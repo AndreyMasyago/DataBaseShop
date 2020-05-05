@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Orders is here</title>
+    <meta http-equiv="Content-Type" content="text/html; charseet=UTF-8" />
+</head>
+
+<body>
+<h2>
+    <div>
+        <form method="post" action="/insert/order">
+            <input type="date" name="orderDate"/>
+            <button type = "submit">insert new order here</button>
+        </form>
+    </div>
+    <div>
+        Orders list
+    </div>
+    {{#orders}}
+        <div>
+            {{orderId}}
+            {{orderDate}}
+         </div>
+    {{/orders}}
+</h2>
+</body>
+</html>

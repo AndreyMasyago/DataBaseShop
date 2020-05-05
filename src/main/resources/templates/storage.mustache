@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Storage</title>
+    <meta http-equiv="Content-Type" content="text/html; charseet=UTF-8"/>
+</head>
+<h1>
+   <body>
+   <div>
+       <form method="post" action="/insert/storage">
+           <input type = "text" name="cellsSize">
+           <button type = "submit">Кнопотька</button>
+       </form>
+   </div>
+   <div>
+       Storage
+   </div>
+   {{#cells}}
+       <div>
+           {{cellsId}}
+           {{cellsSize}}
+       </div>
+   {{/cells}}
+   </body>
+</h1>
+</html>

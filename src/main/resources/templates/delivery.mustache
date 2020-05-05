@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>DeliveryClub</title>
+    <meta http-equiv="Content-Type" content="text/html; charseet=UTF-8" />
+
+</head>
+<h2>
+    <body>
+    <div>
+        <form method="post" action="/insert/delivery">
+            <input type = "date" name="deliveryDate"/>
+            <button type = "sumbit">ПОСТ СЮДА!</button>
+        </form>
+    </div>
+    <div>
+        Deliveries List
+    </div>
+    {{#deliveries}}
+        <div>
+            {{deliveryId}}
+            {{arrivingDateOnStorage}}
+        </div>
+    {{/deliveries}}
+    </body>
+</h2>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Catalog</title>
+    <meta http-equiv="Content-Type" content="text/html; charseet=UTF-8" />
+</head>
+
+<h1>
+    <body>
+    <div>
+        <form method="post" action="/insert/catalog">
+            <input type = "text" name="goodsName"/>
+            <button type="submit">ПОЕХАЛИ!</button>
+        </form>
+    </div>
+    <div>
+        Catalog
+    </div>
+    {{#details}}
+        <div>
+            {{detailId}}
+            {{goodsName}}
+        </div>
+    {{/details}}
+    </body>
+</h1>
+</html>

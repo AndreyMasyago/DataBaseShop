@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Provider one love</title>
+    <meta http-equiv="Content-Type" content="text/html; charseet=UTF-8" />
+
+</head>
+<h2>
+    <body>
+    <div>
+        <form method="post" action="/insert/provider">
+            <input type = "text" name="providerName"/>
+            <select name="category">
+                <option value = "official">Фирма/Дилер</option>
+                <option value = "small production">Небольшое производство</option>
+                <option value = "shop">Магазин</option>
+            </select>
+            <button type = "sumbit">insert provider here</button>
+        </form>
+    </div>
+    <div>
+        Providers List
+    </div>
+    {{#providers}}
+        <div>
+            {{providerId}}
+            {{providerName}}
+            {{category}}
+        </div>
+    {{/providers}}
+    </body>
+</h2>
+</html>

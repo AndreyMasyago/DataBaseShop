@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>sooooo goods</title>
+    <meta http-equiv="Content-Type" content="text/html; charseet=UTF-8" />
+</head>
+<body>
+<h1>
+    <div>
+        <form method="post" action="/insert/goods">
+            <select name = "detailId" placeholder = "Деталька">
+                {{#catalog}}
+                    <option value = {{detailId}}>{{goodsName}}</option>
+                {{/catalog}}
+            </select>
+            <input type="number" name="size" min="1" max="100" placeholder="Объем товара"/>
+            <input type="number" name="deliveryTime" min="1" max="100" placeholder="Время в пути"/>
+            <input type="number" name="purchasePrice" min="1" placeholder="цена покупки"/>
+            <input type="number" name="sellingPrice" min="1" placeholder="цена продажи"/>
+            <input type="text" name="producer" placeholder="А Вы точно продюсер?"/>
+            <select name = "providerId" placeholder = "Провайдер">
+                {{#providers}}
+                    <option value = {{providerId}}>{{providerName}} {{category}}</option>
+                {{/providers}}
+            </select>
+            <button type="submit">ДА ЛАДНО ОНО РАБОТАЕТ</button>
+
+        </form>
+    </div>
+    {{#goods}}
+        <div>
+            {{goodsName}}
+            {{size}}
+            {{deliveryTime}}
+            {{purchasePrice}}
+            {{sellingPrice}}
+            {{producer}}
+            {{providerName}}
+        </div>
+    {{/goods}}
+</h1>
+</body>
+</html>
