@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Reject! ABORT! ALARMA!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>
+    <div>
+        <form method="post" action="/insert/reject">
+            <select name = "orderId" placeholder = "Ордер">
+                {{#order}}
+                    <option value = {{orderId}}>
+                        {{orderId}} {{orderDate}}
+                    </option>
+                {{/order}}
+            </select>
+
+            <input type="number" name="amount" min="1" placeholder="Количество товара"/>
+
+            <select name ="goodsId" placeholder = "Товар">
+                {{#goods}}
+                    <option value = {{goodsId}}>
+                        {{goodsName}} {{detailId}} {{size}} {{deliveryTime}}
+                        {{purchasePrice}} {{sellingPrice}} {{producer}} {{providerName}}
+                    </option>
+                {{/goods}}
+            </select>
+            <button type = "submit">Добавить возврат.</button>
+        </form>
+    </div>
+    {{#reject}}
+        <div>
+            {{goodsId}} {{amount}} {{orderId}}
+        </div>
+    {{/reject}}
+</h1>
+</body>
+</html>
