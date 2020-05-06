@@ -36,6 +36,4 @@ public class Storage {
     public void setCellsSize(int cellsSize) {
         this.cellsSize = cellsSize;
     }
-
-
 }

@@ -21,8 +21,6 @@ public class OrderEntity {
         this.orderDate = orderDate;
     }
 
-
-
     public int getOrderId() {
         return orderId;
     }

@@ -1,6 +1,5 @@
 package DataBase.Repository;
 
-import DataBase.Domain.Goods;
 import DataBase.Domain.Storage;
 import org.springframework.data.repository.CrudRepository;
 
