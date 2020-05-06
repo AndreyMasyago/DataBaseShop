@@ -39,8 +39,16 @@ public class Goods {
         return catalog.getGoodsName();
     }
 
+    public Integer getDetailId(){
+        return catalog.getDetailId();
+    }
+
     public String getProviderName(){
         return provider.getProviderName();
+    }
+
+    public String getProviderCategory(){
+        return provider.getCategory();
     }
 
     public int getGoodsId() {

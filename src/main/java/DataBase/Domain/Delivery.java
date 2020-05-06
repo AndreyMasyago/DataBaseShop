@@ -15,6 +15,13 @@ public class Delivery {
 
     private Date arrivingDateOnStorage;
 
+    public Delivery() {
+    }
+
+    public Delivery(Date arrivingDateOnStorage) {
+        this.arrivingDateOnStorage = arrivingDateOnStorage;
+    }
+
     public Date getArrivingDateOnStorage() {
         return arrivingDateOnStorage;
     }
@@ -30,12 +37,4 @@ public class Delivery {
     public void setDeliveryId(int deliveryId) {
         this.deliveryId = deliveryId;
     }
-
-    public Delivery(Date arrivingDateOnStorage) {
-        this.arrivingDateOnStorage = arrivingDateOnStorage;
-    }
-
-    public Delivery() {
-    }
-
 }
