@@ -1,6 +1,7 @@
 package DataBase.Domain;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Goods {
@@ -21,6 +22,22 @@ public class Goods {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "providerId")
     private Provider provider;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    @JoinColumn(name = "goodsId")
+    List<StorageTransactions> storageTransactionsList;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    @JoinColumn(name = "goodsId")
+    List<OrderContent> orderContentList;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    @JoinColumn(name = "goodsId")
+    List<Reject> rejectList;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    @JoinColumn(name = "goodsId")
+    List<DeliveryContent> deliveryContentList;
 
     public Goods() {
     }

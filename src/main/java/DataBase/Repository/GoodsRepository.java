@@ -5,4 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface GoodsRepository extends CrudRepository<Goods, Integer>  {
     public Goods findByGoodsId(Integer goodsId);
+    public void deleteById(int id);
 }

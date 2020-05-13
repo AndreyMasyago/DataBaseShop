@@ -30,6 +30,15 @@ public class GoodsController {
         return "goods";
     }
 
+    @PostMapping("/insert/goods/delete")
+    public String deleteGoods(
+            @RequestParam int goodsId,
+            Map<String, Object> model
+    ){
+        goodsRepository.deleteById(goodsId);
+        generateIterators(model);
+        return "goods";
+    }
 
     @PostMapping("/insert/goods")
     public String addGoods(

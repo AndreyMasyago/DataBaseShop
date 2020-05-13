@@ -68,6 +68,12 @@
             <td>{{sellingPrice}} руб.</td>
             <td>{{producer}}</td>
             <td>{{providerName}}</td>
+            <td>
+                <form method="post" action="/insert/goods/delete">
+                    <input type="hidden" name="goodsId" value={{goodsId}}>
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
         </tr>
     {{/goods}}
 </table>
