@@ -18,9 +18,18 @@ public class StorageController {
 
     @GetMapping("/insert/storage")
     public String storage(Map<String, Object> model) {
-        Iterable<Storage> it = storageRepository.findAll();
-        model.put("cells", it);
+        generateIterators(model);
 
+        return "storage";
+    }
+
+    @PostMapping("/insert/storage/delete")
+    public String deleteStorage(
+            @RequestParam int storageId,
+            Map<String, Object> model
+    ){
+        storageRepository.deleteById(storageId);
+        generateIterators(model);
         return "storage";
     }
 
@@ -33,9 +42,13 @@ public class StorageController {
         Storage tempStorage = new Storage(cellsSize);
         storageRepository.save(tempStorage);
 
-        Iterable<Storage> it = storageRepository.findAll();
-        model.put("cells", it);
+        generateIterators(model);
 
         return "storage";
+    }
+
+    private void generateIterators(Map<String, Object> model) {
+        Iterable<Storage> it = storageRepository.findAll();
+        model.put("cells", it);
     }
 }

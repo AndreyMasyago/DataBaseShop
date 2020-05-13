@@ -1,17 +1,19 @@
 package DataBase.Domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Storage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     private int cellsId;
+
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "cellsId")
+    List<StorageTransactions> storageTransactions;
+
     private int cellsSize;
 
     public Storage(){

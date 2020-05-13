@@ -5,4 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface StorageRepository extends CrudRepository<Storage, Integer> {
     public Storage findByCellsId(Integer cellsId);
+    public void deleteById(int id);
 }

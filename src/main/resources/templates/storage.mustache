@@ -25,6 +25,12 @@
         <tr>
             <td>№{{cellsId}}</td>
             <td>{{cellsSize}} см^3</td>
+            <td>
+                <form method="post" action="/insert/storage/delete">
+                    <input type="hidden" name="storageId" value={{cellsId}}>
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
         </tr>
     {{/cells}}
 </table>
