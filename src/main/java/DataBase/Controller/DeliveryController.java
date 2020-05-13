@@ -19,9 +19,23 @@ public class DeliveryController {
 
     @GetMapping("/insert/delivery")
     public String delivery(Map<String, Object> model) {
+        generateIterators(model);
+
+        return "delivery";
+    }
+
+    private void generateIterators(Map<String, Object> model) {
         Iterable<Delivery> it = deliveryRepository.findAll();
         model.put("deliveries", it);
+    }
 
+    @PostMapping("/insert/delivery/delete")
+    public String deleteDelivery(
+            @RequestParam int deliveryId,
+            Map<String, Object> model
+    ){
+        deliveryRepository.deleteById(deliveryId);
+        generateIterators(model);
         return "delivery";
     }
 
@@ -30,8 +44,7 @@ public class DeliveryController {
         Delivery tempDelivery = new Delivery(deliveryDate);
         deliveryRepository.save(tempDelivery);
 
-        Iterable<Delivery> it = deliveryRepository.findAll();
-        model.put("deliveries", it);
+        generateIterators(model);
 
         return "delivery";
     }

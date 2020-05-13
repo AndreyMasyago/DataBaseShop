@@ -30,6 +30,12 @@
             <td>
                 {{arrivingDateOnStorage}}
             </td>
+            <td>
+                <form method="post" action="/insert/delivery/delete">
+                    <input type="hidden" name="deliveryId" value={{deliveryId}}>
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
         </tr>
     {{/deliveries}}
 </table>

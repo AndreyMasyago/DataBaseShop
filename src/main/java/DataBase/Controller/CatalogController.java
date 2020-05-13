@@ -18,9 +18,18 @@ public class CatalogController {
 
     @GetMapping("/insert/catalog")
     public String catalog(Map<String, Object> model){
-        Iterable<Catalog> it = catalogRepository.findAll();
-        model.put("details", it);
+        generateIterators(model);
 
+        return "catalog";
+    }
+
+    @PostMapping("/insert/catalog/delete")
+    public String deleteCatalog(
+            @RequestParam int detailId,
+            Map<String, Object> model
+    ){
+        catalogRepository.deleteById(detailId);
+        generateIterators(model);
         return "catalog";
     }
 
@@ -29,9 +38,13 @@ public class CatalogController {
         Catalog tempCatalog = new Catalog(goodsName);
         catalogRepository.save(tempCatalog);
 
-        Iterable<Catalog> it = catalogRepository.findAll();
-        model.put("details", it);
+        generateIterators(model);
 
         return "catalog";
+    }
+
+    private void generateIterators(Map<String, Object> model) {
+        Iterable<Catalog> it = catalogRepository.findAll();
+        model.put("details", it);
     }
 }

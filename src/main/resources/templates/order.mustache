@@ -27,6 +27,12 @@
         <tr>
             <td>№{{orderId}}</td>
             <td>{{orderDate}}</td>
+            <td>
+                <form method="post" action="/insert/order/delete">
+                    <input type="hidden" name="orderId" value={{orderId}}>
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
         </tr>
     {{/orders}}
 </table>

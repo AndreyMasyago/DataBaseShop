@@ -19,10 +19,23 @@ public class OrderController {
 
     @GetMapping("/insert/order")
     public String order(Map<String, Object> model) {
+        generateIterators(model);
+        return "order";
+    }
+
+    @PostMapping("/insert/order/delete")
+    public String deleteOrder(
+            @RequestParam int orderId,
+            Map<String, Object> model
+    ){
+        orderRepository.deleteById(orderId);
+        generateIterators(model);
+        return "order";
+    }
+
+    private void generateIterators(Map<String, Object> model) {
         Iterable<OrderEntity> it = orderRepository.findAll();
         model.put("orders", it);
-
-        return "order";
     }
 
     @PostMapping("/insert/order")
@@ -30,8 +43,7 @@ public class OrderController {
         OrderEntity tempOrderEntity = new OrderEntity(orderDate);
         orderRepository.save(tempOrderEntity);
 
-        Iterable<OrderEntity> it = orderRepository.findAll();
-        model.put("orders", it);
+        generateIterators(model);
 
         return "order";
     }

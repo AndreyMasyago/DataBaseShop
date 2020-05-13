@@ -1,9 +1,9 @@
 package DataBase.Domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.springframework.web.bind.annotation.InitBinder;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Catalog {
@@ -11,6 +11,10 @@ public class Catalog {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int detailId;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    @JoinColumn(name = "detailId")
+    List<Goods> goodsList;
 
     private String goodsName;
 

@@ -24,6 +24,12 @@
             <td>
                 {{goodsName}}
             </td>
+            <td>
+                <form method="post" action="/insert/catalog/delete">
+                    <input type="hidden" name="detailId" value={{detailId}}>
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
         </tr>
     {{/details}}
 </table>

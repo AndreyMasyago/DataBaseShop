@@ -1,17 +1,24 @@
 package DataBase.Domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     private int orderId;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    @JoinColumn(name = "orderId")
+    List<Reject> rejectList;
+
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    @JoinColumn(name = "orderId")
+    List<OrderContent> orderContentList;
+
     private Date orderDate;
 
     public OrderEntity(){
@@ -21,6 +28,22 @@ public class OrderEntity {
         this.orderDate = orderDate;
     }
 
+    public List<Reject> getRejectList() {
+        return rejectList;
+    }
+
+    public void setRejectList(List<Reject> rejectList) {
+        this.rejectList = rejectList;
+    }
+
+/*    public List<OrderContent> getOrderContentList() {
+        return orderContentList;
+    }
+
+    public void setOrderContentList(List<OrderContent> orderContentList) {
+        this.orderContentList = orderContentList;
+    }
+*/
     public int getOrderId() {
         return orderId;
     }

@@ -1,17 +1,19 @@
 package DataBase.Domain;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 public class Delivery {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int deliveryId;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    @JoinColumn(name = "deliveryId")
+    List<DeliveryContent> deliveryContentList;
 
     private Date arrivingDateOnStorage;
 
