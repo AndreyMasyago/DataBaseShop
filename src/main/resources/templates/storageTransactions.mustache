@@ -46,10 +46,16 @@
     </tr>
     {{#storageTransactions}}
         <tr>
-            <td>{{goodsName}}</td>
+            <td>{{goodsName}} (Производитель: "{{producer}}", поставщик: "{{providerName}}")</td>
             <td>{{amount}}шт.</td>
             <td>{{cellsId}}</td>
             <td>{{transactionDate}}</td>
+            <td>
+                <form method="post" action="/insert/storageTransactions/delete">
+                    <input type = "hidden" name="storageTransactionId" value={{storageTransactionId}}>
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
         </tr>
     {{/storageTransactions}}
 </table>

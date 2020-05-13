@@ -28,6 +28,15 @@ public class StorageTransactionsController {
         return "storageTransactions";
     }
 
+    @PostMapping("/insert/storageTransactions/delete")
+    public String deleteStorageTransaction(
+            @RequestParam int storageTransactionId,
+            Map<String, Object> model){
+        storageTransactionsRepository.deleteById(storageTransactionId);
+        generateIterators(model);
+        return "storageTransactions";
+    }
+
     @PostMapping("/insert/storageTransactions")
     public String addStorageTransaction(
             @RequestParam int goodsId,
