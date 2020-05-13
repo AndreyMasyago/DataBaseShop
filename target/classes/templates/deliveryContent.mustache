@@ -51,6 +51,12 @@
             <td>{{amount}}шт.</td>
             <td>{{producer}}</td>
             <td>{{providerName}}</td>
+            <td>
+                <form method="post" action="/insert/deliveryContent/delete">
+                    <input type = "hidden" name="deliveryContentId" value={{deliveryContentId}}>
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
         </tr>
     {{/deliveryContent}}
 </table>

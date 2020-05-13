@@ -29,6 +29,16 @@ public class RejectController {
         return "reject";
     }
 
+    @PostMapping("/insert/reject/delete")
+    public String deleteReject(
+            @RequestParam int rejectId,
+            Map<String, Object> model
+    ){
+        rejectRepository.deleteById(rejectId);
+        generateIterators(model);
+        return "reject";
+    }
+
     @PostMapping("/insert/reject")
     public String addReject(
             @RequestParam int goodsId,

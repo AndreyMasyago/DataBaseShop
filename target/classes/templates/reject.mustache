@@ -33,7 +33,7 @@
             {{/goods}}
         </select>
 
-        <button type = "submit">Добавить возврат.</button>
+        <button type = "submit">Добавить возврат</button>
     </form>
 </div>
 <table>
@@ -48,8 +48,14 @@
         <tr>
             <td>{{orderId}}</td>
             <td>{{orderDate}}</td>
-            <td>{{goodsName}}</td>
+            <td>{{goodsName}} (Производитель: "{{producer}}") (Поставщик: "{{providerName}}")</td>
             <td>{{amount}}шт.</td>
+            <td>
+                <form method="post" action="/insert/reject/delete">
+                    <input type = "hidden" name="rejectId" value={{rejectId}}>
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
         </tr>
     {{/reject}}
 </table>

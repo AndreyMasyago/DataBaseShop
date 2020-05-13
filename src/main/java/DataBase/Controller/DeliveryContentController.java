@@ -29,6 +29,16 @@ public class DeliveryContentController {
         return "deliveryContent";
     }
 
+    @PostMapping("/insert/deliveryContent/delete")
+    public String deleteDeliveryContent(
+            @RequestParam int deliveryContentId,
+            Map<String, Object> model){
+        deliveryContentRepository.deleteById(deliveryContentId);
+        generateIterators(model);
+        return "deliveryContent";
+    }
+
+
     @PostMapping("/insert/deliveryContent")
     public String addDeliveryContent(
             @RequestParam int deliveryId,

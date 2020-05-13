@@ -29,6 +29,16 @@ public class OrderContentController {
         return "orderContent";
     }
 
+    @PostMapping("/insert/orderContent/delete")
+    public String deleteOrderContent(
+            @RequestParam int orderContentId,
+            Map<String, Object> model
+    ){
+        orderContentRepository.deleteById(orderContentId);
+        generateIterators(model);
+        return "orderContent";
+    }
+
     @PostMapping("/insert/orderContent")
     public String addOrderContent(
             @RequestParam int goodsId,
