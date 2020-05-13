@@ -2,26 +2,27 @@
 <html>
 <head>
     <title>Catalog</title>
-    <meta http-equiv="Content-Type" content="text/html; charseet=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 
-<h1>
-    <body>
-    <div>
-        <form method="post" action="/insert/catalog">
-            <input type = "text" name="goodsName"/>
-            <button type="submit">ПОЕХАЛИ!</button>
-        </form>
-    </div>
-    <div>
-        Catalog
-    </div>
+<body>
+<div>
+    <form method="post" action="/insert/catalog">
+        <input type = "text" name="goodsName" required placeholder = "Введите название детали"/>
+        <button type="submit">Добавить деталь в каталог</button>
+    </form>
+</div>
+
+
+<table border = "1">
+    <th>Каталог деталей</th>
     {{#details}}
-        <div>
-            {{detailId}}
-            {{goodsName}}
-        </div>
+        <tr>
+            <td>
+                {{goodsName}}
+            </td>
+        </tr>
     {{/details}}
-    </body>
-</h1>
+</table>
+</body>
 </html>
