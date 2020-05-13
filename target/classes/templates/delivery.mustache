@@ -5,23 +5,32 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 </head>
-<h2>
-    <body>
-    <div>
-        <form method="post" action="/insert/delivery">
-            <input type = "date" name="deliveryDate"/>
-            <button type = "sumbit">ПОСТ СЮДА!</button>
-        </form>
-    </div>
-    <div>
-        Deliveries List
-    </div>
+<body>
+<div>
+    <form method="post" action="/insert/delivery">
+        <input type = "date" name="deliveryDate" required/>
+        <button type = "sumbit">Добавить поставку</button>
+    </form>
+</div>
+
+<table>
+    <caption>Список поставок</caption>
+
+    <tr>
+        <th>
+            Дата поступления
+        </th>
+    </tr>
+
     {{#deliveries}}
-        <div>
-            {{deliveryId}}
-            {{arrivingDateOnStorage}}
-        </div>
+        <tr>
+            <td>
+                {{arrivingDateOnStorage}}
+            </td>
+        </tr>
     {{/deliveries}}
-    </body>
-</h2>
+</table>
+
+</body>
+
 </html>

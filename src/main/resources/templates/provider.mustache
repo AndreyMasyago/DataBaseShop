@@ -1,33 +1,43 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Provider one love</title>
+    <title>Поставщики</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
 </head>
-<h2>
-    <body>
-    <div>
-        <form method="post" action="/insert/provider">
-            <input type = "text" name="providerName"/>
-            <select name="category">
-                <option value = "official">Фирма/Дилер</option>
-                <option value = "small production">Небольшое производство</option>
-                <option value = "shop">Магазин</option>
-            </select>
-            <button type = "sumbit">insert provider here</button>
-        </form>
-    </div>
-    <div>
-        Providers List
-    </div>
+<body>
+<div>
+    <form method="post" action="/insert/provider">
+        <input type = "text" name="providerName" placeholder="Введите название организации" required/>
+        <select name="category" required>
+            <option selected disabled value=''>Выберите категорию</option>
+            <option value = "official">Фирма/Дилер</option>
+            <option value = "small production">Небольшое производство</option>
+            <option value = "shop">Магазин</option>
+        </select>
+        <button type = "sumbit">Добавить поставщика</button>
+    </form>
+</div>
+
+<table>
+    <caption>Список поставщиков</caption>
+    <tr>
+        <th>
+            Название организации
+        </th>
+        <th>
+            Категория организации
+        </th>
+    </tr>
     {{#providers}}
-        <div>
-            {{providerId}}
-            {{providerName}}
-            {{category}}
-        </div>
+        <tr>
+            <td>
+                {{providerName}}
+            </td>
+            <td>
+                {{category}}
+            </td>
+        </tr>
     {{/providers}}
-    </body>
-</h2>
+</table>
+</body>
 </html>

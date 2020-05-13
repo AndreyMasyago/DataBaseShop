@@ -1,36 +1,55 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>deliveryContent so good</title>
+    <title>Содержимое поставок</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<h1>
-    <div>
-        <form method="post" action="/insert/deliveryContent">
-            <select name = "deliveryId" placeholder = "Деливери">
-                {{#deliveries}}
-                    <option value = {{deliveryId}}>
-                        {{deliveryId}} {{arrivingDateOnStorage}}
-                    </option>
-                {{/deliveries}}
-            </select>
+<div>
+    <form method="post" action="/insert/deliveryContent">
+        <select name = "deliveryId" placeholder = "Деливери" required>
+            <option selected disabled value=''>Выберите поставку по её дате</option>
+            {{#deliveries}}
+                <option value = {{deliveryId}}>
+                    {{deliveryId}} {{arrivingDateOnStorage}}
+                </option>
+            {{/deliveries}}
+        </select>
 
-            <input type="number" name="amount" min="1"placeholder="Количество товара"/>
+        <input type="number" name="amount" min="1" placeholder="Количество товара" required/>
 
-            <select name = "goodsId" placeholder = "Гудсик">
-                {{#goods}}
-                    <option value = {{goodsId}}>
-                        {{goodsName}} {{detailId}} {{size}} {{deliveryTime}}
-                        {{purchasePrice}} {{sellingPrice}} {{producer}} {{providerName}}
-                {{/goods}}
-            </select>
-            <button type="submit">ДОБАВЬ МЕНЯ СЮДААА</button>
-        </form>
-    </div>
+        <select name = "goodsId" placeholder = "Товар" required>
+            <option selected disabled value=''>Выберите товар</option>
+            {{#goods}}
+                <option value = {{goodsId}}>
+                    {{goodsName}}
+                    (Производитель: "{{producer}}")
+                    (Поставщик: "{{providerName}}")
+                </option>
+            {{/goods}}
+        </select>
+        <button type="submit">Добавить в поставку</button>
+    </form>
+</div>
+
+<table>
+    <caption>Содержимое поставок</caption>
+    <tr>
+        <th>Дата поступления</th>
+        <th>Товар</th>
+        <th>Количество</th>
+        <th>Производитель</th>
+        <th>Поставщик</th>
+    </tr>
     {{#deliveryContent}}
-        <div>{{arrivingDateOnStorage}} {{amount}} {{goodsName}}</div>
+        <tr>
+            <td>{{arrivingDateOnStorage}}</td>
+            <td>{{goodsName}}</td>
+            <td>{{amount}}шт.</td>
+            <td>{{producer}}</td>
+            <td>{{providerName}}</td>
+        </tr>
     {{/deliveryContent}}
-</h1>
+</table>
 </body>
 </html>
