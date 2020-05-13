@@ -10,9 +10,9 @@ public class Storage {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int cellsId;
 
-    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = {CascadeType.ALL})
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = {CascadeType.REMOVE})
     @JoinColumn(name = "cellsId")
-    List<StorageTransactions> storageTransactions;
+    List<StorageTransactions> storageTransactionsList;
 
     private int cellsSize;
 

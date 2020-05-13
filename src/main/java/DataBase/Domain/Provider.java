@@ -1,9 +1,7 @@
 package DataBase.Domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Provider {
@@ -13,6 +11,10 @@ public class Provider {
     private int providerId;
     private String providerName;
     private String category;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    @JoinColumn(name = "providerId")
+    List<Goods> goodsList;
 
     public Provider() {
     }

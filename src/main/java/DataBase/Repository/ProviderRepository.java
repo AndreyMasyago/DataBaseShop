@@ -5,4 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ProviderRepository extends CrudRepository<Provider, Integer> {
     public Provider findByProviderId(int providerId);
+    public void deleteById(int id);
 }

@@ -39,6 +39,12 @@
             <td>
                 {{category}}
             </td>
+            <td>
+                <form method="post" action="/insert/provider/delete">
+                    <input type="hidden" name="providerId" value={{providerId}}>
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
         </tr>
     {{/providers}}
 </table>

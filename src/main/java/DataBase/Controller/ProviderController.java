@@ -18,9 +18,23 @@ public class ProviderController {
 
     @GetMapping("/insert/provider")
     public String provider(Map<String, Object> model) {
+        generateIterators(model);
+
+        return "provider";
+    }
+
+    private void generateIterators(Map<String, Object> model) {
         Iterable<Provider> it = providerRepository.findAll();
         model.put("providers", it);
+    }
 
+    @PostMapping("/insert/provider/delete")
+    public String deleteProvider(
+            @RequestParam int providerId,
+            Map<String, Object> model
+    ){
+        providerRepository.deleteById(providerId);
+        generateIterators(model);
         return "provider";
     }
 
@@ -33,8 +47,7 @@ public class ProviderController {
         Provider tempProvider = new Provider(providerName, category);
         providerRepository.save(tempProvider);
 
-        Iterable<Provider> it = providerRepository.findAll();
-        model.put("providers", it);
+        generateIterators(model);
 
         return "provider";
     }
