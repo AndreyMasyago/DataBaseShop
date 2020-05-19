@@ -7,7 +7,8 @@ import java.util.List;
 public class Storage {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "storage_generator")
+    @SequenceGenerator(name = "storage_generator", sequenceName = "storage_idx", allocationSize = 1)
     private int cellsId;
 
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = {CascadeType.REMOVE})

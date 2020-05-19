@@ -19,6 +19,7 @@ public class ProviderController {
     @GetMapping("/insert/provider")
     public String provider(Map<String, Object> model) {
         generateIterators(model);
+        model.put("currentId", 0);
 
         return "provider";
     }
@@ -35,6 +36,7 @@ public class ProviderController {
     ){
         providerRepository.deleteById(providerId);
         generateIterators(model);
+        model.put("currentId", 0);
         return "provider";
     }
 
@@ -49,6 +51,7 @@ public class ProviderController {
 
         generateIterators(model);
 
+        model.put("currentId", tempProvider.getProviderId());
         return "provider";
     }
 }

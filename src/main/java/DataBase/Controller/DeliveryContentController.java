@@ -26,6 +26,7 @@ public class DeliveryContentController {
     @GetMapping("/insert/deliveryContent")
     public String deliveryContent(Map<String, Object> model) {
         generateIterators(model);
+        model.put("currentId", 0);
         return "deliveryContent";
     }
 
@@ -35,6 +36,7 @@ public class DeliveryContentController {
             Map<String, Object> model){
         deliveryContentRepository.deleteById(deliveryContentId);
         generateIterators(model);
+        model.put("currentId", 0);
         return "deliveryContent";
     }
 
@@ -53,6 +55,7 @@ public class DeliveryContentController {
         deliveryContentRepository.save(tempDeliveryContent);
 
         generateIterators(model);
+        model.put("currentId", tempDelivery.getDeliveryId());
         return "deliveryContent";
     }
 

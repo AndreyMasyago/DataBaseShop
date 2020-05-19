@@ -8,7 +8,8 @@ import java.util.List;
 @Entity
 public class Delivery {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "delivery_generator")
+    @SequenceGenerator(name = "delivery_generator", sequenceName = "delivery_idx", allocationSize = 1)
     private int deliveryId;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE}, orphanRemoval = true)

@@ -9,7 +9,8 @@ import java.util.List;
 public class Catalog {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "catalog_generator")
+    @SequenceGenerator(name = "catalog_generator", sequenceName = "catalog_idx", allocationSize = 1)
     private int detailId;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE}, orphanRemoval = true)

@@ -21,6 +21,7 @@ public class DeliveryController {
     public String delivery(Map<String, Object> model) {
         generateIterators(model);
 
+        model.put("currentId", 0);
         return "delivery";
     }
 
@@ -36,15 +37,17 @@ public class DeliveryController {
     ){
         deliveryRepository.deleteById(deliveryId);
         generateIterators(model);
+        model.put("currentId", 0);
         return "delivery";
     }
 
     @PostMapping("/insert/delivery")
-    public String addDelivery(@RequestParam Date deliveryDate, Map<String, Object> model) {
-        Delivery tempDelivery = new Delivery(deliveryDate);
+    public String addDelivery(@RequestParam Date arrivingDateOnStorage, Map<String, Object> model) {
+        Delivery tempDelivery = new Delivery(arrivingDateOnStorage);
         deliveryRepository.save(tempDelivery);
 
         generateIterators(model);
+        model.put("currentId", tempDelivery.getDeliveryId());
 
         return "delivery";
     }

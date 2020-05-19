@@ -20,6 +20,8 @@ public class OrderController {
     @GetMapping("/insert/order")
     public String order(Map<String, Object> model) {
         generateIterators(model);
+
+        model.put("currentId", 0);
         return "order";
     }
 
@@ -30,6 +32,8 @@ public class OrderController {
     ){
         orderRepository.deleteById(orderId);
         generateIterators(model);
+
+        model.put("currentId", 0);
         return "order";
     }
 
@@ -45,6 +49,7 @@ public class OrderController {
 
         generateIterators(model);
 
+        model.put("currentId", tempOrderEntity.getOrderId());
         return "order";
     }
 }

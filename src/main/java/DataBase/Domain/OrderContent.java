@@ -6,7 +6,8 @@ import java.sql.Date;
 @Entity
 public class OrderContent {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_content_generator")
+    @SequenceGenerator(name = "order_content_generator", sequenceName = "order_content_idx", allocationSize = 1)
     private int orderContentId;
 
     @ManyToOne(fetch = FetchType.EAGER)

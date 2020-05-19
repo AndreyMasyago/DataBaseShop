@@ -30,6 +30,8 @@ public class CatalogController {
     ){
         catalogRepository.deleteById(detailId);
         generateIterators(model);
+        //ADDED at night BE CAREFULL.
+        model.put("currentId", 0);
         return "catalog";
     }
 
@@ -39,6 +41,8 @@ public class CatalogController {
         catalogRepository.save(tempCatalog);
 
         generateIterators(model);
+        //ADDED at night BE CAREFULL.
+        model.put("currentId", tempCatalog.getDetailId());
 
         return "catalog";
     }
@@ -46,5 +50,8 @@ public class CatalogController {
     private void generateIterators(Map<String, Object> model) {
         Iterable<Catalog> it = catalogRepository.findAll();
         model.put("details", it);
+
+        //ADDED at night BE CAREFULL.
+        model.put("currentId", 0);
     }
 }

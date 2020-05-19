@@ -7,7 +7,8 @@ import java.util.List;
 @Entity
 public class OrderEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_entity_generator")
+    @SequenceGenerator(name = "order_entity_generator", sequenceName = "order_entity_idx", allocationSize = 1)
     private int orderId;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE}, orphanRemoval = true)

@@ -25,6 +25,7 @@ public class StorageTransactionsController {
     @GetMapping("/insert/storageTransactions")
     public String storageTransaction(Map<String, Object> model) {
         generateIterators(model);
+        model.put("currentId", 0);
         return "storageTransactions";
     }
 
@@ -34,6 +35,7 @@ public class StorageTransactionsController {
             Map<String, Object> model){
         storageTransactionsRepository.deleteById(storageTransactionId);
         generateIterators(model);
+        model.put("currentId", 0);
         return "storageTransactions";
     }
 
@@ -53,6 +55,7 @@ public class StorageTransactionsController {
         storageTransactionsRepository.save(tempStorageTransaction);
 
         generateIterators(model);
+        model.put("currentId", tempStorageTransaction.getStorageTransactionId());
         return "storageTransactions";
     }
 

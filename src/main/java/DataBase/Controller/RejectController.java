@@ -26,6 +26,7 @@ public class RejectController {
     @GetMapping("/insert/reject")
     public String reject(Map<String, Object> model) {
         generateIterators(model);
+        model.put("currentId", 0);
         return "reject";
     }
 
@@ -36,6 +37,7 @@ public class RejectController {
     ){
         rejectRepository.deleteById(rejectId);
         generateIterators(model);
+        model.put("currentId", 0);
         return "reject";
     }
 
@@ -54,6 +56,7 @@ public class RejectController {
         rejectRepository.save(tempReject);
 
         generateIterators(model);
+        model.put("currentId", tempReject.getRejectId());
         return "reject";
     }
 

@@ -27,6 +27,7 @@ public class GoodsController {
     @GetMapping("/insert/goods")
     public String goods(Map<String, Object> model) {
         generateIterators(model);
+        model.put("currentId", 0);
         return "goods";
     }
 
@@ -37,6 +38,7 @@ public class GoodsController {
     ){
         goodsRepository.deleteById(goodsId);
         generateIterators(model);
+
         return "goods";
     }
 
@@ -58,6 +60,7 @@ public class GoodsController {
         goodsRepository.save(tempGoods);
 
         generateIterators(model);
+        model.put("currentId", tempGoods.getGoodsId());
         return "goods";
     }
 

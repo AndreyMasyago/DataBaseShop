@@ -6,7 +6,8 @@ import java.sql.Date;
 @Entity
 public class Reject {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reject_generator")
+    @SequenceGenerator(name = "reject_generator", sequenceName = "reject_idx", allocationSize = 1)
     private int rejectId;
 
     @ManyToOne(fetch = FetchType.EAGER)

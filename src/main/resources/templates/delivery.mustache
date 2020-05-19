@@ -11,7 +11,7 @@
 <a href="/insert/">Back to inserts</a>
 <div>
     <form method="post" action="/insert/delivery">
-        <input type = "date" name="deliveryDate" required/>
+        <input type = "date" name="arrivingDateOnStorage" required/>
         <button type = "sumbit">Добавить поставку</button>
     </form>
 </div>
@@ -39,6 +39,7 @@
         </tr>
     {{/deliveries}}
 </table>
+<span id="currentId" data-id="{{currentId}}"></span>
 
 </body>
 

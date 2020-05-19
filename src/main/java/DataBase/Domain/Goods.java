@@ -6,7 +6,8 @@ import java.util.List;
 @Entity
 public class Goods {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "goods_generator")
+    @SequenceGenerator(name = "goods_generator", sequenceName = "goods_idx", allocationSize = 1)
     private int goodsId;
 
     @ManyToOne(fetch = FetchType.EAGER)

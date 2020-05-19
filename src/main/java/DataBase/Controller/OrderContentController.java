@@ -26,6 +26,8 @@ public class OrderContentController {
     @GetMapping("/insert/orderContent")
     public String orderContent(Map<String, Object> model) {
         generateIterators(model);
+
+        model.put("currentId", 0);
         return "orderContent";
     }
 
@@ -36,6 +38,7 @@ public class OrderContentController {
     ){
         orderContentRepository.deleteById(orderContentId);
         generateIterators(model);
+        model.put("currentId", 0);
         return "orderContent";
     }
 
@@ -54,6 +57,7 @@ public class OrderContentController {
         orderContentRepository.save(tempOrderContent);
 
         generateIterators(model);
+        model.put("currentId", tempOrderContent.getOrderContentId());
         return "orderContent";
     }
 

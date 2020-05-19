@@ -20,6 +20,7 @@ public class StorageController {
     public String storage(Map<String, Object> model) {
         generateIterators(model);
 
+        model.put("currentId", 0);
         return "storage";
     }
 
@@ -30,6 +31,7 @@ public class StorageController {
     ){
         storageRepository.deleteById(storageId);
         generateIterators(model);
+        model.put("currentId", 0);
         return "storage";
     }
 
@@ -43,6 +45,7 @@ public class StorageController {
         storageRepository.save(tempStorage);
 
         generateIterators(model);
+        model.put("currentId", tempStorage.getCellsId());
 
         return "storage";
     }
