@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Поставщики</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<a href="/">Back to main</a>
+<br>
+<a href="/insert/">Back to inserts</a>
+<div>
+    <form method="post" action="/insert/provider">
+        <input type = "text" name="providerName" placeholder="Введите название организации" required/>
+        <select name="category" required>
+            <option selected disabled value=''>Выберите категорию</option>
+            <option value = "official">Фирма/Дилер</option>
+            <option value = "small production">Небольшое производство</option>
+            <option value = "shop">Магазин</option>
+        </select>
+        <button type = "sumbit">Добавить поставщика</button>
+    </form>
+</div>
+
+<table>
+    <caption>Список поставщиков</caption>
+    <tr>
+        <th>
+            Название организации
+        </th>
+        <th>
+            Категория организации
+        </th>
+    </tr>
+    {{#providers}}
+        <tr>
+            <td>
+                {{providerName}}
+            </td>
+            <td>
+                {{category}}
+            </td>
+            <td>
+                <form method="post" action="/insert/provider/delete">
+                    <input type="hidden" name="providerId" value={{providerId}}>
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
+        </tr>
+    {{/providers}}
+</table>
+<span id="currentId" data-id="{{currentId}}"></span>
+</body>
+</html>

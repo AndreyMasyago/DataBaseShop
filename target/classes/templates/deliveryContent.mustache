@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Содержимое поставок</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<a href="/">Back to main</a>
+<br>
+<a href="/insert/">Back to inserts</a>
+<div>
+    <form method="post" action="/insert/deliveryContent">
+        <select name = "deliveryId" placeholder = "Деливери" required>
+            <option selected disabled value=''>Выберите поставку по её дате</option>
+            {{#deliveries}}
+                <option value = {{deliveryId}}>
+                    {{deliveryId}} {{arrivingDateOnStorage}}
+                </option>
+            {{/deliveries}}
+        </select>
+
+        <input type="number" name="amount" min="1" placeholder="Количество товара" required/>
+
+        <select name = "goodsId" placeholder = "Товар" required>
+            <option selected disabled value=''>Выберите товар</option>
+            {{#goods}}
+                <option value = {{goodsId}}>
+                    {{goodsName}}
+                    (Производитель: "{{producer}}")
+                    (Поставщик: "{{providerName}}")
+                </option>
+            {{/goods}}
+        </select>
+        <button type="submit">Добавить в поставку</button>
+    </form>
+</div>
+
+<table>
+    <caption>Содержимое поставок</caption>
+    <tr>
+        <th>Дата поступления</th>
+        <th>Товар</th>
+        <th>Количество</th>
+        <th>Производитель</th>
+        <th>Поставщик</th>
+    </tr>
+    {{#deliveryContent}}
+        <tr>
+            <td>{{arrivingDateOnStorage}}</td>
+            <td>{{goodsName}}</td>
+            <td>{{amount}}шт.</td>
+            <td>{{producer}}</td>
+            <td>{{providerName}}</td>
+            <td>
+                <form method="post" action="/insert/deliveryContent/delete">
+                    <input type = "hidden" name="deliveryContentId" value={{deliveryContentId}}>
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
+        </tr>
+    {{/deliveryContent}}
+</table>
+<span id="currentId" data-id="{{currentId}}"></span>
+
+</body>
+</html>

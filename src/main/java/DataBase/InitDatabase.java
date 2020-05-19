@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Component
-public class InitDatabase implements ApplicationRunner {
+public class    InitDatabase implements ApplicationRunner {
     Logger logger = LoggerFactory.getLogger(InitDatabase.class);
 
     SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd");

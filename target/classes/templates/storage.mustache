@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Параметры склада</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<a href="/">Back to main</a>
+<br>
+<a href="/insert/">Back to inserts</a>
+<div>
+   <form method="post" action="/insert/storage">
+       <input type = "number" min = "1" max = "10000"
+              name="cellsSize" placeholder="введите размер ячейки" required>
+       <button type = "submit">Кнопотька</button>
+   </form>
+</div>
+<table>
+    <caption>Параметры склада. Список ячеек и их размеры.</caption>
+    <tr>
+        <th>Номер ячейки</th>
+        <th>Размер ячейки</th>
+    </tr>
+    {{#cells}}
+        <tr>
+            <td>№{{cellsId}}</td>
+            <td>{{cellsSize}} см^3</td>
+            <td>
+                <form method="post" action="/insert/storage/delete">
+                    <input type="hidden" name="storageId" value={{cellsId}}>
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
+        </tr>
+    {{/cells}}
+</table>
+<span id="currentId" data-id="{{currentId}}"></span>
+</body>
+</html>

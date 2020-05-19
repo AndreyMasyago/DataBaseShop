@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Товары</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<a href="/">Back to main</a>
+<br>
+<a href="/insert/">Back to inserts</a>
+<div>
+    <form method="post" action="/insert/goods">
+        <select name = "detailId" placeholder = "Деталька" required>
+            <option selected disabled value=''>Выберите деталь из каталога</option>
+            {{#catalog}}
+                <option value = {{detailId}}>{{goodsName}}</option>
+            {{/catalog}}
+        </select>
+        <input type="number" name="size" min="1" max="100" placeholder="Объем товара" required/>
+        <input type="number" name="deliveryTime" min="1" max="100" placeholder="Время в пути" required/>
+        <input type="number" name="purchasePrice" min="1" placeholder="цена покупки" required/>
+        <input type="number" name="sellingPrice" min="1" placeholder="цена продажи" required/>
+        <input type="text" name="producer" placeholder="Введите производителя" required/>
+        <select name = "providerId" placeholder = "Поставщик" required>
+            <option selected disabled value=''>Выберите поставщика</option>
+            {{#providers}}
+                <option value = {{providerId}}>{{providerName}} {{category}}</option>
+            {{/providers}}
+        </select>
+        <button type="submit">Добавить товар</button>
+
+    </form>
+</div>
+
+<table>
+    <caption>Список товаров</caption>
+    <tr>
+        <th>
+            Название детали
+        </th>
+        <th>
+            Размер(объём) детали
+        </th>
+        <th>
+            Среднее время поставки
+        </th>
+        <th>
+            Цена покупки
+        </th>
+        <th>
+            Цена продажи
+        </th>
+        <th>
+            Производитель
+        </th>
+        <th>
+            Поставщик
+        </th>
+    </tr>
+    {{#goods}}
+        <tr>
+            <td>
+                {{goodsName}}
+            </td>
+            <td>{{size}} см^3</td>
+            <td>{{deliveryTime}} дн.</td>
+            <td>{{purchasePrice}} руб.</td>
+            <td>{{sellingPrice}} руб.</td>
+            <td>{{producer}}</td>
+            <td>{{providerName}}</td>
+            <td>
+                <form method="post" action="/insert/goods/delete">
+                    <input type="hidden" name="goodsId" value={{goodsId}}>
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
+        </tr>
+    {{/goods}}
+</table>
+<span id="currentId" data-id="{{currentId}}"></span>
+</body>
+</html>

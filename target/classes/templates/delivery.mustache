@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>DeliveryClub</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+</head>
+<body>
+<a href="/">Back to main</a>
+<br>
+<a href="/insert/">Back to inserts</a>
+<div>
+    <form method="post" action="/insert/delivery">
+        <input type = "date" name="arrivingDateOnStorage" required/>
+        <button type = "sumbit">Добавить поставку</button>
+    </form>
+</div>
+
+<table>
+    <caption>Список поставок</caption>
+
+    <tr>
+        <th>
+            Дата поступления
+        </th>
+    </tr>
+
+    {{#deliveries}}
+        <tr>
+            <td>
+                {{arrivingDateOnStorage}}
+            </td>
+            <td>
+                <form method="post" action="/insert/delivery/delete">
+                    <input type="hidden" name="deliveryId" value={{deliveryId}}>
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
+        </tr>
+    {{/deliveries}}
+</table>
+<span id="currentId" data-id="{{currentId}}"></span>
+
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Движения по складу</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<a href="/">Back to main</a>
+<br>
+<a href="/insert/">Back to inserts</a>
+<div>
+    <form method="post" action="/insert/storageTransactions">
+        <select name="goodsId" placeholder = "Товар" required>
+            <option selected disabled value=''>Выберите товар</option>
+            {{#goods}}
+                <option value = {{goodsId}}>
+                    {{goodsName}}
+                    (Производитель: "{{producer}}")
+                    (Поставщик: "{{providerName}}")
+                </option>
+            {{/goods}}
+        </select>
+
+        <input type="number" name="amount" placeholder="Количество товара" required/>
+
+        <select name="cellsId" placeHolder = "Номер Ячейки" required>
+            <option selected disabled value=''>Выберите ячейку</option>
+            {{#storage}}
+                <option value = {{cellsId}}>
+                    №{{cellsId}} Размер: {{cellsSize}} см^3
+                </option>
+            {{/storage}}
+        </select>
+        <input type="date" name="transactionDate" required/>
+        <button type = "submit">Добавить транзакцию.</button>
+    </form>
+</div>
+
+<table>
+    <caption>Движения по складу</caption>
+    <tr>
+        <th>Товар</th>
+        <th>Количество</th>
+        <th>Номер ячейки</th>
+        <th>Дата транзакции</th>
+    </tr>
+    {{#storageTransactions}}
+        <tr>
+            <td>{{goodsName}} (Производитель: "{{producer}}", поставщик: "{{providerName}}")</td>
+            <td>{{amount}}шт.</td>
+            <td>{{cellsId}}</td>
+            <td>{{transactionDate}}</td>
+            <td>
+                <form method="post" action="/insert/storageTransactions/delete">
+                    <input type = "hidden" name="storageTransactionId" value={{storageTransactionId}}>
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
+        </tr>
+    {{/storageTransactions}}
+</table>
+<span id="currentId" data-id="{{currentId}}"></span>
+
+</body>
+</html>

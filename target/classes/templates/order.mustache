@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Заказы</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+<a href="/">Back to main</a>
+<br>
+<a href="/insert/">Back to inserts</a>
+<div>
+    <form method="post" action="/insert/order">
+        <input type="date" name="orderDate" required/>
+        <button type = "submit">Создать заказ</button>
+    </form>
+</div>
+
+<table>
+    <caption>Список заказов(чеков)</caption>
+    <tr>
+        <th>Номер заказа(чека)</th>
+        <th>Дата заказа(чека)</th>
+    </tr>
+
+    {{#orders}}
+        <tr>
+            <td>№{{orderId}}</td>
+            <td>{{orderDate}}</td>
+            <td>
+                <form method="post" action="/insert/order/delete">
+                    <input type="hidden" name="orderId" value={{orderId}}>
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
+        </tr>
+    {{/orders}}
+</table>
+<span id="currentId" data-id="{{currentId}}"></span>
+</body>
+</html>
