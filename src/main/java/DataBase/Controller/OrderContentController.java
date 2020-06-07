@@ -7,11 +7,16 @@ import DataBase.Repository.GoodsRepository;
 import DataBase.Repository.OrderContentRepository;
 import DataBase.Repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -70,5 +75,32 @@ public class OrderContentController {
 
         Iterable<OrderEntity> orderEntityIt = orderRepository.findAll();
         model.put("order", orderEntityIt);
+    }
+
+    @GetMapping(value="/order-content/order-content-by-date/", produces=MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Map<String, Object> orderContentFilteredByDate(@RequestParam String goodsSearch, @RequestParam Integer amountLimit) {
+        Map<String, Object> response = new HashMap<>();
+        List<OrderContent> orderContents = orderContentRepository.getOrderContentFilteredByDate(goodsSearch, amountLimit);
+        Long count = orderContentRepository.countOrderContentFilteredByDate(goodsSearch, amountLimit);
+
+        ArrayList<Map<String, Object>> orderContentList = new ArrayList<>();
+
+        Map<String, Object> orderContentInfo;
+
+        for (OrderContent oc : orderContents) {
+            orderContentInfo = new HashMap<>();
+
+            orderContentInfo.put("goodsName", oc.getGoods().getGoodsName());
+            orderContentInfo.put("orderDate", oc.getOrderEntity().getOrderDate());
+            orderContentInfo.put("amount", oc.getAmount());
+
+            orderContentList.add(orderContentInfo);
+        }
+
+        response.put("results", orderContentList);
+        response.put("count", count);
+
+        return response;
     }
 }

@@ -80,7 +80,7 @@ public class GoodsController {
         model.put("providers", providerIt);
     }
 
-    @GetMapping(value="/goods/goods-details/", produces= MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value="/goods/goods-details/", produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Map<String, Object> goodsDetails(@RequestParam String goodsSearch) {
         Map<String, Object> response = new HashMap<>();

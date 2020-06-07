@@ -47,14 +47,15 @@ public interface ProviderRepository extends CrudRepository<Provider, Integer> {
     );
 
     @Query(
-            "SELECT count(p1.providerId) from Provider p1 where p1.providerId in (SELECT DISTINCT p.providerId as providerId " +
-                    "FROM Provider p " +
-                    "JOIN p.goodsList goods " +
-                    "JOIN goods.deliveryContentList deliveryContent " +
-                    "WHERE goods.catalog.goodsName LIKE CONCAT('%',:goodsSearch,'%') " +
-                    "AND p.category LIKE CONCAT('%',:categorySearch,'%') " +
-                    "GROUP BY p.providerId HAVING SUM(deliveryContent.amount) > :amountLimit " +
-            ")"
+            "SELECT COUNT(p1.providerId) from Provider p1 WHERE p1.providerId IN " +
+                    "(SELECT DISTINCT p.providerId as providerId " +
+                            "FROM Provider p " +
+                                    "JOIN p.goodsList goods " +
+                                    "JOIN goods.deliveryContentList deliveryContent " +
+                            "WHERE goods.catalog.goodsName LIKE CONCAT('%',:goodsSearch,'%') " +
+                                    "AND p.category LIKE CONCAT('%',:categorySearch,'%') " +
+                            "GROUP BY p.providerId HAVING SUM(deliveryContent.amount) > :amountLimit " +
+                    ")"
     )
     public Long countDeliveredMoreThanCount(
             @Param("goodsSearch") String goodsSearch,
