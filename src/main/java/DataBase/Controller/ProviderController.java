@@ -3,11 +3,16 @@ package DataBase.Controller;
 import DataBase.Domain.Provider;
 import DataBase.Repository.ProviderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -53,5 +58,30 @@ public class ProviderController {
 
         model.put("currentId", tempProvider.getProviderId());
         return "provider";
+    }
+
+    @GetMapping(value="/provider/delivered-more-than-count/", produces=MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Map<String, Object> test(
+            @RequestParam String goodsSearch,
+            @RequestParam String categorySearch,
+            @RequestParam Long amountLimit,
+            Map<String, Object> model) {
+
+        List<Provider> providers = providerRepository.findDeliveredMoreThanCount(goodsSearch, categorySearch, amountLimit);
+        Long count = providerRepository.countDeliveredMoreThanCount(goodsSearch, categorySearch, amountLimit);
+
+
+        ArrayList<String> providerNames = new ArrayList<>();
+
+        for (Provider p : providers) {
+            providerNames.add(p.getProviderName());
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("providers", providerNames);
+        response.put("count", count);
+
+        return response;
     }
 }
