@@ -62,7 +62,7 @@ public class ProviderController {
 
     @GetMapping(value="/provider/delivered-more-than-count/", produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Map<String, Object> test(
+    public Map<String, Object> deliveredMoreThanCount(
             @RequestParam String goodsSearch,
             @RequestParam String categorySearch,
             @RequestParam Long amountLimit,
@@ -71,7 +71,6 @@ public class ProviderController {
         List<Provider> providers = providerRepository.findDeliveredMoreThanCount(goodsSearch, categorySearch, amountLimit);
         Long count = providerRepository.countDeliveredMoreThanCount(goodsSearch, categorySearch, amountLimit);
 
-
         ArrayList<String> providerNames = new ArrayList<>();
 
         for (Provider p : providers) {
@@ -79,7 +78,7 @@ public class ProviderController {
         }
 
         Map<String, Object> response = new HashMap<>();
-        response.put("providers", providerNames);
+        response.put("results", providerNames);
         response.put("count", count);
 
         return response;

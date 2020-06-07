@@ -7,11 +7,16 @@ import DataBase.Repository.CatalogRepository;
 import DataBase.Repository.GoodsRepository;
 import DataBase.Repository.ProviderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -73,5 +78,36 @@ public class GoodsController {
 
         Iterable<Provider> providerIt = providerRepository.findAll();
         model.put("providers", providerIt);
+    }
+
+    @GetMapping(value="/goods/goods-details/", produces= MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Map<String, Object> goodsDetails(@RequestParam String goodsSearch) {
+        Map<String, Object> response = new HashMap<>();
+        List<Goods> goods = goodsRepository.getGoodsInfo(goodsSearch);
+        Long count = goodsRepository.countGoodsInfo(goodsSearch);
+
+        ArrayList<Map<String, Object>> goodsInfoList = new ArrayList<>();
+
+        Map<String, Object> goodsInfo;
+
+        for (Goods p : goods) {
+            goodsInfo = new HashMap<>();
+
+            goodsInfo.put("deliveryTime", p.getDeliveryTime());
+            goodsInfo.put("purchasePrice", p.getPurchasePrice());
+            goodsInfo.put("sellingPrice", p.getSellingPrice());
+            goodsInfo.put("producer", p.getProducer());
+            goodsInfo.put("goodsName", p.getGoodsName());
+            goodsInfo.put("providerName", p.getProvider().getProviderName());
+            goodsInfo.put("category", p.getProvider().getCategory());
+
+            goodsInfoList.add(goodsInfo);
+        }
+
+        response.put("results", goodsInfoList);
+        response.put("count", count);
+
+        return response;
     }
 }
