@@ -103,4 +103,36 @@ public class OrderContentController {
 
         return response;
     }
+
+    @GetMapping(value="/order-content/monthly-average-sales/", produces=MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Map<String, Object> monthlyAverageSales(@RequestParam String goodsSearch) {
+        Map<String, Object> response = new HashMap<>();
+        List<Object[]> sales = orderContentRepository.getMonthlyAverageSales(goodsSearch);
+
+        ArrayList<Map<String, Object>> salesList = new ArrayList<>();
+
+        Map<String, Object> salesInfo;
+
+        for (Object[] o : sales) {
+            Goods g = (Goods) o[0];
+            Integer month = (Integer) o[1];
+            Long amount = (Long) o[2];
+
+            salesInfo = new HashMap<>();
+
+            salesInfo.put("goodsId", g.getGoodsId());
+            salesInfo.put("goodsName", g.getGoodsName());
+            salesInfo.put("producer", g.getProducer());
+
+            salesInfo.put("month", month);
+            salesInfo.put("amount", amount);
+
+            salesList.add(salesInfo);
+        }
+
+        response.put("results", salesList);
+
+        return response;
+    }
 }

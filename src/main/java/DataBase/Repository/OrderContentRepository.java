@@ -59,4 +59,16 @@ public interface OrderContentRepository extends CrudRepository <OrderContent, In
             @Param("goodsSearch") String goodsSearch,
             @Param("amountLimit") Integer amountLimit
     );
+
+    @Query(
+            "SELECT goods, EXTRACT(MONTH FROM orderEntity.orderDate), SUM(orderContent.amount) " +
+            "FROM OrderContent orderContent " +
+                    "INNER JOIN orderContent.orderEntity orderEntity " +
+                    "INNER JOIN orderContent.goods goods " +
+                    "INNER JOIN goods.catalog c " +
+            "WHERE c.goodsName LIKE CONCAT('%', :goodsSearch, '%') " +
+            "GROUP BY goods.goodsId, EXTRACT(MONTH FROM orderEntity.orderDate) " +
+            "ORDER BY EXTRACT(MONTH FROM orderEntity.orderDate), goods.goodsId"
+    )
+    List<Object[]> getMonthlyAverageSales(@Param("goodsSearch") String goodsSearch);
 }
