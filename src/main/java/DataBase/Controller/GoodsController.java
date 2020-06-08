@@ -7,6 +7,9 @@ import DataBase.Repository.CatalogRepository;
 import DataBase.Repository.GoodsRepository;
 import DataBase.Repository.ProviderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -107,6 +110,39 @@ public class GoodsController {
 
         response.put("results", goodsInfoList);
         response.put("count", count);
+
+        return response;
+    }
+
+    @GetMapping(value="/goods/bestsellers/", produces=MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Map<String, Object> bestsellers() {
+        Map<String, Object> response = new HashMap<>();
+        Page<Object[]> bestSellers = goodsRepository.getBestSellers(PageRequest.of(0,10));
+
+        ArrayList<Map<String, Object>> goodsInfoList = new ArrayList<>();
+
+        Map<String, Object> goodsInfo;
+
+        for (Object[] b: bestSellers) {
+            Goods p = (Goods) b[0];
+            Long amount = (Long) b[1];
+            goodsInfo = new HashMap<>();
+
+            goodsInfo.put("deliveryTime", p.getDeliveryTime());
+            goodsInfo.put("purchasePrice", p.getPurchasePrice());
+            goodsInfo.put("sellingPrice", p.getSellingPrice());
+            goodsInfo.put("producer", p.getProducer());
+            goodsInfo.put("goodsName", p.getGoodsName());
+            goodsInfo.put("providerName", p.getProvider().getProviderName());
+            goodsInfo.put("category", p.getProvider().getCategory());
+
+            goodsInfo.put("amount", amount);
+
+            goodsInfoList.add(goodsInfo);
+        }
+
+        response.put("results", goodsInfoList);
 
         return response;
     }

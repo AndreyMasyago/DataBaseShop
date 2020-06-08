@@ -1,6 +1,8 @@
 package DataBase.Repository;
 
 import DataBase.Domain.Goods;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -23,4 +25,16 @@ public interface GoodsRepository extends CrudRepository<Goods, Integer>  {
             "SELECT COUNT(g.goodsId) FROM Goods g INNER JOIN g.catalog c WHERE c.goodsName LIKE CONCAT('%', :goodsSearch, '%')"
     )
     public Long countGoodsInfo(@Param("goodsSearch") String goodsSearch);
+
+    // 5
+    @Query(
+            "SELECT g, SUM(orderContent.amount) " +
+            "FROM Goods g " +
+                    "INNER JOIN g.catalog c " +
+                    "INNER JOIN g.provider p " +
+                    "INNER JOIN g.orderContentList orderContent " +
+            "GROUP BY g.goodsId " +
+            "ORDER BY SUM(orderContent.amount) DESC "
+    )
+    public Page<Object[]> getBestSellers(Pageable pageable);
 }
