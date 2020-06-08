@@ -5,12 +5,17 @@ import DataBase.Repository.GoodsRepository;
 import DataBase.Repository.StorageRepository;
 import DataBase.Repository.StorageTransactionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -69,4 +74,33 @@ public class StorageTransactionsController {
         Iterable<Storage> storageIt = storageRepository.findAll();
         model.put("storage", storageIt);
     }
+
+    @GetMapping(value="/storage-transactions/stored-goods/", produces=MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Map<String, Object> storedGoods() {
+        Map<String, Object> response = new HashMap<>();
+        List<Object[]> storedGoods = storageTransactionsRepository.getStoredGoods();
+
+        ArrayList<Map<String, Object>> storedGoodsList = new ArrayList<>();
+
+        Map<String, Object> storedGoodsInfo;
+
+        for (Object[] stored : storedGoods) {
+            storedGoodsInfo = new HashMap<>();
+
+            storedGoodsInfo.put("goodsId", stored[0]);
+            storedGoodsInfo.put("cellsId", stored[1]);
+            storedGoodsInfo.put("goodsName", stored[2]);
+            storedGoodsInfo.put("size", stored[3]);
+            storedGoodsInfo.put("totalAmount", stored[4]);
+            storedGoodsInfo.put("totalSize", stored[5]);
+
+            storedGoodsList.add(storedGoodsInfo);
+        }
+
+        response.put("results", storedGoodsList);
+
+        return response;
+    }
+
 }
