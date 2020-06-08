@@ -1,54 +1,66 @@
 package DataBase.Controller;
 
 import DataBase.Domain.Delivery;
+import DataBase.Domain.Goods;
 import DataBase.Repository.DeliveryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.sql.Date;
 import java.util.Map;
+import java.util.Optional;
 
-@Controller
+@RestController
 public class DeliveryController {
 
     @Autowired
     private DeliveryRepository deliveryRepository;
 
-    @GetMapping("/insert/delivery")
-    public String delivery(Map<String, Object> model) {
-        generateIterators(model);
-
-        model.put("currentId", 0);
-        return "delivery";
+    @GetMapping("/delivery/")
+    public Iterable<Delivery> list() {
+        return deliveryRepository.findAll();
     }
 
-    private void generateIterators(Map<String, Object> model) {
-        Iterable<Delivery> it = deliveryRepository.findAll();
-        model.put("deliveries", it);
+    @GetMapping("/delivery/{id}")
+    public ResponseEntity<Delivery> retrieveDelivery(@PathVariable int id) {
+        Optional<Delivery> delivery = deliveryRepository.findById(id);
+
+        if (!delivery.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(delivery.get());
     }
 
-    @PostMapping("/insert/delivery/delete")
-    public String deleteDelivery(
-            @RequestParam int deliveryId,
-            Map<String, Object> model
-    ){
-        deliveryRepository.deleteById(deliveryId);
-        generateIterators(model);
-        model.put("currentId", 0);
-        return "delivery";
+    @DeleteMapping("/delivery/{id}")
+    public void deleteDelivery(@PathVariable int id) {
+        deliveryRepository.deleteById(id);
     }
 
-    @PostMapping("/insert/delivery")
-    public String addDelivery(@RequestParam Date arrivingDateOnStorage, Map<String, Object> model) {
-        Delivery tempDelivery = new Delivery(arrivingDateOnStorage);
-        deliveryRepository.save(tempDelivery);
+    @PostMapping("/delivery")
+    public ResponseEntity<Object> createDelivery(@RequestBody Delivery delivery) {
+        Delivery savedDelivery = deliveryRepository.save(delivery);
 
-        generateIterators(model);
-        model.put("currentId", tempDelivery.getDeliveryId());
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(savedDelivery.getDeliveryId()).toUri();
 
-        return "delivery";
+        return ResponseEntity.created(location).body(savedDelivery);
+    }
+
+    @PutMapping("/delivery/{id}")
+    public ResponseEntity<Object> updateDelivery(@RequestBody Delivery delivery, @PathVariable int id) {
+
+        Optional<Delivery> deliveryOptional = deliveryRepository.findById(id);
+
+        if (!deliveryOptional.isPresent())
+            return ResponseEntity.notFound().build();
+
+        delivery.setDeliveryId(id);
+        deliveryRepository.save(delivery);
+
+        return ResponseEntity.ok(delivery);
     }
 }

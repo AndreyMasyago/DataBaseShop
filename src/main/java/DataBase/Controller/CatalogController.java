@@ -1,57 +1,65 @@
 package DataBase.Controller;
 
 import DataBase.Domain.Catalog;
+import DataBase.Domain.Goods;
 import DataBase.Repository.CatalogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.Map;
+import java.util.Optional;
 
-@Controller
+@RestController
 public class CatalogController {
 
     @Autowired
     private CatalogRepository catalogRepository;
 
-    @GetMapping("/insert/catalog")
-    public String catalog(Map<String, Object> model){
-        generateIterators(model);
-
-        return "catalog";
+    @GetMapping("/catalog/")
+    public Iterable<Catalog> list() {
+        return catalogRepository.findAll();
     }
 
-    @PostMapping("/insert/catalog/delete")
-    public String deleteCatalog(
-            @RequestParam int detailId,
-            Map<String, Object> model
-    ){
-        catalogRepository.deleteById(detailId);
-        generateIterators(model);
-        //ADDED at night BE CAREFULL.
-        model.put("currentId", 0);
-        return "catalog";
+    @GetMapping("/catalog/{id}")
+    public ResponseEntity<Catalog> retrieveDetails(@PathVariable int id) {
+        Optional<Catalog> detail = catalogRepository.findById(id);
+
+        if (!detail.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(detail.get());
     }
 
-    @PostMapping("/insert/catalog")
-    public String addDetail(@RequestParam String goodsName, Map<String, Object> model) {
-        Catalog tempCatalog = new Catalog(goodsName);
-        catalogRepository.save(tempCatalog);
-
-        generateIterators(model);
-        //ADDED at night BE CAREFULL.
-        model.put("currentId", tempCatalog.getDetailId());
-
-        return "catalog";
+    @DeleteMapping("/catalog/{id}")
+    public void deleteDetail(@PathVariable int id) {
+        catalogRepository.deleteById(id);
     }
 
-    private void generateIterators(Map<String, Object> model) {
-        Iterable<Catalog> it = catalogRepository.findAll();
-        model.put("details", it);
+    @PostMapping("/catalog/")
+    public ResponseEntity<Object> createDetail(@RequestBody Catalog detail) {
+        Catalog savedDetail = catalogRepository.save(detail);
 
-        //ADDED at night BE CAREFULL.
-        model.put("currentId", 0);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(savedDetail.getDetailId()).toUri();
+
+        return ResponseEntity.created(location).body(savedDetail);
+    }
+
+    @PutMapping("/catalog/{id}")
+    public ResponseEntity<Object> updateCatalog(@RequestBody Catalog detail, @PathVariable int id) {
+
+        Optional<Catalog> detailOptional = catalogRepository.findById(id);
+
+        if (!detailOptional.isPresent())
+            return ResponseEntity.notFound().build();
+
+        detail.setDetailId(id);
+        catalogRepository.save(detail);
+
+        return ResponseEntity.ok(detail);
     }
 }

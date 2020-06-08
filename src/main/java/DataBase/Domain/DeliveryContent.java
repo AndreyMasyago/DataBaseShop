@@ -1,5 +1,7 @@
 package DataBase.Domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Date;
 
@@ -23,17 +25,26 @@ public class DeliveryContent {
     public DeliveryContent(){
     }
 
+    @JsonIgnore
     public Integer getDetailId() { return goods.getDetailId(); }
+    @JsonIgnore
     public String getGoodsName() { return goods.getGoodsName(); }
+    @JsonIgnore
     public Integer getSize() { return goods.getSize();}
+    @JsonIgnore
     public Integer getDeliveryTime() { return goods.getDeliveryTime(); }
+    @JsonIgnore
     public Integer getPurchasePrice() { return goods.getPurchasePrice(); }
+    @JsonIgnore
     public Integer getSellingPrice() { return goods.getSellingPrice(); }
+    @JsonIgnore
     public String getProducer() { return goods.getProducer(); }
+    @JsonIgnore
     public String getProviderName() { return goods.getProviderName(); }
+    @JsonIgnore
     public String getProviderCategory() { return goods.getProviderCategory(); }
 
-
+    @JsonIgnore
     public Date getArrivingDateOnStorage(){
         return delivery.getArrivingDateOnStorage();
     }

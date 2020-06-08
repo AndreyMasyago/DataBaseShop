@@ -1,5 +1,7 @@
 package DataBase.Domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Date;
 
@@ -29,26 +31,48 @@ public class OrderContent {
         this.orderEntity = orderEntity;
     }
 
+    @JsonIgnore
     public Integer getDetailId() { return goods.getDetailId(); }
+
+    @JsonIgnore
     public Integer getGoodsId() {return goods.getGoodsId(); }
+
+    @JsonIgnore
     public String getGoodsName() { return goods.getGoodsName(); }
+
+    @JsonIgnore
     public Integer getSize() { return goods.getSize();}
+
+    @JsonIgnore
     public Integer getDeliveryTime() { return goods.getDeliveryTime(); }
+
+    @JsonIgnore
     public Integer getPurchasePrice() { return goods.getPurchasePrice(); }
+
+    @JsonIgnore
     public Integer getSellingPrice() { return goods.getSellingPrice(); }
+
+    @JsonIgnore
     public String getProducer() { return goods.getProducer(); }
+
+    @JsonIgnore
     public String getProviderName() { return goods.getProviderName(); }
+
+    @JsonIgnore
     public String getProviderCategory() { return goods.getProviderCategory(); }
 
+    @JsonIgnore
     public Date getOrderDate() { return orderEntity.getOrderDate();}
+
+    @JsonIgnore
     public int getOrderId() {return orderEntity.getOrderId();}
 
     public int getOrderContentId() {
         return orderContentId;
     }
 
-    public void setOrderContentId(int rejectId) {
-        this.orderContentId = rejectId;
+    public void setOrderContentId(int orderContentId) {
+        this.orderContentId = orderContentId;
     }
 
     public Goods getGoods() {

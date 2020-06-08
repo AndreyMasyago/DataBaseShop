@@ -1,5 +1,6 @@
 package DataBase.Controller;
 
+import DataBase.Domain.Catalog;
 import DataBase.Domain.Delivery;
 import DataBase.Domain.DeliveryContent;
 import DataBase.Domain.Goods;
@@ -7,14 +8,16 @@ import DataBase.Repository.DeliveryContentRepository;
 import DataBase.Repository.DeliveryRepository;
 import DataBase.Repository.GoodsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.Map;
+import java.util.Optional;
 
-@Controller
+@RestController
 public class DeliveryContentController {
     @Autowired
     private DeliveryContentRepository deliveryContentRepository;
@@ -23,51 +26,47 @@ public class DeliveryContentController {
     @Autowired
     private DeliveryRepository deliveryRepository;
 
-    @GetMapping("/insert/deliveryContent")
-    public String deliveryContent(Map<String, Object> model) {
-        generateIterators(model);
-        model.put("currentId", 0);
-        return "deliveryContent";
+    @GetMapping("/deliveryContent/")
+    public Iterable<DeliveryContent> list() {
+        return deliveryContentRepository.findAll();
     }
 
-    @PostMapping("/insert/deliveryContent/delete")
-    public String deleteDeliveryContent(
-            @RequestParam int deliveryContentId,
-            Map<String, Object> model){
-        deliveryContentRepository.deleteById(deliveryContentId);
-        generateIterators(model);
-        model.put("currentId", 0);
-        return "deliveryContent";
+    @GetMapping("/deliveryContent/{id}")
+    public ResponseEntity<DeliveryContent> retrieveDeliveryContent(@PathVariable int id) {
+        Optional<DeliveryContent> deliveryContent = deliveryContentRepository.findById(id);
+
+        if (!deliveryContent.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(deliveryContent.get());
     }
 
-
-    @PostMapping("/insert/deliveryContent")
-    public String addDeliveryContent(
-            @RequestParam int deliveryId,
-            @RequestParam int amount,
-            @RequestParam int goodsId,
-            Map<String, Object> model){
-        Delivery tempDelivery = deliveryRepository.findByDeliveryId(deliveryId);
-        Goods tempGoods = goodsRepository.findByGoodsId(goodsId);
-        DeliveryContent tempDeliveryContent = new DeliveryContent(
-                tempDelivery, amount, tempGoods
-        );
-        deliveryContentRepository.save(tempDeliveryContent);
-
-        generateIterators(model);
-        model.put("currentId", tempDelivery.getDeliveryId());
-        return "deliveryContent";
+    @DeleteMapping("/deliveryContent/{id}")
+    public void deleteDeliveryContent(@PathVariable int id) {
+        deliveryContentRepository.deleteById(id);
     }
 
+    @PostMapping("/deliveryContent/")
+    public ResponseEntity<DeliveryContent> createDeliveryContent(@RequestBody DeliveryContent deliveryContent) {
+        DeliveryContent savedDeliveryContent = deliveryContentRepository.save(deliveryContent);
 
-    private void generateIterators(Map<String, Object> model) {
-        Iterable<DeliveryContent> deliveryContentIt = deliveryContentRepository.findAll();
-        model.put("deliveryContent", deliveryContentIt);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(savedDeliveryContent.getDeliveryContentId()).toUri();
 
-        Iterable<Goods> goodsIt = goodsRepository.findAll();
-        model.put("goods", goodsIt);
+        return ResponseEntity.created(location).body(savedDeliveryContent);
+    }
 
-        Iterable<Delivery> deliveryIt = deliveryRepository.findAll();
-        model.put("deliveries", deliveryIt);
+    @PutMapping("/deliveryContent/{id}")
+    public ResponseEntity<Object> updateDeliveryContent(@RequestBody DeliveryContent deliveryContent, @PathVariable int id) {
+
+        Optional<DeliveryContent> deliveryContentOptional = deliveryContentRepository.findById(id);
+
+        if (!deliveryContentOptional.isPresent())
+            return ResponseEntity.notFound().build();
+
+        deliveryContent.setDeliveryContentId(id);
+        deliveryContentRepository.save(deliveryContent);
+
+        return ResponseEntity.ok(deliveryContent);
     }
 }

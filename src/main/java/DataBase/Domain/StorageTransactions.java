@@ -1,5 +1,7 @@
 package DataBase.Domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Date;
 
@@ -34,18 +36,40 @@ public class StorageTransactions {
         this.transactionDate = transactionDate;
     }
 
+    @JsonIgnore
     public Integer getDetailId() { return goods.getDetailId(); }
+
+    @JsonIgnore
     public Integer getGoodsId() {return goods.getGoodsId(); }
+
+    @JsonIgnore
     public String getGoodsName() { return goods.getGoodsName(); }
+
+    @JsonIgnore
     public Integer getSize() { return goods.getSize();}
+
+    @JsonIgnore
     public Integer getDeliveryTime() { return goods.getDeliveryTime(); }
+
+    @JsonIgnore
     public Integer getPurchasePrice() { return goods.getPurchasePrice(); }
+
+    @JsonIgnore
     public Integer getSellingPrice() { return goods.getSellingPrice(); }
+
+    @JsonIgnore
     public String getProducer() { return goods.getProducer(); }
+
+    @JsonIgnore
     public String getProviderName() { return goods.getProviderName(); }
+
+    @JsonIgnore
     public String getProviderCategory() { return goods.getProviderCategory(); }
 
+    @JsonIgnore
     public Integer getCellsId() {return storage.getCellsId();}
+
+    @JsonIgnore
     public Integer getCellsSize() {return storage.getCellsSize();}
 
     public int getStorageTransactionId() {

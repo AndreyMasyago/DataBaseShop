@@ -1,5 +1,7 @@
 package DataBase.Domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -53,18 +55,22 @@ public class Goods {
         this.provider = provider;
     }
 
+    @JsonIgnore
     public String getGoodsName(){
         return catalog.getGoodsName();
     }
 
+    @JsonIgnore
     public Integer getDetailId(){
         return catalog.getDetailId();
     }
 
+    @JsonIgnore
     public String getProviderName(){
         return provider.getProviderName();
     }
 
+    @JsonIgnore
     public String getProviderCategory(){
         return provider.getCategory();
     }

@@ -11,18 +11,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.net.URI;
+import java.util.*;
 
-@Controller
+@RestController
 public class GoodsController {
 
     @Autowired
@@ -32,55 +29,48 @@ public class GoodsController {
     @Autowired
     private ProviderRepository providerRepository;
 
-    @GetMapping("/insert/goods")
-    public String goods(Map<String, Object> model) {
-        generateIterators(model);
-        model.put("currentId", 0);
-        return "goods";
+    @GetMapping("/goods/")
+    public Iterable<Goods> list() {
+        return goodsRepository.findAll();
     }
 
-    @PostMapping("/insert/goods/delete")
-    public String deleteGoods(
-            @RequestParam int goodsId,
-            Map<String, Object> model
-    ){
-        goodsRepository.deleteById(goodsId);
-        generateIterators(model);
+    @GetMapping("/goods/{id}")
+    public ResponseEntity<Goods> retrieveGoods(@PathVariable int id) {
+        Optional<Goods> goods = goodsRepository.findById(id);
 
-        return "goods";
+        if (!goods.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(goods.get());
     }
 
-    @PostMapping("/insert/goods")
-    public String addGoods(
-            @RequestParam int detailId,
-            @RequestParam int size,
-            @RequestParam int deliveryTime,
-            @RequestParam int purchasePrice,
-            @RequestParam int sellingPrice,
-            @RequestParam String producer,
-            @RequestParam int providerId,
-            Map<String, Object> model){
-        Catalog tempCatalog = catalogRepository.findByDetailId(detailId);
-        Provider tempProvider = providerRepository.findByProviderId(providerId);
-        Goods tempGoods = new Goods(
-                tempCatalog, size, deliveryTime, purchasePrice,
-                sellingPrice, producer, tempProvider);
-        goodsRepository.save(tempGoods);
-
-        generateIterators(model);
-        model.put("currentId", tempGoods.getGoodsId());
-        return "goods";
+    @DeleteMapping("/goods/{id}")
+    public void deleteGoods(@PathVariable int id) {
+        goodsRepository.deleteById(id);
     }
 
-    private void generateIterators(Map<String, Object> model) {
-        Iterable<Goods> goodsIt = goodsRepository.findAll();
-        model.put("goods", goodsIt);
+    @PostMapping("/goods")
+    public ResponseEntity<Object> createGoods(@RequestBody Goods goods) {
+        Goods savedGoods = goodsRepository.save(goods);
 
-        Iterable<Catalog> catalogIt = catalogRepository.findAll();
-        model.put("catalog", catalogIt);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(savedGoods.getGoodsId()).toUri();
 
-        Iterable<Provider> providerIt = providerRepository.findAll();
-        model.put("providers", providerIt);
+        return ResponseEntity.created(location).body(savedGoods);
+    }
+
+    @PutMapping("/goods/{id}")
+    public ResponseEntity<Object> updateGoods(@RequestBody Goods goods, @PathVariable int id) {
+
+        Optional<Goods> goodsOptional = goodsRepository.findById(id);
+
+        if (!goodsOptional.isPresent())
+            return ResponseEntity.notFound().build();
+
+        goods.setGoodsId(id);
+        goodsRepository.save(goods);
+
+        return ResponseEntity.ok(goods);
     }
 
     @GetMapping(value="/goods/goods-details/", produces=MediaType.APPLICATION_JSON_VALUE)
