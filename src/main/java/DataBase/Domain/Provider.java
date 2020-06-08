@@ -13,7 +13,7 @@ public class Provider {
     private String providerName;
     private String category;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE}, orphanRemoval = true)
     @JoinColumn(name = "providerId")
     List<Goods> goodsList;
 

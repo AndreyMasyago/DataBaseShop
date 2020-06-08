@@ -13,7 +13,7 @@ public class Catalog {
     @SequenceGenerator(name = "catalog_generator", sequenceName = "catalog_idx", allocationSize = 1)
     private int detailId;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE}, orphanRemoval = true)
     @JoinColumn(name = "detailId")
     List<Goods> goodsList;
 
