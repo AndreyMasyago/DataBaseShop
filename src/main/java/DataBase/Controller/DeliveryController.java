@@ -41,7 +41,7 @@ public class DeliveryController {
     }
 
     @PostMapping("/delivery")
-    public ResponseEntity<Object> createDelivery(@RequestBody Delivery delivery) {
+    public ResponseEntity<Delivery> createDelivery(@RequestBody Delivery delivery) {
         Delivery savedDelivery = deliveryRepository.save(delivery);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -51,7 +51,7 @@ public class DeliveryController {
     }
 
     @PutMapping("/delivery/{id}")
-    public ResponseEntity<Object> updateDelivery(@RequestBody Delivery delivery, @PathVariable int id) {
+    public ResponseEntity<Delivery> updateDelivery(@RequestBody Delivery delivery, @PathVariable int id) {
 
         Optional<Delivery> deliveryOptional = deliveryRepository.findById(id);
 

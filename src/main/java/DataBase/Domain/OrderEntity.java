@@ -1,5 +1,7 @@
 package DataBase.Domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
@@ -11,7 +13,7 @@ public class OrderEntity {
     @SequenceGenerator(name = "order_entity_generator", sequenceName = "order_entity_idx", allocationSize = 1)
     private int orderId;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE}, orphanRemoval = true)
     @JoinColumn(name = "orderId")
     List<Reject> rejectList;
 
@@ -29,10 +31,12 @@ public class OrderEntity {
         this.orderDate = orderDate;
     }
 
+    @JsonIgnore
     public List<Reject> getRejectList() {
         return rejectList;
     }
 
+    @JsonIgnore
     public void setRejectList(List<Reject> rejectList) {
         this.rejectList = rejectList;
     }

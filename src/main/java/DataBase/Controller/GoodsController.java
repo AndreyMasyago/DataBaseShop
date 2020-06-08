@@ -50,7 +50,7 @@ public class GoodsController {
     }
 
     @PostMapping("/goods")
-    public ResponseEntity<Object> createGoods(@RequestBody Goods goods) {
+    public ResponseEntity<Goods> createGoods(@RequestBody Goods goods) {
         Goods savedGoods = goodsRepository.save(goods);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -60,7 +60,7 @@ public class GoodsController {
     }
 
     @PutMapping("/goods/{id}")
-    public ResponseEntity<Object> updateGoods(@RequestBody Goods goods, @PathVariable int id) {
+    public ResponseEntity<Goods> updateGoods(@RequestBody Goods goods, @PathVariable int id) {
 
         Optional<Goods> goodsOptional = goodsRepository.findById(id);
 

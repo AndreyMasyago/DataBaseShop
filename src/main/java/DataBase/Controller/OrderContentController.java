@@ -1,5 +1,6 @@
 package DataBase.Controller;
 
+import DataBase.Domain.DeliveryContent;
 import DataBase.Domain.Goods;
 import DataBase.Domain.OrderContent;
 import DataBase.Domain.OrderEntity;
@@ -8,18 +9,15 @@ import DataBase.Repository.OrderContentRepository;
 import DataBase.Repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.net.URI;
+import java.util.*;
 
-@Controller
+@RestController
 public class OrderContentController {
     @Autowired
     private OrderContentRepository orderContentRepository;
@@ -28,53 +26,48 @@ public class OrderContentController {
     @Autowired
     private OrderRepository orderRepository;
 
-    @GetMapping("/insert/orderContent")
-    public String orderContent(Map<String, Object> model) {
-        generateIterators(model);
-
-        model.put("currentId", 0);
-        return "orderContent";
+    @GetMapping("/orderContent/")
+    public Iterable<OrderContent> list() {
+        return orderContentRepository.findAll();
     }
 
-    @PostMapping("/insert/orderContent/delete")
-    public String deleteOrderContent(
-            @RequestParam int orderContentId,
-            Map<String, Object> model
-    ){
-        orderContentRepository.deleteById(orderContentId);
-        generateIterators(model);
-        model.put("currentId", 0);
-        return "orderContent";
+    @GetMapping("/orderContent/{id}")
+    public ResponseEntity<OrderContent> retrieveOrderContent(@PathVariable int id) {
+        Optional<OrderContent> orderContent = orderContentRepository.findById(id);
+
+        if (!orderContent.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(orderContent.get());
     }
 
-    @PostMapping("/insert/orderContent")
-    public String addOrderContent(
-            @RequestParam int goodsId,
-            @RequestParam int amount,
-            @RequestParam int orderId,
-            Map<String, Object> model
-    ){
-        Goods tempGoods = goodsRepository.findByGoodsId(goodsId);
-        OrderEntity tempOrder = orderRepository.findByOrderId(orderId);
-        OrderContent tempOrderContent = new OrderContent(
-                tempGoods, amount, tempOrder
-        );
-        orderContentRepository.save(tempOrderContent);
-
-        generateIterators(model);
-        model.put("currentId", tempOrderContent.getOrderContentId());
-        return "orderContent";
+    @DeleteMapping("/orderContent/{id}")
+    public void deleteOrderContent(@PathVariable int id) {
+        orderContentRepository.deleteById(id);
     }
 
-    private void generateIterators(Map<String, Object> model) {
-        Iterable<OrderContent> orderContentIt = orderContentRepository.findAll();
-        model.put("orderContent", orderContentIt);
+    @PostMapping("/orderContent/")
+    public ResponseEntity<OrderContent> createOrderContent(@RequestBody OrderContent orderContent) {
+        OrderContent savedOrderContent = orderContentRepository.save(orderContent);
 
-        Iterable<Goods> goodsIt = goodsRepository.findAll();
-        model.put("goods", goodsIt);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(savedOrderContent.getOrderContentId()).toUri();
 
-        Iterable<OrderEntity> orderEntityIt = orderRepository.findAll();
-        model.put("order", orderEntityIt);
+        return ResponseEntity.created(location).body(savedOrderContent);
+    }
+
+    @PutMapping("/orderContent/{id}")
+    public ResponseEntity<OrderContent> updateOrderContent(@RequestBody OrderContent orderContent, @PathVariable int id) {
+
+        Optional<OrderContent> orderContentOptional = orderContentRepository.findById(id);
+
+        if (!orderContentOptional.isPresent())
+            return ResponseEntity.notFound().build();
+
+        orderContent.setOrderContentId(id);
+        orderContentRepository.save(orderContent);
+
+        return ResponseEntity.ok(orderContent);
     }
 
     @GetMapping(value="/order-content/order-content-by-date/", produces=MediaType.APPLICATION_JSON_VALUE)

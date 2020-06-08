@@ -40,7 +40,7 @@ public class CatalogController {
     }
 
     @PostMapping("/catalog/")
-    public ResponseEntity<Object> createDetail(@RequestBody Catalog detail) {
+    public ResponseEntity<Catalog> createDetail(@RequestBody Catalog detail) {
         Catalog savedDetail = catalogRepository.save(detail);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -50,7 +50,7 @@ public class CatalogController {
     }
 
     @PutMapping("/catalog/{id}")
-    public ResponseEntity<Object> updateCatalog(@RequestBody Catalog detail, @PathVariable int id) {
+    public ResponseEntity<Catalog> updateCatalog(@RequestBody Catalog detail, @PathVariable int id) {
 
         Optional<Catalog> detailOptional = catalogRepository.findById(id);
 

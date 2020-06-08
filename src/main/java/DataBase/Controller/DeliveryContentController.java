@@ -57,7 +57,7 @@ public class DeliveryContentController {
     }
 
     @PutMapping("/deliveryContent/{id}")
-    public ResponseEntity<Object> updateDeliveryContent(@RequestBody DeliveryContent deliveryContent, @PathVariable int id) {
+    public ResponseEntity<DeliveryContent> updateDeliveryContent(@RequestBody DeliveryContent deliveryContent, @PathVariable int id) {
 
         Optional<DeliveryContent> deliveryContentOptional = deliveryContentRepository.findById(id);
 
