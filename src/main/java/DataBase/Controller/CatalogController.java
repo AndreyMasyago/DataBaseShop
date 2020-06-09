@@ -50,16 +50,17 @@ public class CatalogController {
     }
 
     @PutMapping("/catalog/{id}")
-    public ResponseEntity<Catalog> updateCatalog(@RequestBody Catalog detail, @PathVariable int id) {
+    public ResponseEntity<Catalog> updateCatalog(@RequestBody Catalog input, @PathVariable int id) {
 
-        Optional<Catalog> detailOptional = catalogRepository.findById(id);
+        Optional<Catalog> stored = catalogRepository.findById(id);
 
-        if (!detailOptional.isPresent())
+        if (!stored.isPresent())
             return ResponseEntity.notFound().build();
 
-        detail.setDetailId(id);
-        catalogRepository.save(detail);
+        Catalog updated = stored.get();
+        updated.setGoodsName(input.getGoodsName());
+        catalogRepository.save(updated);
 
-        return ResponseEntity.ok(detail);
+        return ResponseEntity.ok(updated);
     }
 }

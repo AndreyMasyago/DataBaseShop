@@ -55,19 +55,21 @@ public class StorageTransactionsController {
     }
 
     @PutMapping("/storageTransactions/{id}")
-    public ResponseEntity<StorageTransactions> updateCell(
-            @RequestBody StorageTransactions storageTransaction, @PathVariable int id) {
+    public ResponseEntity<StorageTransactions> updateCell(@RequestBody StorageTransactions input, @PathVariable int id) {
 
-        Optional<StorageTransactions> storageTransactionsOptional = storageTransactionsRepository.findById(id);
+        Optional<StorageTransactions> stored = storageTransactionsRepository.findById(id);
 
-
-        if (!storageTransactionsOptional.isPresent())
+        if (!stored.isPresent())
             return ResponseEntity.notFound().build();
 
-        storageTransaction.setStorageTransactionId(id);
-        storageTransactionsRepository.save(storageTransaction);
+        StorageTransactions updated = stored.get();
+        updated.setStorage(input.getStorage());
+        updated.setAmount(input.getAmount());
+        updated.setGoods(input.getGoods());
+        updated.setTransactionDate(input.getTransactionDate());
+        storageTransactionsRepository.save(updated);
 
-        return ResponseEntity.ok(storageTransaction);
+        return ResponseEntity.ok(updated);
     }
 
     @GetMapping(value="/storage-transactions/stored-goods/", produces=MediaType.APPLICATION_JSON_VALUE)

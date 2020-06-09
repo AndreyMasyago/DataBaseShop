@@ -56,17 +56,19 @@ public class RejectController {
     }
 
     @PutMapping("/reject/{id}")
-    public ResponseEntity<Reject> updateReject(@RequestBody Reject reject, @PathVariable int id) {
+    public ResponseEntity<Reject> updateReject(@RequestBody Reject input, @PathVariable int id) {
 
-        Optional<Reject> rejectOptional = rejectRepository.findById(id);
+        Optional<Reject> stored = rejectRepository.findById(id);
 
-
-        if (!rejectOptional.isPresent())
+        if (!stored.isPresent())
             return ResponseEntity.notFound().build();
 
-        reject.setRejectId(id);
-        rejectRepository.save(reject);
+        Reject updated = stored.get();
+        updated.setOrderEntity(input.getOrderEntity());
+        updated.setAmount(input.getAmount());
+        updated.setGoods(input.getGoods());
+        rejectRepository.save(updated);
 
-        return ResponseEntity.ok(reject);
+        return ResponseEntity.ok(updated);
     }
 }

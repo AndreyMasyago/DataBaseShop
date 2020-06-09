@@ -1,6 +1,7 @@
 package DataBase.Controller;
 
 import DataBase.Domain.Catalog;
+import DataBase.Domain.Delivery;
 import DataBase.Domain.Goods;
 import DataBase.Domain.Provider;
 import DataBase.Repository.CatalogRepository;
@@ -60,17 +61,24 @@ public class GoodsController {
     }
 
     @PutMapping("/goods/{id}")
-    public ResponseEntity<Goods> updateGoods(@RequestBody Goods goods, @PathVariable int id) {
+    public ResponseEntity<Goods> updateGoods(@RequestBody Goods input, @PathVariable int id) {
 
-        Optional<Goods> goodsOptional = goodsRepository.findById(id);
+        Optional<Goods> stored = goodsRepository.findById(id);
 
-        if (!goodsOptional.isPresent())
+        if (!stored.isPresent())
             return ResponseEntity.notFound().build();
 
-        goods.setGoodsId(id);
-        goodsRepository.save(goods);
+        Goods updated = stored.get();
+        updated.setCatalog(input.getCatalog());
+        updated.setDeliveryTime(input.getDeliveryTime());
+        updated.setSize(input.getSize());
+        updated.setPurchasePrice(input.getPurchasePrice());
+        updated.setSellingPrice(input.getSellingPrice());
+        updated.setProducer(input.getProducer());
+        updated.setProvider(input.getProvider());
+        goodsRepository.save(updated);
 
-        return ResponseEntity.ok(goods);
+        return ResponseEntity.ok(updated);
     }
 
     @GetMapping(value="/goods/goods-details/", produces=MediaType.APPLICATION_JSON_VALUE)

@@ -1,6 +1,7 @@
 package DataBase.Controller;
 
 import DataBase.Domain.Delivery;
+import DataBase.Domain.DeliveryContent;
 import DataBase.Domain.Goods;
 import DataBase.Repository.DeliveryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,16 +52,17 @@ public class DeliveryController {
     }
 
     @PutMapping("/delivery/{id}")
-    public ResponseEntity<Delivery> updateDelivery(@RequestBody Delivery delivery, @PathVariable int id) {
+    public ResponseEntity<Delivery> updateDelivery(@RequestBody Delivery input, @PathVariable int id) {
 
-        Optional<Delivery> deliveryOptional = deliveryRepository.findById(id);
+        Optional<Delivery> stored = deliveryRepository.findById(id);
 
-        if (!deliveryOptional.isPresent())
+        if (!stored.isPresent())
             return ResponseEntity.notFound().build();
 
-        delivery.setDeliveryId(id);
-        deliveryRepository.save(delivery);
+        Delivery updated = stored.get();
+        updated.setArrivingDateOnStorage(input.getArrivingDateOnStorage());
+        deliveryRepository.save(updated);
 
-        return ResponseEntity.ok(delivery);
+        return ResponseEntity.ok(updated);
     }
 }

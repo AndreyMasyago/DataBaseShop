@@ -1,5 +1,6 @@
 package DataBase.Controller;
 
+import DataBase.Domain.Delivery;
 import DataBase.Domain.OrderEntity;
 import DataBase.Domain.Provider;
 import DataBase.Repository.ProviderRepository;
@@ -50,18 +51,19 @@ public class ProviderController {
     }
 
     @PutMapping("/provider/{id}")
-    public ResponseEntity<Provider> updateProvider(@RequestBody Provider provider, @PathVariable int id) {
+    public ResponseEntity<Provider> updateProvider(@RequestBody Provider input, @PathVariable int id) {
 
-        Optional<Provider> providerOptional = providerRepository.findById(id);
+        Optional<Provider> stored = providerRepository.findById(id);
 
-
-        if (!providerOptional.isPresent())
+        if (!stored.isPresent())
             return ResponseEntity.notFound().build();
 
-        provider.setProviderId(id);
-        providerRepository.save(provider);
+        Provider updated = stored.get();
+        updated.setProviderName(input.getProviderName());
+        updated.setCategory(input.getCategory());
+        providerRepository.save(updated);
 
-        return ResponseEntity.ok(provider);
+        return ResponseEntity.ok(updated);
     }
 
     @GetMapping(value="/provider/delivered-more-than-count/", produces=MediaType.APPLICATION_JSON_VALUE)

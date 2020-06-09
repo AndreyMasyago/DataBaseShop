@@ -1,5 +1,6 @@
 package DataBase.Controller;
 
+import DataBase.Domain.Delivery;
 import DataBase.Domain.Goods;
 import DataBase.Domain.OrderEntity;
 import DataBase.Repository.OrderRepository;
@@ -51,17 +52,17 @@ public class OrderController {
     }
 
     @PutMapping("/order/{id}")
-    public ResponseEntity<OrderEntity> updateOrder(@RequestBody OrderEntity orderEntity, @PathVariable int id) {
+    public ResponseEntity<OrderEntity> updateOrder(@RequestBody OrderEntity input, @PathVariable int id) {
 
-        Optional<OrderEntity> orderEntityOptional = orderRepository.findById(id);
+        Optional<OrderEntity> stored = orderRepository.findById(id);
 
-
-        if (!orderEntityOptional.isPresent())
+        if (!stored.isPresent())
             return ResponseEntity.notFound().build();
 
-        orderEntity.setOrderId(id);
-        orderRepository.save(orderEntity);
+        OrderEntity updated = stored.get();
+        updated.setOrderDate(input.getOrderDate());
+        orderRepository.save(updated);
 
-        return ResponseEntity.ok(orderEntity);
+        return ResponseEntity.ok(updated);
     }
 }

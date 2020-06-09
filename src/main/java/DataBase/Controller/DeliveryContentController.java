@@ -57,16 +57,19 @@ public class DeliveryContentController {
     }
 
     @PutMapping("/deliveryContent/{id}")
-    public ResponseEntity<DeliveryContent> updateDeliveryContent(@RequestBody DeliveryContent deliveryContent, @PathVariable int id) {
+    public ResponseEntity<DeliveryContent> updateDeliveryContent(@RequestBody DeliveryContent input, @PathVariable int id) {
 
-        Optional<DeliveryContent> deliveryContentOptional = deliveryContentRepository.findById(id);
+        Optional<DeliveryContent> stored = deliveryContentRepository.findById(id);
 
-        if (!deliveryContentOptional.isPresent())
+        if (!stored.isPresent())
             return ResponseEntity.notFound().build();
 
-        deliveryContent.setDeliveryContentId(id);
-        deliveryContentRepository.save(deliveryContent);
+        DeliveryContent updated = stored.get();
+        updated.setDelivery(input.getDelivery());
+        updated.setAmount(input.getAmount());
+        updated.setGoods(input.getGoods());
+        deliveryContentRepository.save(updated);
 
-        return ResponseEntity.ok(deliveryContent);
+        return ResponseEntity.ok(updated);
     }
 }

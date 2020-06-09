@@ -1,9 +1,6 @@
 package DataBase.Controller;
 
-import DataBase.Domain.DeliveryContent;
-import DataBase.Domain.Goods;
-import DataBase.Domain.OrderContent;
-import DataBase.Domain.OrderEntity;
+import DataBase.Domain.*;
 import DataBase.Repository.GoodsRepository;
 import DataBase.Repository.OrderContentRepository;
 import DataBase.Repository.OrderRepository;
@@ -57,17 +54,20 @@ public class OrderContentController {
     }
 
     @PutMapping("/orderContent/{id}")
-    public ResponseEntity<OrderContent> updateOrderContent(@RequestBody OrderContent orderContent, @PathVariable int id) {
+    public ResponseEntity<OrderContent> updateOrderContent(@RequestBody OrderContent input, @PathVariable int id) {
 
-        Optional<OrderContent> orderContentOptional = orderContentRepository.findById(id);
+        Optional<OrderContent> stored = orderContentRepository.findById(id);
 
-        if (!orderContentOptional.isPresent())
+        if (!stored.isPresent())
             return ResponseEntity.notFound().build();
 
-        orderContent.setOrderContentId(id);
-        orderContentRepository.save(orderContent);
+        OrderContent updated = stored.get();
+        updated.setAmount(input.getAmount());
+        updated.setGoods(input.getGoods());
+        updated.setOrderEntity(input.getOrderEntity());
+        orderContentRepository.save(updated);
 
-        return ResponseEntity.ok(orderContent);
+        return ResponseEntity.ok(updated);
     }
 
     @GetMapping(value="/order-content/order-content-by-date/", produces=MediaType.APPLICATION_JSON_VALUE)

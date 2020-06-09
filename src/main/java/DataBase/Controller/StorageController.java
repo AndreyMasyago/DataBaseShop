@@ -50,17 +50,17 @@ public class StorageController {
     }
 
     @PutMapping("/storage/{id}")
-    public ResponseEntity<Storage> updateCell(@RequestBody Storage cell, @PathVariable int id) {
+    public ResponseEntity<Storage> updateCell(@RequestBody Storage input, @PathVariable int id) {
 
-        Optional<Storage> cellOptional = storageRepository.findById(id);
+        Optional<Storage> stored = storageRepository.findById(id);
 
-
-        if (!cellOptional.isPresent())
+        if (!stored.isPresent())
             return ResponseEntity.notFound().build();
 
-        cell.setCellsId(id);
-        storageRepository.save(cell);
+        Storage updated = stored.get();
+        updated.setCellsSize(input.getCellsSize());
+        storageRepository.save(updated);
 
-        return ResponseEntity.ok(cell);
+        return ResponseEntity.ok(updated);
     }
 }
