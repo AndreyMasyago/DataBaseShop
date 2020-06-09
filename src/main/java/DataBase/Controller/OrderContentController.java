@@ -140,4 +140,15 @@ public class OrderContentController {
 
         return response;
     }
+
+    @GetMapping(value="/order-content/overhead/", produces=MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Map<String, Object> overhead() {
+        Float overhead = orderContentRepository.getOverhead();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("overhead", overhead);
+
+        return response;
+    }
 }

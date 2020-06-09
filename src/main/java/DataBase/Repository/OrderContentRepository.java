@@ -92,4 +92,17 @@ public interface OrderContentRepository extends CrudRepository <OrderContent, In
                     "INNER JOIN goods.provider provider"
     )
     Object[] getProviderIncomeStats(@Param("providerSearch") String providerSearch);
+
+    // 8
+    @Query(
+            "SELECT " +
+                    "CAST (SUM(orderContent.amount * goods.purchasePrice) as float)" +
+                    " / " +
+                    "SUM(orderContent.amount * goods.sellingPrice) " +
+            "FROM OrderContent orderContent " +
+                    "INNER JOIN orderContent.orderEntity orderEntity " +
+                    "INNER JOIN orderContent.goods goods " +
+                    "INNER JOIN goods.provider provider"
+    )
+    Float getOverhead();
 }
