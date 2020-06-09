@@ -1,57 +1,66 @@
 package DataBase.Controller;
 
+import DataBase.Domain.Reject;
 import DataBase.Domain.Storage;
 import DataBase.Repository.StorageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.Map;
+import java.util.Optional;
 
-@Controller
+@RestController
 public class StorageController {
 
     @Autowired
     private StorageRepository storageRepository;
 
-    @GetMapping("/insert/storage")
-    public String storage(Map<String, Object> model) {
-        generateIterators(model);
-
-        model.put("currentId", 0);
-        return "storage";
+    @GetMapping("/storage/")
+    public Iterable<Storage> list() {
+        return storageRepository.findAll();
     }
 
-    @PostMapping("/insert/storage/delete")
-    public String deleteStorage(
-            @RequestParam int storageId,
-            Map<String, Object> model
-    ){
-        storageRepository.deleteById(storageId);
-        generateIterators(model);
-        model.put("currentId", 0);
-        return "storage";
+    @GetMapping("/storage/{id}")
+    public ResponseEntity<Storage> retrieveCell(@PathVariable int id) {
+        Optional<Storage> cell = storageRepository.findById(id);
+
+        if (!cell.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(cell.get());
     }
 
-    @PostMapping("/insert/storage")
-    public String addCell(
-            @RequestParam int cellsSize,
-            Map<String, Object> model
-    ) {
-
-        Storage tempStorage = new Storage(cellsSize);
-        storageRepository.save(tempStorage);
-
-        generateIterators(model);
-        model.put("currentId", tempStorage.getCellsId());
-
-        return "storage";
+    @DeleteMapping("/storage/{id}")
+    public void deleteCell(@PathVariable int id) {
+        storageRepository.deleteById(id);
     }
 
-    private void generateIterators(Map<String, Object> model) {
-        Iterable<Storage> it = storageRepository.findAll();
-        model.put("cells", it);
+    @PostMapping("/storage/")
+    public ResponseEntity<Storage> createCell(@RequestBody Storage cell) {
+        Storage savedCell = storageRepository.save(cell);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(savedCell.getCellsId()).toUri();
+
+        return ResponseEntity.created(location).body(savedCell);
+    }
+
+    @PutMapping("/storage/{id}")
+    public ResponseEntity<Storage> updateCell(@RequestBody Storage cell, @PathVariable int id) {
+
+        Optional<Storage> cellOptional = storageRepository.findById(id);
+
+
+        if (!cellOptional.isPresent())
+            return ResponseEntity.notFound().build();
+
+        cell.setCellsId(id);
+        storageRepository.save(cell);
+
+        return ResponseEntity.ok(cell);
     }
 }

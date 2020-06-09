@@ -1,63 +1,67 @@
 package DataBase.Controller;
 
+import DataBase.Domain.OrderEntity;
 import DataBase.Domain.Provider;
 import DataBase.Repository.ProviderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.net.URI;
+import java.util.*;
 
-@Controller
+@RestController
 public class ProviderController {
 
     @Autowired
     private ProviderRepository providerRepository;
 
-    @GetMapping("/insert/provider")
-    public String provider(Map<String, Object> model) {
-        generateIterators(model);
-        model.put("currentId", 0);
-
-        return "provider";
+    @GetMapping("/provider/")
+    public Iterable<Provider> list() {
+        return providerRepository.findAll();
     }
 
-    private void generateIterators(Map<String, Object> model) {
-        Iterable<Provider> it = providerRepository.findAll();
-        model.put("providers", it);
+    @GetMapping("/provider/{id}")
+    public ResponseEntity<Provider> retrieveProvider(@PathVariable int id) {
+        Optional<Provider> provider = providerRepository.findById(id);
+
+        if (!provider.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(provider.get());
     }
 
-    @PostMapping("/insert/provider/delete")
-    public String deleteProvider(
-            @RequestParam int providerId,
-            Map<String, Object> model
-    ){
-        providerRepository.deleteById(providerId);
-        generateIterators(model);
-        model.put("currentId", 0);
-        return "provider";
+    @DeleteMapping("/provider/{id}")
+    public void deleteProvider(@PathVariable int id) {
+        providerRepository.deleteById(id);
     }
 
-    @PostMapping("/insert/provider")
-    public String addProvider(
-            @RequestParam String providerName,
-            @RequestParam String category,
-            Map<String, Object> model) {
+    @PostMapping("/provider/")
+    public ResponseEntity<Provider> createProvider(@RequestBody Provider provider) {
+        Provider savedProvider = providerRepository.save(provider);
 
-        Provider tempProvider = new Provider(providerName, category);
-        providerRepository.save(tempProvider);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(savedProvider.getProviderId()).toUri();
 
-        generateIterators(model);
+        return ResponseEntity.created(location).body(savedProvider);
+    }
 
-        model.put("currentId", tempProvider.getProviderId());
-        return "provider";
+    @PutMapping("/provider/{id}")
+    public ResponseEntity<Provider> updateProvider(@RequestBody Provider provider, @PathVariable int id) {
+
+        Optional<Provider> providerOptional = providerRepository.findById(id);
+
+
+        if (!providerOptional.isPresent())
+            return ResponseEntity.notFound().build();
+
+        provider.setProviderId(id);
+        providerRepository.save(provider);
+
+        return ResponseEntity.ok(provider);
     }
 
     @GetMapping(value="/provider/delivered-more-than-count/", produces=MediaType.APPLICATION_JSON_VALUE)
