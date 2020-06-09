@@ -6,19 +6,16 @@ import DataBase.Repository.StorageRepository;
 import DataBase.Repository.StorageTransactionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-@Controller
+@RestController
 public class StorageTransactionsController {
     @Autowired
     private StorageRepository storageRepository;
@@ -27,52 +24,50 @@ public class StorageTransactionsController {
     @Autowired
     private StorageTransactionsRepository storageTransactionsRepository;
 
-    @GetMapping("/insert/storageTransactions")
-    public String storageTransaction(Map<String, Object> model) {
-        generateIterators(model);
-        model.put("currentId", 0);
-        return "storageTransactions";
+    @GetMapping("/storageTransactions/")
+    public Iterable<StorageTransactions> list() {
+        return storageTransactionsRepository.findAll();
     }
 
-    @PostMapping("/insert/storageTransactions/delete")
-    public String deleteStorageTransaction(
-            @RequestParam int storageTransactionId,
-            Map<String, Object> model){
-        storageTransactionsRepository.deleteById(storageTransactionId);
-        generateIterators(model);
-        model.put("currentId", 0);
-        return "storageTransactions";
+    @GetMapping("/storageTransactions/{id}")
+    public ResponseEntity<StorageTransactions> retrieveStorageTransaction(@PathVariable int id) {
+        Optional<StorageTransactions> storageTransaction = storageTransactionsRepository.findById(id);
+
+        if (!storageTransaction.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(storageTransaction.get());
     }
 
-    @PostMapping("/insert/storageTransactions")
-    public String addStorageTransaction(
-            @RequestParam int goodsId,
-            @RequestParam int amount,
-            @RequestParam int cellsId,
-            @RequestParam Date transactionDate,
-            Map<String, Object> model
-            ){
-        Goods tempGoods = goodsRepository.findByGoodsId(goodsId);
-        Storage tempStorage = storageRepository.findByCellsId(cellsId);
-        StorageTransactions tempStorageTransaction = new StorageTransactions(
-                tempGoods, amount, tempStorage, transactionDate
-        );
-        storageTransactionsRepository.save(tempStorageTransaction);
-
-        generateIterators(model);
-        model.put("currentId", tempStorageTransaction.getStorageTransactionId());
-        return "storageTransactions";
+    @DeleteMapping("/storageTransactions/{id}")
+    public void deleteStorageTransaction(@PathVariable int id) {
+        storageTransactionsRepository.deleteById(id);
     }
 
-    private void generateIterators(Map<String, Object> model) {
-        Iterable<StorageTransactions> storageTransactionsIt = storageTransactionsRepository.findAll();
-        model.put("storageTransactions", storageTransactionsIt);
+    @PostMapping("/storageTransactions/")
+    public ResponseEntity<StorageTransactions> createStorageTransaction(@RequestBody StorageTransactions storageTransaction) {
+        StorageTransactions savedStorageTransaction = storageTransactionsRepository.save(storageTransaction);
 
-        Iterable<Goods> goodsIt = goodsRepository.findAll();
-        model.put("goods", goodsIt);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(savedStorageTransaction.getStorageTransactionId()).toUri();
 
-        Iterable<Storage> storageIt = storageRepository.findAll();
-        model.put("storage", storageIt);
+        return ResponseEntity.created(location).body(savedStorageTransaction);
+    }
+
+    @PutMapping("/storageTransactions/{id}")
+    public ResponseEntity<StorageTransactions> updateCell(
+            @RequestBody StorageTransactions storageTransaction, @PathVariable int id) {
+
+        Optional<StorageTransactions> storageTransactionsOptional = storageTransactionsRepository.findById(id);
+
+
+        if (!storageTransactionsOptional.isPresent())
+            return ResponseEntity.notFound().build();
+
+        storageTransaction.setStorageTransactionId(id);
+        storageTransactionsRepository.save(storageTransaction);
+
+        return ResponseEntity.ok(storageTransaction);
     }
 
     @GetMapping(value="/storage-transactions/stored-goods/", produces=MediaType.APPLICATION_JSON_VALUE)

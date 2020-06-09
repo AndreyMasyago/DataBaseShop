@@ -1,55 +1,67 @@
 package DataBase.Controller;
 
+import DataBase.Domain.Goods;
 import DataBase.Domain.OrderEntity;
 import DataBase.Repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.sql.Date;
 import java.util.Map;
+import java.util.Optional;
 
-@Controller
+@RestController
 public class OrderController {
 
     @Autowired
     private OrderRepository orderRepository;
 
-    @GetMapping("/insert/order")
-    public String order(Map<String, Object> model) {
-        generateIterators(model);
-
-        model.put("currentId", 0);
-        return "order";
+    @GetMapping("/order/")
+    public Iterable<OrderEntity> list() {
+        return orderRepository.findAll();
     }
 
-    @PostMapping("/insert/order/delete")
-    public String deleteOrder(
-            @RequestParam int orderId,
-            Map<String, Object> model
-    ){
-        orderRepository.deleteById(orderId);
-        generateIterators(model);
+    @GetMapping("/order/{id}")
+    public ResponseEntity<OrderEntity> retrieveOrder(@PathVariable int id) {
+        Optional<OrderEntity> orders = orderRepository.findById(id);
 
-        model.put("currentId", 0);
-        return "order";
+        if (!orders.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(orders.get());
     }
 
-    private void generateIterators(Map<String, Object> model) {
-        Iterable<OrderEntity> it = orderRepository.findAll();
-        model.put("orders", it);
+    @DeleteMapping("/order/{id}")
+    public void deleteOrders(@PathVariable int id) {
+        orderRepository.deleteById(id);
     }
 
-    @PostMapping("/insert/order")
-    public String addOrder(@RequestParam Date orderDate, Map<String, Object> model){
-        OrderEntity tempOrderEntity = new OrderEntity(orderDate);
-        orderRepository.save(tempOrderEntity);
+    @PostMapping("/order/")
+    public ResponseEntity<OrderEntity> createOrder(@RequestBody OrderEntity orderEntity) {
+        OrderEntity savedOrders = orderRepository.save(orderEntity);
 
-        generateIterators(model);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(savedOrders.getOrderId()).toUri();
 
-        model.put("currentId", tempOrderEntity.getOrderId());
-        return "order";
+        return ResponseEntity.created(location).body(savedOrders);
+    }
+
+    @PutMapping("/order/{id}")
+    public ResponseEntity<OrderEntity> updateOrder(@RequestBody OrderEntity orderEntity, @PathVariable int id) {
+
+        Optional<OrderEntity> orderEntityOptional = orderRepository.findById(id);
+
+
+        if (!orderEntityOptional.isPresent())
+            return ResponseEntity.notFound().build();
+
+        orderEntity.setOrderId(id);
+        orderRepository.save(orderEntity);
+
+        return ResponseEntity.ok(orderEntity);
     }
 }

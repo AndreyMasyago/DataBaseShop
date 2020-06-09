@@ -7,14 +7,16 @@ import DataBase.Repository.GoodsRepository;
 import DataBase.Repository.OrderRepository;
 import DataBase.Repository.RejectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.Map;
+import java.util.Optional;
 
-@Controller
+@RestController
 public class RejectController {
     @Autowired
     private RejectRepository rejectRepository;
@@ -23,51 +25,48 @@ public class RejectController {
     @Autowired
     private OrderRepository orderRepository;
 
-    @GetMapping("/insert/reject")
-    public String reject(Map<String, Object> model) {
-        generateIterators(model);
-        model.put("currentId", 0);
-        return "reject";
+    @GetMapping("/reject/")
+    public Iterable<Reject> list() {
+        return rejectRepository.findAll();
     }
 
-    @PostMapping("/insert/reject/delete")
-    public String deleteReject(
-            @RequestParam int rejectId,
-            Map<String, Object> model
-    ){
-        rejectRepository.deleteById(rejectId);
-        generateIterators(model);
-        model.put("currentId", 0);
-        return "reject";
+    @GetMapping("/reject/{id}")
+    public ResponseEntity<Reject> retrieveReject(@PathVariable int id) {
+        Optional<Reject> reject = rejectRepository.findById(id);
+
+        if (!reject.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(reject.get());
     }
 
-    @PostMapping("/insert/reject")
-    public String addReject(
-            @RequestParam int goodsId,
-            @RequestParam int amount,
-            @RequestParam int orderId,
-            Map<String, Object> model
-    ){
-        Goods tempGoods = goodsRepository.findByGoodsId(goodsId);
-        OrderEntity tempOrder = orderRepository.findByOrderId(orderId);
-        Reject tempReject = new Reject(
-                tempGoods, amount, tempOrder
-        );
-        rejectRepository.save(tempReject);
-
-        generateIterators(model);
-        model.put("currentId", tempReject.getRejectId());
-        return "reject";
+    @DeleteMapping("/reject/{id}")
+    public void deleteReject(@PathVariable int id) {
+        rejectRepository.deleteById(id);
     }
 
-    private void generateIterators(Map<String, Object> model) {
-        Iterable<Reject> rejectIt = rejectRepository.findAll();
-        model.put("reject", rejectIt);
+    @PostMapping("/reject/")
+    public ResponseEntity<Reject> createReject(@RequestBody Reject reject) {
+        Reject savedReject = rejectRepository.save(reject);
 
-        Iterable<Goods> goodsIt = goodsRepository.findAll();
-        model.put("goods", goodsIt);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(savedReject.getRejectId()).toUri();
 
-        Iterable<OrderEntity> orderEntityIt = orderRepository.findAll();
-        model.put("order", orderEntityIt);
+        return ResponseEntity.created(location).body(savedReject);
+    }
+
+    @PutMapping("/reject/{id}")
+    public ResponseEntity<Reject> updateReject(@RequestBody Reject reject, @PathVariable int id) {
+
+        Optional<Reject> rejectOptional = rejectRepository.findById(id);
+
+
+        if (!rejectOptional.isPresent())
+            return ResponseEntity.notFound().build();
+
+        reject.setRejectId(id);
+        rejectRepository.save(reject);
+
+        return ResponseEntity.ok(reject);
     }
 }
