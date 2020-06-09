@@ -128,4 +128,16 @@ public class OrderContentController {
 
         return response;
     }
+
+    @GetMapping(value="/order-content/provider-income-stats/", produces=MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Map<String, Object> providerIncomeStats(@RequestParam String providerSearch) {
+        Object[] incomeStats = orderContentRepository.getProviderIncomeStats(providerSearch);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("shareOfSale", incomeStats[0]);
+        response.put("shareOfAmount", incomeStats[1]);
+
+        return response;
+    }
 }

@@ -60,6 +60,7 @@ public interface OrderContentRepository extends CrudRepository <OrderContent, In
             @Param("amountLimit") Integer amountLimit
     );
 
+    // 6
     @Query(
             "SELECT goods, EXTRACT(MONTH FROM orderEntity.orderDate), SUM(orderContent.amount) " +
             "FROM OrderContent orderContent " +
@@ -71,4 +72,24 @@ public interface OrderContentRepository extends CrudRepository <OrderContent, In
             "ORDER BY EXTRACT(MONTH FROM orderEntity.orderDate), goods.goodsId"
     )
     List<Object[]> getMonthlyAverageSales(@Param("goodsSearch") String goodsSearch);
+
+    // 7
+    @Query(
+            "SELECT " +
+                    "CAST (SUM( " +
+                        "CASE " +
+                        "WHEN provider.providerName like CONCAT('%', :providerSearch, '%') THEN (orderContent.amount * (goods.sellingPrice - goods.purchasePrice)) " +
+                        "ELSE 0 END" +
+                    ") as float) / SUM(orderContent.amount * (goods.sellingPrice - goods.purchasePrice)), " +
+                    "CAST (SUM( " +
+                        "CASE " +
+                        "WHEN provider.providerName like CONCAT('%', :providerSearch, '%') THEN orderContent.amount " +
+                        "ELSE 0 END" +
+                    ") as float) / SUM(orderContent.amount) " +
+            "FROM OrderContent orderContent " +
+                    "INNER JOIN orderContent.orderEntity orderEntity " +
+                    "INNER JOIN orderContent.goods goods " +
+                    "INNER JOIN goods.provider provider"
+    )
+    Object[] getProviderIncomeStats(@Param("providerSearch") String providerSearch);
 }
