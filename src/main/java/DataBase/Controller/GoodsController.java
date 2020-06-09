@@ -136,4 +136,43 @@ public class GoodsController {
 
         return response;
     }
+
+    @GetMapping(value="/goods/rejects/", produces=MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Map<String, Object> rejects() {
+        Map<String, Object> response = new HashMap<>();
+        List<Object[]> rejects = goodsRepository.getRejects();
+
+        ArrayList<Map<String, Object>> rejectsList = new ArrayList<>();
+
+        Map<String, Object> goodsInfo;
+
+        for (Object[] r: rejects) {
+            goodsInfo = new HashMap<>();
+            Goods g = (Goods) r[0];
+            Long amount = (Long) r[1];
+
+            goodsInfo.put("producer", g.getProducer());
+            goodsInfo.put("goodsName", g.getGoodsName());
+            goodsInfo.put("providerName", g.getProvider().getProviderName());
+            goodsInfo.put("amount", amount);
+
+            rejectsList.add(goodsInfo);
+        }
+
+        response.put("results", rejectsList);
+
+        return response;
+    }
+
+    @GetMapping(value="/goods/reject-providers/", produces=MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Map<String, Object> rejectProviders() {
+        Map<String, Object> response = new HashMap<>();
+        List<String> rejects = goodsRepository.getRejectProviders();
+
+        response.put("results", rejects);
+
+        return response;
+    }
 }

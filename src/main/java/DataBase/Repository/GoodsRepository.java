@@ -37,4 +37,27 @@ public interface GoodsRepository extends CrudRepository<Goods, Integer>  {
             "ORDER BY SUM(orderContent.amount) DESC "
     )
     public Page<Object[]> getBestSellers(Pageable pageable);
+
+    // 10.1
+    @Query(
+            "SELECT g, SUM(reject.amount) " +
+            "FROM Goods g " +
+                    "INNER JOIN FETCH g.catalog c " +
+                    "INNER JOIN FETCH g.provider p " +
+                    "INNER JOIN g.rejectList reject " +
+                    "INNER JOIN reject.orderEntity orderEntity " +
+            "GROUP BY g.goodsId, c.detailId, p.providerId " +
+            "ORDER BY SUM(reject.amount) DESC "
+    )
+    public List<Object[]> getRejects();
+
+    // 10.2
+    @Query(
+            "SELECT DISTINCT p.providerName " +
+            "FROM Goods g " +
+                    "INNER JOIN g.provider p " +
+                    "INNER JOIN g.rejectList reject " +
+                    "INNER JOIN reject.orderEntity orderEntity "
+    )
+    public List<String> getRejectProviders();
 }
