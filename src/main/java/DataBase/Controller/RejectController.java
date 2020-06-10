@@ -25,12 +25,12 @@ public class RejectController {
     @Autowired
     private OrderRepository orderRepository;
 
-    @GetMapping("/reject/")
+    @GetMapping("/api/reject/")
     public Iterable<Reject> list() {
         return rejectRepository.findAll();
     }
 
-    @GetMapping("/reject/{id}")
+    @GetMapping("/api/reject/{id}")
     public ResponseEntity<Reject> retrieveReject(@PathVariable int id) {
         Optional<Reject> reject = rejectRepository.findById(id);
 
@@ -40,12 +40,12 @@ public class RejectController {
         return ResponseEntity.ok(reject.get());
     }
 
-    @DeleteMapping("/reject/{id}")
+    @DeleteMapping("/api/reject/{id}")
     public void deleteReject(@PathVariable int id) {
         rejectRepository.deleteById(id);
     }
 
-    @PostMapping("/reject/")
+    @PostMapping("/api/reject/")
     public ResponseEntity<Reject> createReject(@RequestBody Reject reject) {
         Reject savedReject = rejectRepository.save(reject);
 
@@ -55,7 +55,7 @@ public class RejectController {
         return ResponseEntity.created(location).body(savedReject);
     }
 
-    @PutMapping("/reject/{id}")
+    @PutMapping("/api/reject/{id}")
     public ResponseEntity<Reject> updateReject(@RequestBody Reject input, @PathVariable int id) {
 
         Optional<Reject> stored = rejectRepository.findById(id);

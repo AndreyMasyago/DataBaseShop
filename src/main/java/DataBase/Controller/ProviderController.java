@@ -20,12 +20,12 @@ public class ProviderController {
     @Autowired
     private ProviderRepository providerRepository;
 
-    @GetMapping("/provider/")
+    @GetMapping("/api/provider/")
     public Iterable<Provider> list() {
         return providerRepository.findAll();
     }
 
-    @GetMapping("/provider/{id}")
+    @GetMapping("/api/provider/{id}")
     public ResponseEntity<Provider> retrieveProvider(@PathVariable int id) {
         Optional<Provider> provider = providerRepository.findById(id);
 
@@ -35,12 +35,12 @@ public class ProviderController {
         return ResponseEntity.ok(provider.get());
     }
 
-    @DeleteMapping("/provider/{id}")
+    @DeleteMapping("/api/provider/{id}")
     public void deleteProvider(@PathVariable int id) {
         providerRepository.deleteById(id);
     }
 
-    @PostMapping("/provider/")
+    @PostMapping("/api/provider/")
     public ResponseEntity<Provider> createProvider(@RequestBody Provider provider) {
         Provider savedProvider = providerRepository.save(provider);
 
@@ -50,7 +50,7 @@ public class ProviderController {
         return ResponseEntity.created(location).body(savedProvider);
     }
 
-    @PutMapping("/provider/{id}")
+    @PutMapping("/api/provider/{id}")
     public ResponseEntity<Provider> updateProvider(@RequestBody Provider input, @PathVariable int id) {
 
         Optional<Provider> stored = providerRepository.findById(id);
@@ -66,7 +66,7 @@ public class ProviderController {
         return ResponseEntity.ok(updated);
     }
 
-    @GetMapping(value="/provider/delivered-more-than-count/", produces=MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/api/provider/delivered-more-than-count/")
     @ResponseBody
     public Map<String, Object> deliveredMoreThanCount(
             @RequestParam String goodsSearch,

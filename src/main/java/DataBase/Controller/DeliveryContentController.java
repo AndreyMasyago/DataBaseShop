@@ -26,12 +26,12 @@ public class DeliveryContentController {
     @Autowired
     private DeliveryRepository deliveryRepository;
 
-    @GetMapping("/deliveryContent/")
+    @GetMapping("/api/deliveryContent/")
     public Iterable<DeliveryContent> list() {
         return deliveryContentRepository.findAll();
     }
 
-    @GetMapping("/deliveryContent/{id}")
+    @GetMapping("/api/deliveryContent/{id}")
     public ResponseEntity<DeliveryContent> retrieveDeliveryContent(@PathVariable int id) {
         Optional<DeliveryContent> deliveryContent = deliveryContentRepository.findById(id);
 
@@ -41,12 +41,12 @@ public class DeliveryContentController {
         return ResponseEntity.ok(deliveryContent.get());
     }
 
-    @DeleteMapping("/deliveryContent/{id}")
+    @DeleteMapping("/api/deliveryContent/{id}")
     public void deleteDeliveryContent(@PathVariable int id) {
         deliveryContentRepository.deleteById(id);
     }
 
-    @PostMapping("/deliveryContent/")
+    @PostMapping("/api/deliveryContent/")
     public ResponseEntity<DeliveryContent> createDeliveryContent(@RequestBody DeliveryContent deliveryContent) {
         DeliveryContent savedDeliveryContent = deliveryContentRepository.save(deliveryContent);
 
@@ -56,7 +56,7 @@ public class DeliveryContentController {
         return ResponseEntity.created(location).body(savedDeliveryContent);
     }
 
-    @PutMapping("/deliveryContent/{id}")
+    @PutMapping("/api/deliveryContent/{id}")
     public ResponseEntity<DeliveryContent> updateDeliveryContent(@RequestBody DeliveryContent input, @PathVariable int id) {
 
         Optional<DeliveryContent> stored = deliveryContentRepository.findById(id);

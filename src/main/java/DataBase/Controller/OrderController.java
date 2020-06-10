@@ -21,12 +21,12 @@ public class OrderController {
     @Autowired
     private OrderRepository orderRepository;
 
-    @GetMapping("/order/")
+    @GetMapping("/api/order/")
     public Iterable<OrderEntity> list() {
         return orderRepository.findAll();
     }
 
-    @GetMapping("/order/{id}")
+    @GetMapping("/api/order/{id}")
     public ResponseEntity<OrderEntity> retrieveOrder(@PathVariable int id) {
         Optional<OrderEntity> orders = orderRepository.findById(id);
 
@@ -36,12 +36,12 @@ public class OrderController {
         return ResponseEntity.ok(orders.get());
     }
 
-    @DeleteMapping("/order/{id}")
+    @DeleteMapping("/api/order/{id}")
     public void deleteOrders(@PathVariable int id) {
         orderRepository.deleteById(id);
     }
 
-    @PostMapping("/order/")
+    @PostMapping("/api/order/")
     public ResponseEntity<OrderEntity> createOrder(@RequestBody OrderEntity orderEntity) {
         OrderEntity savedOrders = orderRepository.save(orderEntity);
 
@@ -51,7 +51,7 @@ public class OrderController {
         return ResponseEntity.created(location).body(savedOrders);
     }
 
-    @PutMapping("/order/{id}")
+    @PutMapping("/api/order/{id}")
     public ResponseEntity<OrderEntity> updateOrder(@RequestBody OrderEntity input, @PathVariable int id) {
 
         Optional<OrderEntity> stored = orderRepository.findById(id);

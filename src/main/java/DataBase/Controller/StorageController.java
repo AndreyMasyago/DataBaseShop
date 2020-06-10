@@ -19,12 +19,12 @@ public class StorageController {
     @Autowired
     private StorageRepository storageRepository;
 
-    @GetMapping("/storage/")
+    @GetMapping("/api/storage/")
     public Iterable<Storage> list() {
         return storageRepository.findAll();
     }
 
-    @GetMapping("/storage/{id}")
+    @GetMapping("/api/storage/{id}")
     public ResponseEntity<Storage> retrieveCell(@PathVariable int id) {
         Optional<Storage> cell = storageRepository.findById(id);
 
@@ -34,12 +34,12 @@ public class StorageController {
         return ResponseEntity.ok(cell.get());
     }
 
-    @DeleteMapping("/storage/{id}")
+    @DeleteMapping("/api/storage/{id}")
     public void deleteCell(@PathVariable int id) {
         storageRepository.deleteById(id);
     }
 
-    @PostMapping("/storage/")
+    @PostMapping("/api/storage/")
     public ResponseEntity<Storage> createCell(@RequestBody Storage cell) {
         Storage savedCell = storageRepository.save(cell);
 
@@ -49,7 +49,7 @@ public class StorageController {
         return ResponseEntity.created(location).body(savedCell);
     }
 
-    @PutMapping("/storage/{id}")
+    @PutMapping("/api/storage/{id}")
     public ResponseEntity<Storage> updateCell(@RequestBody Storage input, @PathVariable int id) {
 
         Optional<Storage> stored = storageRepository.findById(id);

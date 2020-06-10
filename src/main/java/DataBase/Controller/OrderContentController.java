@@ -23,12 +23,12 @@ public class OrderContentController {
     @Autowired
     private OrderRepository orderRepository;
 
-    @GetMapping("/orderContent/")
+    @GetMapping("/api/orderContent/")
     public Iterable<OrderContent> list() {
         return orderContentRepository.findAll();
     }
 
-    @GetMapping("/orderContent/{id}")
+    @GetMapping("/api/orderContent/{id}")
     public ResponseEntity<OrderContent> retrieveOrderContent(@PathVariable int id) {
         Optional<OrderContent> orderContent = orderContentRepository.findById(id);
 
@@ -38,12 +38,12 @@ public class OrderContentController {
         return ResponseEntity.ok(orderContent.get());
     }
 
-    @DeleteMapping("/orderContent/{id}")
+    @DeleteMapping("/api/orderContent/{id}")
     public void deleteOrderContent(@PathVariable int id) {
         orderContentRepository.deleteById(id);
     }
 
-    @PostMapping("/orderContent/")
+    @PostMapping("/api/orderContent/")
     public ResponseEntity<OrderContent> createOrderContent(@RequestBody OrderContent orderContent) {
         OrderContent savedOrderContent = orderContentRepository.save(orderContent);
 
@@ -53,7 +53,7 @@ public class OrderContentController {
         return ResponseEntity.created(location).body(savedOrderContent);
     }
 
-    @PutMapping("/orderContent/{id}")
+    @PutMapping("/api/orderContent/{id}")
     public ResponseEntity<OrderContent> updateOrderContent(@RequestBody OrderContent input, @PathVariable int id) {
 
         Optional<OrderContent> stored = orderContentRepository.findById(id);
@@ -70,8 +70,7 @@ public class OrderContentController {
         return ResponseEntity.ok(updated);
     }
 
-    @GetMapping(value="/order-content/order-content-by-date/", produces=MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
+    @GetMapping("/api/order-content/order-content-by-date/")
     public Map<String, Object> orderContentFilteredByDate(@RequestParam String goodsSearch, @RequestParam Integer amountLimit) {
         Map<String, Object> response = new HashMap<>();
         List<OrderContent> orderContents = orderContentRepository.getOrderContentFilteredByDate(goodsSearch, amountLimit);
@@ -97,8 +96,7 @@ public class OrderContentController {
         return response;
     }
 
-    @GetMapping(value="/order-content/monthly-average-sales/", produces=MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
+    @GetMapping("/api/order-content/monthly-average-sales/")
     public Map<String, Object> monthlyAverageSales(@RequestParam String goodsSearch) {
         Map<String, Object> response = new HashMap<>();
         List<Object[]> sales = orderContentRepository.getMonthlyAverageSales(goodsSearch);
@@ -129,8 +127,7 @@ public class OrderContentController {
         return response;
     }
 
-    @GetMapping(value="/order-content/provider-income-stats/", produces=MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
+    @GetMapping("/api/order-content/provider-income-stats/")
     public Map<String, Object> providerIncomeStats(@RequestParam String providerSearch) {
         Object[] incomeStats = orderContentRepository.getProviderIncomeStats(providerSearch);
 
@@ -141,8 +138,7 @@ public class OrderContentController {
         return response;
     }
 
-    @GetMapping(value="/order-content/overhead/", produces=MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
+    @GetMapping("/api/order-content/overhead/")
     public Map<String, Object> overhead() {
         Float overhead = orderContentRepository.getOverhead();
 

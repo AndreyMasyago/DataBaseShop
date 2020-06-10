@@ -24,12 +24,12 @@ public class StorageTransactionsController {
     @Autowired
     private StorageTransactionsRepository storageTransactionsRepository;
 
-    @GetMapping("/storageTransactions/")
+    @GetMapping("/api/storageTransactions/")
     public Iterable<StorageTransactions> list() {
         return storageTransactionsRepository.findAll();
     }
 
-    @GetMapping("/storageTransactions/{id}")
+    @GetMapping("/api/storageTransactions/{id}")
     public ResponseEntity<StorageTransactions> retrieveStorageTransaction(@PathVariable int id) {
         Optional<StorageTransactions> storageTransaction = storageTransactionsRepository.findById(id);
 
@@ -39,12 +39,12 @@ public class StorageTransactionsController {
         return ResponseEntity.ok(storageTransaction.get());
     }
 
-    @DeleteMapping("/storageTransactions/{id}")
+    @DeleteMapping("/api/storageTransactions/{id}")
     public void deleteStorageTransaction(@PathVariable int id) {
         storageTransactionsRepository.deleteById(id);
     }
 
-    @PostMapping("/storageTransactions/")
+    @PostMapping("/api/storageTransactions/")
     public ResponseEntity<StorageTransactions> createStorageTransaction(@RequestBody StorageTransactions storageTransaction) {
         StorageTransactions savedStorageTransaction = storageTransactionsRepository.save(storageTransaction);
 
@@ -54,7 +54,7 @@ public class StorageTransactionsController {
         return ResponseEntity.created(location).body(savedStorageTransaction);
     }
 
-    @PutMapping("/storageTransactions/{id}")
+    @PutMapping("/api/storageTransactions/{id}")
     public ResponseEntity<StorageTransactions> updateCell(@RequestBody StorageTransactions input, @PathVariable int id) {
 
         Optional<StorageTransactions> stored = storageTransactionsRepository.findById(id);
@@ -72,7 +72,7 @@ public class StorageTransactionsController {
         return ResponseEntity.ok(updated);
     }
 
-    @GetMapping(value="/storage-transactions/stored-goods/", produces=MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/api/storage-transactions/stored-goods/")
     @ResponseBody
     public Map<String, Object> storedGoods() {
         Map<String, Object> response = new HashMap<>();

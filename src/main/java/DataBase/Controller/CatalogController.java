@@ -19,12 +19,12 @@ public class CatalogController {
     @Autowired
     private CatalogRepository catalogRepository;
 
-    @GetMapping("/catalog/")
+    @GetMapping("/api/catalog/")
     public Iterable<Catalog> list() {
         return catalogRepository.findAll();
     }
 
-    @GetMapping("/catalog/{id}")
+    @GetMapping("/api/catalog/{id}")
     public ResponseEntity<Catalog> retrieveDetails(@PathVariable int id) {
         Optional<Catalog> detail = catalogRepository.findById(id);
 
@@ -34,12 +34,12 @@ public class CatalogController {
         return ResponseEntity.ok(detail.get());
     }
 
-    @DeleteMapping("/catalog/{id}")
+    @DeleteMapping("/api/catalog/{id}")
     public void deleteDetail(@PathVariable int id) {
         catalogRepository.deleteById(id);
     }
 
-    @PostMapping("/catalog/")
+    @PostMapping("/api/catalog/")
     public ResponseEntity<Catalog> createDetail(@RequestBody Catalog detail) {
         Catalog savedDetail = catalogRepository.save(detail);
 
@@ -49,7 +49,7 @@ public class CatalogController {
         return ResponseEntity.created(location).body(savedDetail);
     }
 
-    @PutMapping("/catalog/{id}")
+    @PutMapping("/api/catalog/{id}")
     public ResponseEntity<Catalog> updateCatalog(@RequestBody Catalog input, @PathVariable int id) {
 
         Optional<Catalog> stored = catalogRepository.findById(id);

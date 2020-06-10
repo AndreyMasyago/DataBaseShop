@@ -27,12 +27,12 @@ public class GoodsController {
     @Autowired
     private ProviderRepository providerRepository;
 
-    @GetMapping("/goods/")
+    @GetMapping("/api/goods/")
     public Iterable<Goods> list() {
         return goodsRepository.findAll();
     }
 
-    @GetMapping("/goods/{id}")
+    @GetMapping("/api/goods/{id}")
     public ResponseEntity<Goods> retrieveGoods(@PathVariable int id) {
         Optional<Goods> goods = goodsRepository.findById(id);
 
@@ -42,12 +42,12 @@ public class GoodsController {
         return ResponseEntity.ok(goods.get());
     }
 
-    @DeleteMapping("/goods/{id}")
+    @DeleteMapping("/api/goods/{id}")
     public void deleteGoods(@PathVariable int id) {
         goodsRepository.deleteById(id);
     }
 
-    @PostMapping("/goods")
+    @PostMapping("/api/goods")
     public ResponseEntity<Goods> createGoods(@RequestBody Goods goods) {
         Goods savedGoods = goodsRepository.save(goods);
 
@@ -57,7 +57,7 @@ public class GoodsController {
         return ResponseEntity.created(location).body(savedGoods);
     }
 
-    @PutMapping("/goods/{id}")
+    @PutMapping("/api/goods/{id}")
     public ResponseEntity<Goods> updateGoods(@RequestBody Goods input, @PathVariable int id) {
 
         Optional<Goods> stored = goodsRepository.findById(id);
@@ -78,7 +78,7 @@ public class GoodsController {
         return ResponseEntity.ok(updated);
     }
 
-    @GetMapping(value="/goods/goods-details/", produces=MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/api/goods/goods-details/")
     @ResponseBody
     public Map<String, Object> goodsDetails(@RequestParam String goodsSearch) {
         Map<String, Object> response = new HashMap<>();
@@ -110,7 +110,7 @@ public class GoodsController {
         return response;
     }
 
-    @GetMapping(value="/goods/bestsellers/", produces=MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/api/goods/bestsellers/")
     @ResponseBody
     public Map<String, Object> bestsellers() {
         Map<String, Object> response = new HashMap<>();
@@ -144,7 +144,7 @@ public class GoodsController {
         return response;
     }
 
-    @GetMapping(value="/goods-rejects/", produces=MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/api/goods-rejects/")
     @ResponseBody
     public Map<String, Object> rejects() {
         Map<String, Object> response = new HashMap<>();
@@ -173,7 +173,7 @@ public class GoodsController {
         return response;
     }
 
-    @GetMapping(value="/reject-providers/", produces=MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/api/reject-providers/")
     @ResponseBody
     public Map<String, Object> rejectProviders() {
         Map<String, Object> response = new HashMap<>();
@@ -184,7 +184,7 @@ public class GoodsController {
         return response;
     }
 
-    @GetMapping(value="/goods/daily-report/", produces=MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/api/goods/daily-report/")
     @ResponseBody
     public Map<String, Object> dailyReport(@RequestParam("reportDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date reportDate) {
         Map<String, Object> response = new HashMap<>();
@@ -219,7 +219,7 @@ public class GoodsController {
         return response;
     }
 
-    @GetMapping(value="/goods/storage-report/", produces=MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/api/goods/storage-report/")
     @ResponseBody
     public Map<String, Object> storageReport() {
         Map<String, Object> response = new HashMap<>();
