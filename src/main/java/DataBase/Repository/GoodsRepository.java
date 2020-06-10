@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 public interface GoodsRepository extends CrudRepository<Goods, Integer>  {
@@ -60,4 +60,17 @@ public interface GoodsRepository extends CrudRepository<Goods, Integer>  {
                     "INNER JOIN reject.orderEntity orderEntity "
     )
     public List<String> getRejectProviders();
+
+    // 11
+    @Query(
+            "SELECT g, SUM(orderContent.amount), SUM(orderContent.amount * (g.sellingPrice - g.purchasePrice)) " +
+            "FROM Goods g " +
+                    "INNER JOIN FETCH g.catalog c " +
+                    "INNER JOIN FETCH g.provider p " +
+                    "INNER JOIN g.orderContentList orderContent " +
+                    "INNER JOIN orderContent.orderEntity orderEntity " +
+            "WHERE orderEntity.orderDate = :reportDate " +
+            "GROUP BY g.goodsId, c.detailId, p.providerId "
+    )
+    public List<Object[]> getDailyReport(@Param("reportDate") Date reportDate);
 }

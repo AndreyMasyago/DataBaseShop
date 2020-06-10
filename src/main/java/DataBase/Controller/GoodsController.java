@@ -1,19 +1,15 @@
 package DataBase.Controller;
 
-import DataBase.Domain.Catalog;
-import DataBase.Domain.Delivery;
 import DataBase.Domain.Goods;
-import DataBase.Domain.Provider;
 import DataBase.Repository.CatalogRepository;
 import DataBase.Repository.GoodsRepository;
 import DataBase.Repository.ProviderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -180,6 +176,41 @@ public class GoodsController {
         List<String> rejects = goodsRepository.getRejectProviders();
 
         response.put("results", rejects);
+
+        return response;
+    }
+
+    @GetMapping(value="/goods/daily-report/", produces=MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Map<String, Object> dailyReport(@RequestParam("reportDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date reportDate) {
+        Map<String, Object> response = new HashMap<>();
+        List<Object[]> dailyReport = goodsRepository.getDailyReport(reportDate);
+
+        ArrayList<Map<String, Object>> goodsInfoList = new ArrayList<>();
+
+        Map<String, Object> goodsInfo;
+
+        for (Object[] b: dailyReport) {
+            Goods p = (Goods) b[0];
+            Long amount = (Long) b[1];
+            Long total = (Long) b[2];
+            goodsInfo = new HashMap<>();
+
+            goodsInfo.put("deliveryTime", p.getDeliveryTime());
+            goodsInfo.put("purchasePrice", p.getPurchasePrice());
+            goodsInfo.put("sellingPrice", p.getSellingPrice());
+            goodsInfo.put("producer", p.getProducer());
+            goodsInfo.put("goodsName", p.getGoodsName());
+            goodsInfo.put("providerName", p.getProvider().getProviderName());
+            goodsInfo.put("category", p.getProvider().getCategory());
+
+            goodsInfo.put("amount", amount);
+            goodsInfo.put("total", total);
+
+            goodsInfoList.add(goodsInfo);
+        }
+
+        response.put("results", goodsInfoList);
 
         return response;
     }
