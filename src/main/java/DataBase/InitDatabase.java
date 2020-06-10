@@ -272,8 +272,8 @@ public class    InitDatabase implements ApplicationRunner {
         rows.forEach(row -> {
             String virtualId = row[0];
             Goods goods = goodsMap.get(row[1]);
-            int amount = Integer.parseInt(row[2]);
-            OrderEntity order = orders.get(row[3]);
+            OrderEntity order = orders.get(row[2]);
+            int amount = Integer.parseInt(row[3]);
 
             OrderContent model = orderContentRepository.save(new OrderContent(
                     goods,
@@ -300,8 +300,8 @@ public class    InitDatabase implements ApplicationRunner {
         rows.forEach(row -> {
             String virtualId = row[0];
             Goods goods = goodsMap.get(row[1]);
-            int amount = Integer.parseInt(row[2]);
-            OrderEntity order = orders.get(row[3]);
+            OrderEntity order = orders.get(row[2]);
+            int amount = Integer.parseInt(row[3]);
 
             Reject model = rejectRepository.save(new Reject(
                     goods,
