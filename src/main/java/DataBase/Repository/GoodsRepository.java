@@ -1,6 +1,7 @@
 package DataBase.Repository;
 
 import DataBase.Domain.Goods;
+import DataBase.Domain.Provider;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -53,11 +54,11 @@ public interface GoodsRepository extends CrudRepository<Goods, Integer>  {
 
     // 10.2
     @Query(
-            "SELECT DISTINCT p.providerName " +
+            "SELECT DISTINCT p " +
             "FROM Goods g " +
                     "INNER JOIN g.provider p " +
                     "INNER JOIN g.rejectList reject " +
                     "INNER JOIN reject.orderEntity orderEntity "
     )
-    public List<String> getRejectProviders();
+    public List<Provider> getRejectProviders();
 }

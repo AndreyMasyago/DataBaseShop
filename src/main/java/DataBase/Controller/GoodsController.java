@@ -95,6 +95,7 @@ public class GoodsController {
         for (Goods p : goods) {
             goodsInfo = new HashMap<>();
 
+            goodsInfo.put("goodsId", p.getGoodsId());
             goodsInfo.put("deliveryTime", p.getDeliveryTime());
             goodsInfo.put("purchasePrice", p.getPurchasePrice());
             goodsInfo.put("sellingPrice", p.getSellingPrice());
@@ -127,6 +128,7 @@ public class GoodsController {
             Long amount = (Long) b[1];
             goodsInfo = new HashMap<>();
 
+            goodsInfo.put("goodsId", p.getGoodsId());
             goodsInfo.put("deliveryTime", p.getDeliveryTime());
             goodsInfo.put("purchasePrice", p.getPurchasePrice());
             goodsInfo.put("sellingPrice", p.getSellingPrice());
@@ -145,7 +147,7 @@ public class GoodsController {
         return response;
     }
 
-    @GetMapping(value="/goods/rejects/", produces=MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value="/goods-rejects/", produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Map<String, Object> rejects() {
         Map<String, Object> response = new HashMap<>();
@@ -160,6 +162,7 @@ public class GoodsController {
             Goods g = (Goods) r[0];
             Long amount = (Long) r[1];
 
+            goodsInfo.put("goodsId", g.getGoodsId());
             goodsInfo.put("producer", g.getProducer());
             goodsInfo.put("goodsName", g.getGoodsName());
             goodsInfo.put("providerName", g.getProvider().getProviderName());
@@ -173,11 +176,11 @@ public class GoodsController {
         return response;
     }
 
-    @GetMapping(value="/goods/reject-providers/", produces=MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value="/reject-providers/", produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Map<String, Object> rejectProviders() {
         Map<String, Object> response = new HashMap<>();
-        List<String> rejects = goodsRepository.getRejectProviders();
+        List<Provider> rejects = goodsRepository.getRejectProviders();
 
         response.put("results", rejects);
 
