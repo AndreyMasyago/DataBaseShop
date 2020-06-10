@@ -214,4 +214,40 @@ public class GoodsController {
 
         return response;
     }
+
+    @GetMapping(value="/goods/storage-report/", produces=MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Map<String, Object> storageReport() {
+        Map<String, Object> response = new HashMap<>();
+        List<Object[]> dailyReport = goodsRepository.getStorageReport();
+
+        ArrayList<Map<String, Object>> goodsInfoList = new ArrayList<>();
+
+        Map<String, Object> goodsInfo;
+
+        for (Object[] b: dailyReport) {
+            Goods p = (Goods) b[0];
+            Integer cellsId = (Integer) b[1];
+            Long amount = (Long) b[2];
+            goodsInfo = new HashMap<>();
+
+            goodsInfo.put("goodsId", p.getGoodsId());
+            goodsInfo.put("deliveryTime", p.getDeliveryTime());
+            goodsInfo.put("purchasePrice", p.getPurchasePrice());
+            goodsInfo.put("sellingPrice", p.getSellingPrice());
+            goodsInfo.put("producer", p.getProducer());
+            goodsInfo.put("goodsName", p.getGoodsName());
+            goodsInfo.put("providerName", p.getProvider().getProviderName());
+            goodsInfo.put("category", p.getProvider().getCategory());
+
+            goodsInfo.put("cellsId", cellsId);
+            goodsInfo.put("amount", amount);
+
+            goodsInfoList.add(goodsInfo);
+        }
+
+        response.put("results", goodsInfoList);
+
+        return response;
+    }
 }

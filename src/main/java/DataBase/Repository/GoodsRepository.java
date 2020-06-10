@@ -73,4 +73,15 @@ public interface GoodsRepository extends CrudRepository<Goods, Integer>  {
             "GROUP BY g.goodsId, c.detailId, p.providerId "
     )
     public List<Object[]> getDailyReport(@Param("reportDate") Date reportDate);
+
+    // 13
+    @Query(
+            "SELECT g, storage.cellsId, COALESCE(SUM(storageTransaction.amount), 0) " +
+            "FROM Goods g " +
+                    "INNER JOIN g.catalog c " +
+                    "LEFT JOIN g.storageTransactionsList storageTransaction " +
+                    "INNER JOIN storageTransaction.storage storage " +
+            "GROUP BY g.goodsId, storage.cellsId, c.detailId"
+    )
+    public List<Object[]> getStorageReport();
 }
