@@ -15,8 +15,13 @@ export async function getRejectDetails() {
   return await r.json();
 }
 
-
 export async function getProvidersWithReject() {
   const r = await fetch(`${API_BASE}/reject-providers/`);
+  return await r.json();
+}
+
+export async function getMonthlyAverageSales(params) {
+  const r = await fetch(
+  	`${API_BASE}/order-content/monthly-average-sales/?goodsSearch=${params.goodsSearch}&amountLimit=${params.amountLimit}`);
   return await r.json();
 }

@@ -22,6 +22,8 @@ import BestSellers from './components/pages/queries/BestSellers';
 import GoodsDetails from './components/pages/queries/GoodsDetails';
 import RejectDetails from './components/pages/queries/RejectDetails';
 import RejectProviders from './components/pages/queries/RejectProviders';
+import MonthlyAverageSales from './components/pages/queries/MonthlyAverageSales';
+
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -101,6 +103,10 @@ function App() {
 
               <Route path="/reject-providers/">
                 <RejectProviders />
+              </Route>
+
+              <Route path="/order-content/monthly-average-sales/">
+                <MonthlyAverageSales />
               </Route>
 
 

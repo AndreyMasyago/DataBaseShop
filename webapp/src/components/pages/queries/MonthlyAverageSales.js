@@ -4,22 +4,25 @@ import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 
-import { getGoodsDetails } from '../../../api/queries';
+import { getMonthlyAverageSales } from '../../../api/queries';
 import useForm from '../../forms/formHook';
 
 
-export default function GoodsDetails () {
+export default function MonthlyAverageSales () {
   const [data, setData] = useState([]);
 
-  const callback = formState => getGoodsDetails(formState).then(data => setData(data.results));
+  const callback = formState => getMonthlyAverageSales(formState).then(data => setData(data.results));
 
-  const { handleInputChange, formState } = useForm({ goodsSearch: '' }, callback);
+  const { handleInputChange, formState } = useForm({
+    goodsSearch: '',
+    amountLimit: ''
+  }, callback);
 
   useEffect(() => { callback(formState) }, [formState]);
 
   return (
     <div>
-      <h1>Top 5 best selling goods</h1>
+      <h1>Montly Average Sales</h1>
 
       <Form className="search-form">
         <Form.Row>
@@ -39,14 +42,20 @@ export default function GoodsDetails () {
         <thead>
           <tr>
             <th>Goods ID</th>
+            <th>Month</th>
+            <th><b>Amount</b></th>
             <th>Goods Name</th>
+            <th>Producer</th>
           </tr>
         </thead>
         <tbody>
           {data.map(item => (
-            <tr key={item.goodsId}>
+            <tr key={`${item.goodsId}_${item.month}`}>
               <td><Link to={`/goods/${item.goodsId}/`}>{item.goodsId}</Link></td>
+              <td>{item.month}</td>
+              <td>{item.amount}</td>
               <td>{item.goodsName}</td>
+              <td>{item.producer}</td>
             </tr>
           ))}
         </tbody>
