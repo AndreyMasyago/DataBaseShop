@@ -47,13 +47,17 @@ function Intro() {
           <Link to="/bestsellers/">#5. BestSellers</Link>
         </div>
         <div>
-          <Link to="/order-content/monthly-average-sales/">#6 Monthly Average Sales</Link>
+          <Link to="/monthly-average-sales/">#6 Monthly Average Sales</Link>
         </div>
         <div>
           <Link to="/goods-rejects/">#10.1 Reject details</Link>
         </div>
         <div>
           <Link to="/reject-providers/">#10.2 Reject providers</Link>
+        </div>
+
+        <div>
+          <Link to="/finance-report/">#12. Finance report</Link>
         </div>
       </div>
     </div>

@@ -57,3 +57,18 @@ a:hover {
   cursor: pointer;
   text-decoration: underline;
 }
+
+.FinanceReport-total-row {
+  font-weight: bold;
+  border-top: 3px solid #aaa;
+}
+
+.table .FinanceReport-total-col {
+  font-weight: bold;
+  border-left: 3px solid #aaa;
+}
+
+input[type=date]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    display: none;
+}

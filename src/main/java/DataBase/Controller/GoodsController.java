@@ -254,4 +254,34 @@ public class GoodsController {
 
         return response;
     }
+
+    @GetMapping("/api/goods/finance-report/")
+    @ResponseBody
+    public Map<String, Object> financeReport(
+                @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
+                @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate
+    ) {
+        Map<String, Object> response = new HashMap<>();
+        List<Object[]> financeReport = goodsRepository.getFinanceReport(startDate, endDate);
+
+        ArrayList<Map<String, Object>> resultList = new ArrayList<>();
+
+        Map<String, Object> reportItem;
+
+        for (Object[] b: financeReport) {
+            reportItem = new HashMap<>();
+
+            reportItem.put("date", b[0]);
+            reportItem.put("income", b[1]);
+            reportItem.put("expense", b[2]);
+            reportItem.put("rejects", b[3]);
+            reportItem.put("rowTotal", b[4]);
+
+            resultList.add(reportItem);
+        }
+
+        response.put("results", resultList);
+
+        return response;
+    }
 }
