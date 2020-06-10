@@ -21,12 +21,12 @@ public class DeliveryController {
     @Autowired
     private DeliveryRepository deliveryRepository;
 
-    @GetMapping("/delivery/")
+    @GetMapping("/api/delivery/")
     public Iterable<Delivery> list() {
         return deliveryRepository.findAll();
     }
 
-    @GetMapping("/delivery/{id}")
+    @GetMapping("/api/delivery/{id}")
     public ResponseEntity<Delivery> retrieveDelivery(@PathVariable int id) {
         Optional<Delivery> delivery = deliveryRepository.findById(id);
 
@@ -36,12 +36,12 @@ public class DeliveryController {
         return ResponseEntity.ok(delivery.get());
     }
 
-    @DeleteMapping("/delivery/{id}")
+    @DeleteMapping("/api/delivery/{id}")
     public void deleteDelivery(@PathVariable int id) {
         deliveryRepository.deleteById(id);
     }
 
-    @PostMapping("/delivery")
+    @PostMapping("/api/delivery")
     public ResponseEntity<Delivery> createDelivery(@RequestBody Delivery delivery) {
         Delivery savedDelivery = deliveryRepository.save(delivery);
 
@@ -51,7 +51,7 @@ public class DeliveryController {
         return ResponseEntity.created(location).body(savedDelivery);
     }
 
-    @PutMapping("/delivery/{id}")
+    @PutMapping("/api/delivery/{id}")
     public ResponseEntity<Delivery> updateDelivery(@RequestBody Delivery input, @PathVariable int id) {
 
         Optional<Delivery> stored = deliveryRepository.findById(id);

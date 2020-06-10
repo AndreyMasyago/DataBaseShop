@@ -1,1 +1,1 @@
-export const API_BASE = '';
+export const API_BASE = '/api';
