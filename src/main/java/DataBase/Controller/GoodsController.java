@@ -1,6 +1,7 @@
 package DataBase.Controller;
 
 import DataBase.Domain.Goods;
+import DataBase.Domain.Provider;
 import DataBase.Repository.CatalogRepository;
 import DataBase.Repository.GoodsRepository;
 import DataBase.Repository.ProviderRepository;
