@@ -80,7 +80,7 @@ public class GoodsController {
 
     @GetMapping("/api/goods/goods-details/")
     @ResponseBody
-    public Map<String, Object> goodsDetails(@RequestParam String goodsSearch) {
+    public Map<String, Object> goodsDetails(@RequestParam Integer goodsSearch) {
         Map<String, Object> response = new HashMap<>();
         List<Goods> goods = goodsRepository.getGoodsInfo(goodsSearch);
         Long count = goodsRepository.countGoodsInfo(goodsSearch);

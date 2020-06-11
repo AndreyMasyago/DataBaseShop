@@ -6,15 +6,21 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import { getGoodsDetails } from '../../../api/queries';
+import { listDetails } from '../../../api/catalog';
 import useForm from '../../forms/formHook';
 
 
 export default function GoodsDetails () {
   const [data, setData] = useState([]);
 
+  const [details, setDetails] = useState([]);
+  useEffect(() => { listDetails().then(setDetails); }, []);
+
   const callback = formState => getGoodsDetails(formState).then(data => setData(data.results));
 
-  const { handleInputChange, formState } = useForm({ goodsSearch: '' }, callback);
+  const { handleInputChange, formState } = useForm({
+    goodsSearch: '' 
+  }, callback);
 
   useEffect(() => { callback(formState) }, [formState]);
 
@@ -30,12 +36,17 @@ export default function GoodsDetails () {
         <Form.Row>
           <Col lg={3}>
             <Form.Control
-              type="text"
-              placeholder="Поиск по названию детали"
+              as="select"
               name="goodsSearch"
               value={formState.goodsSearch}
               onChange={handleInputChange}
-            />
+              required
+            >
+              <option value="" disabled>Выберите деталь</option>
+              {details.map(d => (
+                <option key={d.detailId} value={d.detailId}>{d.goodsName}</option>
+              ))}
+            </Form.Control>            
           </Col>
         </Form.Row>
       </Form>

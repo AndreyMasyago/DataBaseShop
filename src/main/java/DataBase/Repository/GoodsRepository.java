@@ -17,15 +17,15 @@ public interface GoodsRepository extends CrudRepository<Goods, Integer>  {
 
     // 2.1
     @Query(
-            "SELECT g FROM Goods g INNER JOIN FETCH g.catalog c INNER JOIN FETCH g.provider p WHERE c.goodsName LIKE CONCAT('%', :goodsSearch, '%')"
+            "SELECT g FROM Goods g INNER JOIN FETCH g.catalog c INNER JOIN FETCH g.provider p WHERE c.detailId= :goodsSearch"
     )
-    public List<Goods> getGoodsInfo(@Param("goodsSearch") String goodsSearch);
+    public List<Goods> getGoodsInfo(@Param("goodsSearch") Integer goodsSearch);
 
     // 2.2
     @Query(
-            "SELECT COUNT(g.goodsId) FROM Goods g INNER JOIN g.catalog c WHERE c.goodsName LIKE CONCAT('%', :goodsSearch, '%')"
+            "SELECT COUNT(g.goodsId) FROM Goods g INNER JOIN g.catalog c WHERE c.detailId= :goodsSearch"
     )
-    public Long countGoodsInfo(@Param("goodsSearch") String goodsSearch);
+    public Long countGoodsInfo(@Param("goodsSearch") Integer goodsSearch);
 
     // 5
     @Query(
