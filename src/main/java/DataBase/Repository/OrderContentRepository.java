@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 public interface OrderContentRepository extends CrudRepository <OrderContent, Integer> {
@@ -20,28 +20,14 @@ public interface OrderContentRepository extends CrudRepository <OrderContent, In
                     "INNER JOIN FETCH orderContent.orderEntity orderEntity " +
                     "INNER JOIN FETCH orderContent.goods goods " +
                     "INNER JOIN FETCH goods.catalog c " +
-            "WHERE c.goodsName LIKE CONCAT('%', :goodsSearch, '%') " +
+            "WHERE c.detailId = :goodsSearch " +
                     "AND orderEntity.orderDate BETWEEN :orderDateFrom AND :orderDateTo " +
                     "AND orderContent.amount > :amountLimit"
     )
     public List<OrderContent> getOrderContentFilteredByDate(
-            @Param("goodsSearch") String goodsSearch,
+            @Param("goodsSearch") Integer goodsSearch,
             @Param("orderDateFrom") Date orderDateFrom,
             @Param("orderDateTo") Date orderDateTo,
-            @Param("amountLimit") Long amountLimit
-    );
-
-    @Query(
-            "SELECT orderContent " +
-            "FROM OrderContent orderContent " +
-                    "INNER JOIN FETCH orderContent.orderEntity orderEntity " +
-                    "INNER JOIN FETCH orderContent.goods goods " +
-                    "INNER JOIN FETCH goods.catalog c " +
-            "WHERE c.goodsName LIKE CONCAT('%', :goodsSearch, '%') " +
-                    "AND orderContent.amount > :amountLimit"
-    )
-    public List<OrderContent> getOrderContentFilteredByDate(
-            @Param("goodsSearch") String goodsSearch,
             @Param("amountLimit") Integer amountLimit
     );
 
@@ -52,11 +38,14 @@ public interface OrderContentRepository extends CrudRepository <OrderContent, In
                     "INNER JOIN orderContent.orderEntity orderEntity " +
                     "INNER JOIN orderContent.goods goods " +
                     "INNER JOIN goods.catalog c " +
-            "WHERE c.goodsName LIKE CONCAT('%', :goodsSearch, '%') " +
-                    "AND orderContent.amount > :amountLimit"
+            "WHERE c.detailId= :goodsSearch " +
+                    "AND orderContent.amount > :amountLimit " +
+                    "AND orderEntity.orderDate BETWEEN :orderDateFrom AND :orderDateTo "
     )
     public Long countOrderContentFilteredByDate(
-            @Param("goodsSearch") String goodsSearch,
+            @Param("goodsSearch") Integer goodsSearch,
+            @Param("orderDateFrom") Date orderDateFrom,
+            @Param("orderDateTo") Date orderDateTo,
             @Param("amountLimit") Integer amountLimit
     );
 

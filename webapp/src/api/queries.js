@@ -74,3 +74,9 @@ export async function addDelivery(data) {
     return { errors: await r.json() };
   }
 }
+
+export async function getOrdersWithAmountFiltredByDate(param) {
+  const r = await fetch(
+    `${API_BASE}/order-content/order-content-by-date/?goodsSearch=${param.goodsSearch}&amountLimit=${param.amountLimit}&orderDateFrom=${param.orderDateFrom}&orderDateTo=${param.orderDateTo}`);
+  return await r.json();
+}

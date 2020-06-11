@@ -57,6 +57,9 @@ function Intro() {
           <Link to="/goods-details/">#2. Goods details</Link>
         </div>
         <div>
+          <Link to="/orders-with-amount-filtred-by-date/">#3 Orders with amount</Link>
+        </div>
+        <div>
           <Link to="/bestsellers/">#5. BestSellers</Link>
         </div>
         <div>
@@ -76,7 +79,7 @@ function Intro() {
         </div>
         <div>
           <Link to="/finance-report/">#12. Finance report</Link>
-        </div>        
+        </div>
         <div>
           <Link to="/storage-report/">#13 Storage Report</Link>
         </div>

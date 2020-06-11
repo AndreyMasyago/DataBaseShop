@@ -34,6 +34,7 @@ import FinanceReport from './components/pages/queries/FinanceReport';
 import DailyReport from './components/pages/queries/DailyReport';
 import StorageReport from './components/pages/queries/StorageReport';
 import DeliveredMoreThanCount from './components/pages/queries/DeliveredMoreThanCount';
+import OrdersWithAmountFiltredByDate from './components/pages/queries/OrdersWithAmountFiltredByDate';
 
 import AddDeliveryForm from './components/forms/AddDeliveryForm';
 
@@ -156,6 +157,10 @@ function App() {
 
               <Route path="/delivered-more-than-count/">
                 <DeliveredMoreThanCount />
+              </Route>
+
+              <Route path="/orders-with-amount-filtred-by-date/">
+                <OrdersWithAmountFiltredByDate />
               </Route>
 
             </Switch>
