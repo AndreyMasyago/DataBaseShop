@@ -43,7 +43,10 @@ function Intro() {
       </Col>
 
       <Col lg={6}>
-        <h2>Queries</h2>
+        <h2>Queries</h2>        
+        <div>
+          <Link to="/delivered-more-than-count/">#1 Delivered more than count</Link>
+        </div>
         <div>
           <Link to="/goods-details/">#2. Goods details</Link>
         </div>

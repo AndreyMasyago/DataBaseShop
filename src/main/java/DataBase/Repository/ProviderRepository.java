@@ -18,13 +18,13 @@ public interface ProviderRepository extends CrudRepository<Provider, Integer> {
             "FROM Provider p " +
                     "JOIN p.goodsList goods " +
                     "JOIN goods.deliveryContentList deliveryContent " +
-            "WHERE goods.catalog.goodsName LIKE CONCAT('%',:goodsSearch,'%') " +
-                    "AND p.category LIKE CONCAT('%',:categorySearch,'%') " +
+            "WHERE goods.catalog.detailId = :goodsSearch " +
+                    "AND p.category = :categorySearch " +
                     "AND deliveryContent.delivery.arrivingDateOnStorage BETWEEN :arrivingDateFrom AND :arrivingDateTo " +
-            "GROUP BY p.providerName HAVING SUM(deliveryContent.amount) > :amountLimit"
+            "GROUP BY p.providerId HAVING SUM(deliveryContent.amount) > :amountLimit"
     )
     public List<Provider> findDeliveredMoreThanCount(
-            @Param("goodsSearch") String goodsSearch,
+            @Param("goodsSearch") Integer goodsSearch,
             @Param("categorySearch") String categorySearch,
             @Param("arrivingDateFrom") Date arrivingDateFrom,
             @Param("arrivingDateTo") Date arrivingDateTo,
@@ -38,14 +38,14 @@ public interface ProviderRepository extends CrudRepository<Provider, Integer> {
                             "FROM Provider p " +
                                     "JOIN p.goodsList goods " +
                                     "JOIN goods.deliveryContentList deliveryContent " +
-                            "WHERE goods.catalog.goodsName LIKE CONCAT('%',:goodsSearch,'%') " +
-                                    "AND p.category LIKE CONCAT('%',:categorySearch,'%') " +
+                            "WHERE goods.catalog.detailId = :goodsSearch " +
+                                    "AND p.category = :categorySearch " +
                                     "AND deliveryContent.delivery.arrivingDateOnStorage BETWEEN :arrivingDateFrom AND :arrivingDateTo " +
                             "GROUP BY p.providerId HAVING SUM(deliveryContent.amount) > :amountLimit " +
                     ")"
     )
     public Long countDeliveredMoreThanCount(
-            @Param("goodsSearch") String goodsSearch,
+            @Param("goodsSearch") Integer goodsSearch,
             @Param("categorySearch") String categorySearch,
             @Param("arrivingDateFrom") Date arrivingDateFrom,
             @Param("arrivingDateTo") Date arrivingDateTo,

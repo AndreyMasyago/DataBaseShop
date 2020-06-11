@@ -55,3 +55,9 @@ export async function getStorageReport() {
     `${API_BASE}/goods/storage-report/`);
   return await r.json();
 }
+
+export async function getDeliveredMoreThanCount(param) {
+  const r = await fetch(
+    `${API_BASE}/provider/delivered-more-than-count/?goodsSearch=${param.goodsSearch}&categorySearch=${param.categorySearch}&amountLimit=${param.amountLimit}&startDate=${param.startDate}&endDate=${param.endDate}`);
+  return await r.json();
+}

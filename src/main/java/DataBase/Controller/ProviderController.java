@@ -70,7 +70,7 @@ public class ProviderController {
     @GetMapping("/api/provider/delivered-more-than-count/")
     @ResponseBody
     public Map<String, Object> deliveredMoreThanCount(
-            @RequestParam String goodsSearch,
+            @RequestParam Integer goodsSearch,
             @RequestParam String categorySearch,
             @RequestParam Long amountLimit,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
@@ -79,14 +79,9 @@ public class ProviderController {
         List<Provider> providers = providerRepository.findDeliveredMoreThanCount(goodsSearch, categorySearch, startDate, endDate, amountLimit);
         Long count = providerRepository.countDeliveredMoreThanCount(goodsSearch, categorySearch, startDate, endDate, amountLimit);
 
-        ArrayList<String> providerNames = new ArrayList<>();
-
-        for (Provider p : providers) {
-            providerNames.add(p.getProviderName());
-        }
-
         Map<String, Object> response = new HashMap<>();
-        response.put("results", providerNames);
+
+        response.put("results", providers);
         response.put("count", count);
 
         return response;
