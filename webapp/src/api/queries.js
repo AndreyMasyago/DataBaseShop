@@ -61,3 +61,16 @@ export async function getDeliveredMoreThanCount(param) {
     `${API_BASE}/provider/delivered-more-than-count/?goodsSearch=${param.goodsSearch}&categorySearch=${param.categorySearch}&amountLimit=${param.amountLimit}&startDate=${param.startDate}&endDate=${param.endDate}`);
   return await r.json();
 }
+
+export async function addDelivery(data) {
+  const r = await fetch(`${API_BASE}/delivery/addDelivery`, {
+    method: 'POST',
+    headers: {'Content-type': 'application/json'},
+    body: JSON.stringify(data)
+  });
+  if (r.status === 200) {
+    return await r.json();
+  } else {
+    return { errors: await r.json() };
+  }
+}

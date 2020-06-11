@@ -35,6 +35,8 @@ import DailyReport from './components/pages/queries/DailyReport';
 import StorageReport from './components/pages/queries/StorageReport';
 import DeliveredMoreThanCount from './components/pages/queries/DeliveredMoreThanCount';
 
+import AddDeliveryForm from './components/forms/AddDeliveryForm';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -93,6 +95,14 @@ function App() {
               <Route path="/StorageTransactions/">
                 <StorageTransactionsPage />
               </Route>
+
+              {/* Perfect forms */}
+
+              <Route path="/add-delivery-form/">
+                <AddDeliveryForm />
+              </Route>
+
+              {/* Queries */}
 
               <Route path="/bestsellers/">
                 <BestSellers />

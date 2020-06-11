@@ -43,7 +43,13 @@ function Intro() {
       </Col>
 
       <Col lg={6}>
-        <h2>Queries</h2>        
+        <h2>&lsquo;Perfect&rsquo; forms</h2>
+
+        <div>
+          <Link to="/add-delivery-form/">Add delivery form (input)</Link>
+        </div>
+
+        <h2 className="queries-header">Queries</h2>
         <div>
           <Link to="/delivered-more-than-count/">#1 Delivered more than count</Link>
         </div>
