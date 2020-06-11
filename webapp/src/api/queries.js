@@ -49,3 +49,9 @@ export async function getDailyReport(params) {
     `${API_BASE}/goods/daily-report/?reportDate=${params.reportDate}`);
   return await r.json();
 }
+
+export async function getStorageReport() {
+  const r = await fetch(
+    `${API_BASE}/goods/storage-report/`);
+  return await r.json();
+}

@@ -32,6 +32,7 @@ import ProviderIncomeStats from './components/pages/queries/ProviderIncomeStats'
 import OverHead from './components/pages/queries/OverHead';
 import FinanceReport from './components/pages/queries/FinanceReport';
 import DailyReport from './components/pages/queries/DailyReport';
+import StorageReport from './components/pages/queries/StorageReport';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -136,6 +137,10 @@ function App() {
 
               <Route path="/daily-report/">
                 <DailyReport />
+              </Route>
+
+              <Route path="/storage-report/">
+                <StorageReport />
               </Route>
 
             </Switch>

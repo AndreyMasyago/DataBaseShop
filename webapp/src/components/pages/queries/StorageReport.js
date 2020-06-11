@@ -1,44 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
-import Form from 'react-bootstrap/Form';
 
-import { getDailyReport } from '../../../api/queries';
+import { getStorageReport } from '../../../api/queries';
 import useForm from '../../forms/formHook';
 
 
-export default function DailyReport () {
+export default function StorageReport() {
   const [data, setData] = useState([]);
 
-  const callback = formState => getDailyReport(formState).then(data => setData(data.results));
+  const callback = formState => getStorageReport().then(data => setData(data.results));
 
-  const { handleInputChange, formState } = useForm({
-    reportDate: '2020-10-21'
+  const { formState } = useForm({
   }, callback);
 
-  useEffect(() => { callback(formState) }, [formState]);
+  useEffect(() => { callback() }, [formState]);
+
+  console.log(data);
 
   return (
     <div>
-      <h1>Daily Report</h1>
-      <Form>
-        <Form.Control
-              type="date"
-              placeholder="Выберите дату для отчёта"
-              name="reportDate"
-              value={formState.reportDate}
-              onChange={handleInputChange}
-              required
-        />
-      </Form>
-
+      <h1>Инвентаризационная ведомость</h1>
       <Table striped bordered hover>
         <thead>
           <tr>
             <th>#</th>
             <th>Goods Name</th>
             <th>Amount</th>
-            <th>Total Profit</th>
             <th>Producer</th>
             <th>Provider</th>
           </tr>
@@ -49,7 +37,6 @@ export default function DailyReport () {
               <td><Link to={`/goods/${item.goodsId}/`}>{item.goodsId}</Link></td>
               <td>{item.goodsName}</td>
               <td>{item.amount}</td>
-              <td>{item.total}</td>
               <td>{item.producer}</td>
               <td>{item.providerName}</td>
             </tr>

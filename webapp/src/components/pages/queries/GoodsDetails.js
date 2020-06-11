@@ -47,6 +47,9 @@ export default function GoodsDetails () {
               <tr>
                 <th>Goods ID</th>
                 <th>Goods Name</th>
+                <th>Provider Name</th>
+                <th>Purchase Price</th>
+                <th>Delivery Time</th>
               </tr>
             </thead>
             <tbody>
@@ -54,6 +57,9 @@ export default function GoodsDetails () {
                 <tr key={item.goodsId}>
                   <td><Link to={`/goods/${item.goodsId}/`}>{item.goodsId}</Link></td>
                   <td>{item.goodsName}</td>
+                  <td>{item.providerName}</td>
+                  <td>{item.purchasePrice}</td>
+                  <td>{item.deliveryTime}</td>
                 </tr>
               ))}
             </tbody>
