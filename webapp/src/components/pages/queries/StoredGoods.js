@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 
-import { getStorageReport } from '../../../api/queries';
+import { getStoredGoods } from '../../../api/queries';
 import useForm from '../../forms/formHook';
 
 
 export default function StorageReport() {
   const [data, setData] = useState([]);
 
-  const callback = formState => getStorageReport().then(data => setData(data.results));
+  const callback = formState => getStoredGoods().then(data => setData(data.results));
 
   const { formState } = useForm({
   }, callback);
@@ -22,21 +22,23 @@ export default function StorageReport() {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>#</th>
             <th>Goods Name</th>
-            <th>Amount</th>
+            <th>Total Amount</th>
+            <th>Total Size</th>
             <th>Producer</th>
             <th>Provider</th>
+            <th>Cells Id</th>
           </tr>
         </thead>
         <tbody>
           {data.map(item => (
-            <tr key={item.goodsId}>
-              <td><Link to={`/goods/${item.goodsId}/`}>{item.goodsId}</Link></td>
-              <td>{item.goodsName}</td>
-              <td>{item.amount}</td>
-              <td>{item.producer}</td>
-              <td>{item.providerName}</td>
+            <tr key={item[0].goodsId}>
+              <td><Link to={`/goods/${item[0].goodsId}/`}>{item[0].catalog.goodsName}</Link></td>
+              <td>{item[2]}</td>
+              <td>{item[3]}</td>
+              <td>{item[0].producer}</td>
+              <td>{item[0].provider.providerName}</td>
+              <td>{item[1].cellsId}</td>
             </tr>
           ))}
         </tbody>

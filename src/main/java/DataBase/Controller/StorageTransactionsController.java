@@ -78,24 +78,7 @@ public class StorageTransactionsController {
         Map<String, Object> response = new HashMap<>();
         List<Object[]> storedGoods = storageTransactionsRepository.getStoredGoods();
 
-        ArrayList<Map<String, Object>> storedGoodsList = new ArrayList<>();
-
-        Map<String, Object> storedGoodsInfo;
-
-        for (Object[] stored : storedGoods) {
-            storedGoodsInfo = new HashMap<>();
-
-            storedGoodsInfo.put("goodsId", stored[0]);
-            storedGoodsInfo.put("cellsId", stored[1]);
-            storedGoodsInfo.put("goodsName", stored[2]);
-            storedGoodsInfo.put("size", stored[3]);
-            storedGoodsInfo.put("totalAmount", stored[4]);
-            storedGoodsInfo.put("totalSize", stored[5]);
-
-            storedGoodsList.add(storedGoodsInfo);
-        }
-
-        response.put("results", storedGoodsList);
+        response.put("results", storedGoods);
 
         return response;
     }

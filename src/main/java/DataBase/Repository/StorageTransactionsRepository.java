@@ -12,7 +12,7 @@ public interface StorageTransactionsRepository extends CrudRepository<StorageTra
 
     // 4
     @Query(
-            "SELECT g.goodsId, storage.cellsId, c.goodsName, g.size, SUM(st.amount), SUM(st.amount) * g.size " +
+            "SELECT g, storage, SUM(st.amount), SUM(st.amount) * g.size " +
                     "FROM StorageTransactions st " +
                     "INNER JOIN st.goods g " +
                     "INNER JOIN g.catalog c " +
