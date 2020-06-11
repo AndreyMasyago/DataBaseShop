@@ -49,6 +49,10 @@ function Intro() {
           <Link to="/add-delivery-form/">Add delivery form (input)</Link>
         </div>
 
+        <div>
+          <Link to="/monthly-average-sales/">#6 Monthly Average Sales (output)</Link>
+        </div>
+
         <h2 className="queries-header">Queries</h2>
         <div>
           <Link to="/delivered-more-than-count/">#1 Delivered more than count</Link>
@@ -58,9 +62,6 @@ function Intro() {
         </div>
         <div>
           <Link to="/bestsellers/">#5. BestSellers</Link>
-        </div>
-        <div>
-          <Link to="/monthly-average-sales/">#6 Monthly Average Sales</Link>
         </div>
         <div>
           <Link to="/provider-income-stats/">#7. Provider Income Stats</Link>
@@ -76,7 +77,7 @@ function Intro() {
         </div>
         <div>
           <Link to="/finance-report/">#12. Finance report</Link>
-        </div>        
+        </div>
         <div>
           <Link to="/storage-report/">#13 Storage Report</Link>
         </div>
