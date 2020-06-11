@@ -1,35 +1,17 @@
 .App {
+  font-size: 20px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.navbar {
+  padding-left: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.navbar-brand {
+  font-size: 32px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+h1 {
+  font-size: 28px;
 }
 
 form {
@@ -44,18 +26,23 @@ form.search-form {
 }
 
 
-a {
-  color: white;
+a, a:hover {
+  color: #3c3c3c;
   text-decoration: underline;
 }
 
-a:hover {
-  color: white;
+a.btn {
+  text-decoration: none;
 }
 
 .controls {
   cursor: pointer;
   text-decoration: underline;
+}
+
+.btn-create-container {
+  margin-top: 15px;
+  margin-bottom: 25px;
 }
 
 .FinanceReport-total-row {

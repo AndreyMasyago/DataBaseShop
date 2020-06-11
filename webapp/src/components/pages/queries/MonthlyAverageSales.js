@@ -38,7 +38,7 @@ export default function MonthlyAverageSales () {
         </Form.Row>
       </Form>
 
-      <Table striped bordered hover variant="dark">
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th>Goods ID</th>

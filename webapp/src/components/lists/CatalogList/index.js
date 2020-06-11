@@ -18,7 +18,7 @@ export default function CatalogList() {
   const match = useRouteMatch();
 
   return (
-    <Table striped bordered hover variant="dark">
+    <Table striped bordered hover>
       <thead>
         <tr>
           <th>#</th>
@@ -31,7 +31,7 @@ export default function CatalogList() {
           <tr key={item.detailId}>
             <td><Link to={`${match.url}${item.detailId}/`}>{item.detailId}</Link></td>
             <td>{item.goodsName}</td>
-            <td><span className="controls" onClick={() => deleteItem(item.detailId)}>Удалить</span></td>
+            <td style={{width: 140, textAlign: 'center'}}><span className="btn btn-danger" onClick={() => deleteItem(item.detailId)}>Удалить</span></td>
           </tr>
         ))}
       </tbody>

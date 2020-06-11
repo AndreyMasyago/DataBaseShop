@@ -18,7 +18,7 @@ export default function DeliveriesList() {
   const match = useRouteMatch();
 
   return (
-    <Table striped bordered hover variant="dark">
+    <Table striped bordered hover>
       <thead>
         <tr>
           <th>#</th>
@@ -31,7 +31,7 @@ export default function DeliveriesList() {
           <tr key={item.deliveryId}>
             <td><Link to={`${match.url}${item.deliveryId}/`}>{item.deliveryId}</Link></td>
             <td>{item.arrivingDateOnStorage}</td>
-            <td><span className="controls" onClick={() => deleteItem(item.deliveryId)}>Удалить</span></td>
+            <td style={{width: 140, textAlign: 'center'}}><span className="btn btn-danger" onClick={() => deleteItem(item.deliveryId)}>Удалить</span></td>
           </tr>
         ))}
       </tbody>

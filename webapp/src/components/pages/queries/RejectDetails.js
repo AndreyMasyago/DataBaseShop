@@ -14,7 +14,7 @@ export default function RejectDetails () {
     <div>
       <h1>Summary of rejected details</h1>
 
-      <Table striped bordered hover variant="dark">
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th>Goods ID</th>

@@ -14,7 +14,7 @@ export default function BestSellers () {
     <div>
       <h1>Top 5 best selling goods</h1>
 
-      <Table striped bordered hover variant="dark">
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th>Goods ID</th>

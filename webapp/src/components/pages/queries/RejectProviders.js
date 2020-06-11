@@ -14,7 +14,7 @@ export default function RejectProviders () {
     <div>
       <h1>Providers with rejects</h1>
 
-      <Table striped bordered hover variant="dark">
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th>Provider ID</th>

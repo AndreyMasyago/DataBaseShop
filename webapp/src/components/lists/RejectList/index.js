@@ -18,7 +18,7 @@ export default function RejectList() {
   const match = useRouteMatch();
 
   return (
-    <Table striped bordered hover variant="dark">
+    <Table striped bordered hover>
       <thead>
         <tr>
           <th>#</th>
@@ -39,7 +39,7 @@ export default function RejectList() {
             <td>{item.goods.catalog.goodsName}</td>
             <td>{item.goods.producer}</td>
             <td>{item.goods.provider.providerName}</td>
-            <td><span className="controls" onClick={() => deleteItem(item.rejectId)}>Удалить</span></td>
+            <td style={{width: 140, textAlign: 'center'}}><span className="btn btn-danger" onClick={() => deleteItem(item.rejectId)}>Удалить</span></td>
           </tr>
         ))}
       </tbody>

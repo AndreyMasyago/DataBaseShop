@@ -2,9 +2,10 @@ import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
+import Container from 'react-bootstrap/Container';
+import Navbar from 'react-bootstrap/Navbar';
 
 import Intro from './components/Intro'
 import CatalogPage from './components/pages/crud/CatalogPage';
@@ -31,18 +32,13 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Router>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-            </ul>
-          </nav>
+    <Container className="App">
+      <Navbar>
+        <Navbar.Brand href="/">Home</Navbar.Brand>
+      </Navbar>
 
-          <div>
+      <div>
+        <Router>
             {/* A <Switch> looks through its children <Route>s and
                 renders the first one that matches the current URL. */}
             <Switch>
@@ -115,10 +111,9 @@ function App() {
               </Route>
 
             </Switch>
-          </div>
         </Router>
-      </header>
-    </div>
+      </div>
+    </Container>
   );
 }
 

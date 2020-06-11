@@ -18,7 +18,7 @@ export default function GoodsList() {
   const match = useRouteMatch();
 
   return (
-    <Table striped bordered hover variant="dark">
+    <Table striped bordered hover>
       <thead>
         <tr>
           <th>#</th>
@@ -43,7 +43,7 @@ export default function GoodsList() {
             <td>{item.purchasePrice}</td>
             <td>{item.sellingPrice}</td>
             <td>{item.producer}</td>
-            <td><span className="controls" onClick={() => deleteItem(item.goodsId)}>Удалить</span></td>
+            <td style={{width: 140, textAlign: 'center'}}><span className="btn btn-danger" onClick={() => deleteItem(item.goodsId)}>Удалить</span></td>
           </tr>
         ))}
       </tbody>

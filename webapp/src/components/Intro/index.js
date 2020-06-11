@@ -1,12 +1,15 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 import './styles.css';
 
 function Intro() {
   return (
-    <div className="Intro">
-      <div className="Intro-left">
+    <Row className="Intro">
+      <Col lg={6}>
+        <h2>CRUD</h2>
         <div>
           <Link to="/catalog/">Catalog</Link>
         </div>
@@ -37,9 +40,10 @@ function Intro() {
         <div>
           <Link to="/storageTransactions/">StorageTransactions</Link>
         </div>
-      </div>
+      </Col>
 
-      <div className="Intro-right">
+      <Col lg={6}>
+        <h2>Queries</h2>
         <div>
           <Link to="/goods-details/">#2. Goods details</Link>
         </div>
@@ -59,8 +63,8 @@ function Intro() {
         <div>
           <Link to="/finance-report/">#12. Finance report</Link>
         </div>
-      </div>
-    </div>
+      </Col>
+    </Row>
   );
 }
 

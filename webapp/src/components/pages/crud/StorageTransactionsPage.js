@@ -5,30 +5,67 @@ import {
   Link,
   useRouteMatch
 } from "react-router-dom";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 import StorageTransactionForm from '../../forms/StorageTransactionForm';
 import StorageTransactionsList from '../../lists/StorageTransactionsList';
 
 export default function StorageTransactionsPage() {
   const match = useRouteMatch();
-  
+
   return (
     <div>
 
-      <Switch>        
+      <Switch>
         <Route path={`${match.path}create/`}>
-          <Link to={`${match.url}/`}>Back to list</Link>
+          <Row>
+            <Col>
+              <Breadcrumb>
+                <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+                <Breadcrumb.Item href={`${match.url}/`}>
+                  Storage Transactions
+                </Breadcrumb.Item>
+                <Breadcrumb.Item active>Create</Breadcrumb.Item>
+              </Breadcrumb>
+            </Col>
+          </Row>
           <StorageTransactionForm />
         </Route>
-        
+
         <Route path={`${match.path}:id/`}>
-          <Link to={`${match.url}/`}>Back to list</Link>
+          <Row>
+            <Col>
+              <Breadcrumb>
+                <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+                <Breadcrumb.Item href={`${match.url}/`}>
+                  Storage Transactions
+                </Breadcrumb.Item>
+                <Breadcrumb.Item active>Edit</Breadcrumb.Item>
+              </Breadcrumb>
+            </Col>
+          </Row>
+
           <StorageTransactionForm />
         </Route>
-        
+
         <Route path={match.path}>
-          <h1>StorageTransactions</h1>
-          <Link to={`${match.url}create/`}>Create StorageTransaction</Link>
+          <Row>
+            <Col>
+              <Breadcrumb>
+                <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+                <Breadcrumb.Item active>Storage Transactions</Breadcrumb.Item>
+              </Breadcrumb>
+            </Col>
+          </Row>
+
+          <Row className="btn-create-container">
+            <Col>
+              <Link className="btn btn-primary" to={`${match.url}create/`}>Create storage transaction</Link>
+            </Col>
+          </Row>
+
           <StorageTransactionsList />
         </Route>
       </Switch>
