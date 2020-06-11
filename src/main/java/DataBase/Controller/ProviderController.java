@@ -5,6 +5,7 @@ import DataBase.Domain.OrderEntity;
 import DataBase.Domain.Provider;
 import DataBase.Repository.ProviderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -72,10 +73,11 @@ public class ProviderController {
             @RequestParam String goodsSearch,
             @RequestParam String categorySearch,
             @RequestParam Long amountLimit,
-            Map<String, Object> model) {
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate) {
 
-        List<Provider> providers = providerRepository.findDeliveredMoreThanCount(goodsSearch, categorySearch, amountLimit);
-        Long count = providerRepository.countDeliveredMoreThanCount(goodsSearch, categorySearch, amountLimit);
+        List<Provider> providers = providerRepository.findDeliveredMoreThanCount(goodsSearch, categorySearch, startDate, endDate, amountLimit);
+        Long count = providerRepository.countDeliveredMoreThanCount(goodsSearch, categorySearch, startDate, endDate, amountLimit);
 
         ArrayList<String> providerNames = new ArrayList<>();
 
