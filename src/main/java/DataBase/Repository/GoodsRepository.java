@@ -85,4 +85,8 @@ public interface GoodsRepository extends CrudRepository<Goods, Integer>  {
             "GROUP BY g.goodsId, storage.cellsId, c.detailId"
     )
     public List<Object[]> getStorageReport();
+
+    // 12
+    @Query(value="SELECT * FROM finance_report(:startDate, :endDate)", nativeQuery=true)
+    List<Object[]> getFinanceReport(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 }

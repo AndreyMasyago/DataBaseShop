@@ -25,6 +25,7 @@ import RejectProviders from './components/pages/queries/RejectProviders';
 import MonthlyAverageSales from './components/pages/queries/MonthlyAverageSales';
 import ProviderIncomeStats from './components/pages/queries/ProviderIncomeStats';
 import OverHead from './components/pages/queries/OverHead';
+import FinanceReport from './components/pages/queries/FinanceReport';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -32,7 +33,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">        
+      <header className="App-header">
         <Router>
           <nav>
             <ul>
@@ -41,7 +42,7 @@ function App() {
               </li>
             </ul>
           </nav>
-          
+
           <div>
             {/* A <Switch> looks through its children <Route>s and
                 renders the first one that matches the current URL. */}
@@ -53,7 +54,7 @@ function App() {
               <Route path="/catalog/">
                 <CatalogPage />
               </Route>
-              
+
               <Route path="/deliveryContent/">
                 <DeliveryContentPage />
               </Route>
@@ -106,18 +107,21 @@ function App() {
                 <RejectProviders />
               </Route>
 
-              <Route path="/order-content/monthly-average-sales/">
+              <Route path="/monthly-average-sales/">
                 <MonthlyAverageSales />
               </Route>
 
-              <Route path="/order-content/provider-income-stats/">
+              <Route path="/provider-income-stats/">
                 <ProviderIncomeStats />
               </Route>
 
-              <Route path="/order-content/overhead/">
+              <Route path="/overhead/">
                 <OverHead />
               </Route>
 
+              <Route path="/finance-report/">
+                <FinanceReport />
+              </Route>
 
             </Switch>
           </div>
