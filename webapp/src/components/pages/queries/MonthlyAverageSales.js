@@ -150,7 +150,7 @@ export default function MonthlyAverageSales () {
           <Table striped bordered hover>
             <thead>
               <tr>
-                <th>Goods ID</th>
+                <th>Goods Name</th>
                 <th>Month</th>
                 <th>Producer</th>
                 <th><b>Amount</b></th>

@@ -25,7 +25,6 @@ export async function getMonthlyAverageSales(params) {
     q.push(`${k}=${params[k]}`);
     return q;
   }, []).join('&');
-  console.log(query);
 
   const r = await fetch(
   	`${API_BASE}/order-content/monthly-average-sales-2/?${query}`);
