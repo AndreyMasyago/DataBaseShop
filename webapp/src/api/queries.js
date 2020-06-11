@@ -40,6 +40,12 @@ export async function getProviderIncomeStats(params) {
 
 export async function getOverHead() {
   const r = await fetch(
-  	`${API_BASE}/order-content/overhead/`);
+    `${API_BASE}/order-content/overhead/`);
+  return await r.json();
+}
+
+export async function getDailyReport(params) {
+  const r = await fetch(
+    `${API_BASE}/goods/daily-report/?reportDate=${params.reportDate}`);
   return await r.json();
 }

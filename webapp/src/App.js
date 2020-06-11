@@ -31,6 +31,7 @@ import MonthlyAverageSales from './components/pages/queries/MonthlyAverageSales'
 import ProviderIncomeStats from './components/pages/queries/ProviderIncomeStats';
 import OverHead from './components/pages/queries/OverHead';
 import FinanceReport from './components/pages/queries/FinanceReport';
+import DailyReport from './components/pages/queries/DailyReport';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -131,6 +132,10 @@ function App() {
 
               <Route path="/finance-report/">
                 <FinanceReport />
+              </Route>
+
+              <Route path="/daily-report/">
+                <DailyReport />
               </Route>
 
             </Switch>

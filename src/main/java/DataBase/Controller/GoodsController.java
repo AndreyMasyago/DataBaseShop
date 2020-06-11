@@ -207,6 +207,7 @@ public class GoodsController {
             goodsInfo.put("goodsName", p.getGoodsName());
             goodsInfo.put("providerName", p.getProvider().getProviderName());
             goodsInfo.put("category", p.getProvider().getCategory());
+            goodsInfo.put("goodsId", p.getGoodsId());
 
             goodsInfo.put("amount", amount);
             goodsInfo.put("total", total);
