@@ -34,7 +34,8 @@ function AddDeliveryForm({ saveFormState, lastFormState }) {
         setErrors(response.errors);
         return { preventRedirect: true };
       } else {
-        saveFormState({});
+        saveFormState(EMPTY_STATE);
+        setFormState(EMPTY_STATE);
       }
     });
   }
@@ -45,7 +46,10 @@ function AddDeliveryForm({ saveFormState, lastFormState }) {
   }, callback);
 
   useEffect(() => {
-    saveFormState(formState);
+
+    if (!formState.redirect) {
+      saveFormState({...formState});
+    }
   }, [saveFormState, formState])
 
   function onContentStateChange(i, newState) {

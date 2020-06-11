@@ -52,7 +52,7 @@ function App() {
     <Container className="App">
       <Router>
         <Navbar>
-          <Navbar.Brand><Link to="/">Home</Link></Navbar.Brand>
+          <Navbar.Brand><Link to="/">AutoShop</Link></Navbar.Brand>
         </Navbar>
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}

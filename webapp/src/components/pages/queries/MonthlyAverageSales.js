@@ -8,6 +8,7 @@ import Pagination from 'react-bootstrap/Pagination';
 
 import { getMonthlyAverageSales } from '../../../api/queries';
 import { listDetails } from '../../../api/catalog';
+import { MONTH } from '../../../constants';
 import useForm from '../../forms/formHook';
 
 const EMPTY_FORM = {
@@ -83,8 +84,8 @@ export default function MonthlyAverageSales () {
               required
             >
               <option value="">Месяц</option>
-              {[...Array(12).keys()].map(m => (
-                <option key={m + 1} value={m + 1}>{m + 1}</option>
+              {Object.keys(MONTH).map(k => (
+                <option value={k}>{MONTH[k]}</option>
               ))}
             </Form.Control>
           </Col>
@@ -160,7 +161,7 @@ export default function MonthlyAverageSales () {
               {data.results.map(item => (
                 <tr key={`${item.goodsId}_${item.month}`}>
                   <td><Link to={`/catalog/${item.detailId}/`}>{item.goodsName}</Link></td>
-                  <td>{item.month}</td>
+                  <td>{MONTH[item.month]}</td>
                   <td>{item.producer}</td>
                   <td><b>{item.amount}</b></td>
                 </tr>
