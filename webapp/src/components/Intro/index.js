@@ -50,7 +50,7 @@ function Intro() {
         </div>
 
         <div>
-          <Link to="/monthly-average-sales/">#6 Monthly Average Sales (output)</Link>
+          <Link to="/monthly-average-sales/">#6 Monthly average sales (output)</Link>
         </div>
 
         <h2 className="queries-header">Queries</h2>
@@ -64,16 +64,16 @@ function Intro() {
           <Link to="/orders-with-amount-filtred-by-date/">#3 Orders with amount</Link>
         </div>
         <div>
-          <Link to="/stored-goods/">#4 Stored Goods</Link>
+          <Link to="/stored-goods/">#4 Stored goods</Link>
         </div>
         <div>
-          <Link to="/bestsellers/">#5 BestSellers</Link>
+          <Link to="/bestsellers/">#5 Bestsellers</Link>
         </div>
         <div>
-          <Link to="/provider-income-stats/">#7 Provider Income Stats</Link>
+          <Link to="/provider-income-stats/">#7 Provider income stats</Link>
         </div>
         <div>
-          <Link to="/overhead/">#8 OverHead</Link>
+          <Link to="/overhead/">#8 Overhead</Link>
         </div>
         <div>
           <Link to="/goods-rejects/">#10 Reject stats</Link>
@@ -85,13 +85,13 @@ function Intro() {
           <Link to="/finance-report/">#12 Finance report</Link>
         </div>
         <div>
-          <Link to="/storage-report/">#13 Storage Report</Link>
+          <Link to="/storage-report/">#13 Storage report</Link>
         </div>
         <div>
-          <Link to="/free-space/">#15 Free Space</Link>
+          <Link to="/free-space/">#15 Free space</Link>
         </div>
         <div>
-          <Link to="/future-orders/">#16 Future Orders</Link>
+          <Link to="/future-orders/">#16 Future orders</Link>
         </div>
       </Col>
     </Row>
