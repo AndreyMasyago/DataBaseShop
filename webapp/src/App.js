@@ -33,6 +33,8 @@ import OverHead from './components/pages/queries/OverHead';
 import FinanceReport from './components/pages/queries/FinanceReport';
 import DailyReport from './components/pages/queries/DailyReport';
 
+import AddDeliveryForm from './components/forms/AddDeliveryForm';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -138,6 +140,9 @@ function App() {
                 <DailyReport />
               </Route>
 
+              <Route path="/add-delivery-form/">
+                <AddDeliveryForm />
+              </Route>
             </Switch>
         </Router>
       </div>

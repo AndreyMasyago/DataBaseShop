@@ -49,3 +49,17 @@ export async function getDailyReport(params) {
     `${API_BASE}/goods/daily-report/?reportDate=${params.reportDate}`);
   return await r.json();
 }
+
+
+export async function addDelivery(data) {
+  const r = await fetch(`${API_BASE}/delivery/addDelivery`, {
+    method: 'POST',
+    headers: {'Content-type': 'application/json'},
+    body: JSON.stringify(data)
+  });
+  if (r.status === 200) {
+    return await r.json();
+  } else {
+    return { errors: await r.json() };
+  }
+}

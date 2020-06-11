@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 const useForm = (initialState, callback) => {
   const [formState, setFormState] = useState(initialState);
-  
+
   const handleSubmit = (event) => {
     if (event) {
       event.preventDefault();
@@ -11,20 +11,20 @@ const useForm = (initialState, callback) => {
     if (callback && !formState.redirect) {
       const result = callback(formState);
 
-      Promise.resolve(result).then(() => {
+      Promise.resolve(result).then(options => {
         setFormState({
           ...formState,
-          redirect: true
+          redirect: !options || !options.preventRedirect
         });
       })
-    } 
+    }
   }
 
   const handleInputChange = (event) => {
     event.persist();
-  
+
     setFormState(formState => ({
-      ...formState, 
+      ...formState,
       [event.target.name]: event.target.value
     }));
   }
