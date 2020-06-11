@@ -8,8 +8,9 @@ import org.springframework.data.repository.query.Param;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
-public interface OrderContentRepository extends CrudRepository <OrderContent, Integer> {
+public interface OrderContentRepository extends CrudRepository <OrderContent, Integer>, MonthlyAverageSales {
     public OrderContent findByOrderContentId(int id);
     public void deleteById(int id);
 

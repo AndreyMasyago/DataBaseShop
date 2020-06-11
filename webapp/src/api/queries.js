@@ -21,8 +21,14 @@ export async function getProvidersWithReject() {
 }
 
 export async function getMonthlyAverageSales(params) {
+  const query = Object.keys(params).reduce((q, k) => {
+    q.push(`${k}=${params[k]}`);
+    return q;
+  }, []).join('&');
+  console.log(query);
+
   const r = await fetch(
-  	`${API_BASE}/order-content/monthly-average-sales/?goodsSearch=${params.goodsSearch}`);
+  	`${API_BASE}/order-content/monthly-average-sales-2/?${query}`);
   return await r.json();
 }
 
