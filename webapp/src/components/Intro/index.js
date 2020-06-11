@@ -60,10 +60,7 @@ function Intro() {
           <Link to="/overhead/">#8. OverHead</Link>
         </div>
         <div>
-          <Link to="/goods-rejects/">#10.1 Reject details</Link>
-        </div>
-        <div>
-          <Link to="/reject-providers/">#10.2 Reject providers</Link>
+          <Link to="/goods-rejects/">#10 Reject stats</Link>
         </div>
 
         <div>

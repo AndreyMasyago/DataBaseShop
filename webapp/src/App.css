@@ -27,9 +27,12 @@ a.btn {
   text-decoration: none;
 }
 
-.controls {
-  cursor: pointer;
-  text-decoration: underline;
+.search-form {
+  margin-top: 15px;
+}
+
+.report-body {
+  margin-top: 20px;
 }
 
 .btn-create-container {

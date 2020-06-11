@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
+import Table from 'react-bootstrap/Table';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 import { getProviderIncomeStats } from '../../../api/queries';
 import { listProviders } from '../../../api/provider';
@@ -22,27 +25,47 @@ export default function ProviderIncomeStats () {
 
   return (
     <div>
-    <Form onSubmit={handleSubmit}>
-        <Form.Group as={Form.Col}>
-          <Form.Label>Поставщик</Form.Label>
-          <Form.Control
-            as="select" 
-            name="providerSearch" 
-            value={formState.providerSearch} 
-            onChange={handleInputChange}
-            required
-          >
-            <option value="" disabled>Выберите поставщика</option>
-            {providers.map(p => (
-              <option key={p.providerId} value={p.providerId}>{p.providerName}</option>
-            ))}
-          </Form.Control>
-        </Form.Group>
-    </Form>
-    
-      <h1>Provider Income Stats</h1>
-      <div>Share Of Sale: {data.shareOfSale * 100}%</div>
-      <div>Share Of Amount: {data.shareOfAmount * 100}%</div>
+      <Row>
+        <Col>
+          <h1>Доля продаж поставщика</h1>
+        </Col>
+      </Row>
+
+      <Form onSubmit={handleSubmit} className="search-form">
+          <Form.Row>
+            <Col lg={3}>
+              <Form.Control
+                as="select"
+                name="providerSearch"
+                value={formState.providerSearch}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="" disabled>Выберите поставщика</option>
+                {providers.map(p => (
+                  <option key={p.providerId} value={p.providerId}>{p.providerName}</option>
+                ))}
+              </Form.Control>
+            </Col>
+          </Form.Row>
+      </Form>
+
+      <Row className="report-body">
+        <Col>
+          <Table>
+            <tbody>
+              <tr>
+                <td><b>Share Of Sale</b></td>
+                <td style={{width: 400}}>{data.shareOfSale * 100}%</td>
+              </tr>
+              <tr>
+                <td><b>Share Of Amount</b></td>
+                <td style={{width: 400}}>{data.shareOfAmount * 100}%</td>
+              </tr>
+            </tbody>
+          </Table>
+        </Col>
+      </Row>
 
     </div>
   );

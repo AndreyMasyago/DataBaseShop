@@ -6,6 +6,10 @@ import {
 } from "react-router-dom";
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 import Intro from './components/Intro'
 import CatalogPage from './components/pages/crud/CatalogPage';
@@ -96,11 +100,21 @@ function App() {
               </Route>
 
               <Route path="/goods-rejects/">
-                <RejectDetails />
-              </Route>
+                <Row>
+                  <Col>
+                    <h1>Возвраты</h1>
+                  </Col>
+                </Row>
 
-              <Route path="/reject-providers/">
-                <RejectProviders />
+                <Tabs defaultActiveKey="details" id="rejects-tabs">
+                  <Tab eventKey="details" title="Детали">
+                    <RejectDetails />
+                  </Tab>
+
+                  <Tab eventKey="providers" title="Поставщики">
+                    <RejectProviders />
+                  </Tab>
+                </Tabs>
               </Route>
 
               <Route path="/monthly-average-sales/">

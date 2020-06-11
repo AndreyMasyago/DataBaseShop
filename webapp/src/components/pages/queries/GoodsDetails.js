@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import { getGoodsDetails } from '../../../api/queries';
@@ -19,38 +20,46 @@ export default function GoodsDetails () {
 
   return (
     <div>
-      <h1>Top 5 best selling goods</h1>
+      <Row>
+        <Col>
+          <h1>Поиск деталей</h1>
+        </Col>
+      </Row>
 
       <Form className="search-form">
         <Form.Row>
-          <Col className="col-lg-3">
+          <Col lg={3}>
             <Form.Control
-              type="text" 
-              placeholder="Поиск по названию детали" 
-              name="goodsSearch" 
-              value={formState.goodsSearch} 
+              type="text"
+              placeholder="Поиск по названию детали"
+              name="goodsSearch"
+              value={formState.goodsSearch}
               onChange={handleInputChange}
             />
           </Col>
         </Form.Row>
       </Form>
 
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Goods ID</th>
-            <th>Goods Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map(item => (
-            <tr key={item.goodsId}>
-              <td><Link to={`/goods/${item.goodsId}/`}>{item.goodsId}</Link></td>
-              <td>{item.goodsName}</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+      <Row className="report-body">
+        <Col>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Goods ID</th>
+                <th>Goods Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map(item => (
+                <tr key={item.goodsId}>
+                  <td><Link to={`/goods/${item.goodsId}/`}>{item.goodsId}</Link></td>
+                  <td>{item.goodsName}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </Col>
+      </Row>
     </div>
   );
 }
