@@ -78,9 +78,14 @@ public interface OrderContentRepository extends CrudRepository <OrderContent, In
             "FROM OrderContent orderContent " +
                     "INNER JOIN orderContent.orderEntity orderEntity " +
                     "INNER JOIN orderContent.goods goods " +
-                    "INNER JOIN goods.provider provider"
+                    "INNER JOIN goods.provider provider " +
+                    "WHERE orderContent.orderEntity.orderDate BETWEEN :orderDateFrom AND :orderDateTo "
     )
-    List<Object[]> getProviderIncomeStats(@Param("providerSearch") Integer providerSearch);
+    List<Object[]> getProviderIncomeStats(
+            @Param("providerSearch") Integer providerSearch,
+            @Param("orderDateFrom") Date orderDateFrom,
+            @Param("orderDateTo") Date orderDateTo
+    );
 
     // 8
     @Query(

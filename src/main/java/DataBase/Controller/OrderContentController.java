@@ -5,6 +5,7 @@ import DataBase.Repository.GoodsRepository;
 import DataBase.Repository.OrderContentRepository;
 import DataBase.Repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -130,8 +131,14 @@ public class OrderContentController {
     }
 
     @GetMapping("/api/order-content/provider-income-stats/")
-    public Map<String, Object> providerIncomeStats(@RequestParam Integer providerSearch) {
-        List<Object[]> incomeStats = orderContentRepository.getProviderIncomeStats(providerSearch);
+    public Map<String, Object> providerIncomeStats(
+            @RequestParam Integer providerSearch,
+            @Param("orderDateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date orderDateFrom,
+            @Param("orderDateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date orderDateTo
+    ) {
+        List<Object[]> incomeStats = orderContentRepository.getProviderIncomeStats(
+                providerSearch, orderDateFrom, orderDateTo
+        );
 
         Map<String, Object> response = new HashMap<>();
         response.put("shareOfSale", incomeStats.get(0)[0]);
