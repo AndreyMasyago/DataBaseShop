@@ -48,6 +48,8 @@ export default function ProviderIncomeStats () {
                   <option key={p.providerId} value={p.providerId}>{p.providerName}</option>
                 ))}
               </Form.Control>
+            </Col>
+            <Col lg={3}>
               <Form.Control
                 type="date"
                 placeholder="С даты"
@@ -56,6 +58,8 @@ export default function ProviderIncomeStats () {
                 onChange={handleInputChange}
                 required
               />
+            </Col>
+            <Col lg={3}>
               <Form.Control
                 type="date"
                 placeholder="По дату"

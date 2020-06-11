@@ -38,45 +38,49 @@ export default function DeliveredMoreThanCount () {
 
       <Form onSubmit={handleSubmit}>
         <Form.Row>
-          <Form.Control
-            as="select"
-            name="goodsSearch"
-            value={formState.goodsSearch}
-            onChange={handleInputChange}
-            required
-          >
-            <option value="" disabled>Выберите деталь</option>
-            {details.map(d => (
-              <option key={d.detailId} value={d.detailId}>{d.goodsName}</option>
-            ))}
-          </Form.Control>
+          <Col lg={3}>
+            <Form.Control
+              as="select"
+              name="goodsSearch"
+              value={formState.goodsSearch}
+              onChange={handleInputChange}
+              required
+            >
+              <option value="" disabled>Выберите деталь</option>
+              {details.map(d => (
+                <option key={d.detailId} value={d.detailId}>{d.goodsName}</option>
+              ))}
+            </Form.Control>
+          </Col>
+          <Col lg={3}>
+            <Form.Control
+              as="select"
+              name="categorySearch"
+              value={formState.category}
+              onChange={handleInputChange}
+              required
+            >
+              <option value="" disabled>Выберите категорию</option>
+              {Object.keys(CATEGORY).map(k => (
+                <option value={k}>{CATEGORY[k]}</option>
+              ))}
+            </Form.Control>
+          </Col>
+          <Col lg={3}>
+            <Form.Control
+              type="number"
+              min="0"
+              placeholder="Минимальное пороговое значение"
+              name="amountLimit"
+              value={formState.amountLimit}
+              onChange={handleInputChange}
+              required
+            />
+          </Col>
         </Form.Row>
-        <Form.Row>
-          <Form.Control
-            as="select"
-            name="categorySearch"
-            value={formState.category}
-            onChange={handleInputChange}
-            required
-          >
-            <option value="" disabled>Выберите категорию</option>
-            {Object.keys(CATEGORY).map(k => (
-              <option value={k}>{CATEGORY[k]}</option>
-            ))}
-          </Form.Control>
-        </Form.Row>
-        <Form.Row>
-          <Form.Control
-            type="number"
-            min="0"
-            placeholder="Минимальное пороговое значение"
-            name="amountLimit"
-            value={formState.amountLimit}
-            onChange={handleInputChange}
-            required
-          />
-        </Form.Row>
-        <Form.Control
+        <Form.Row className="search-form">
+          <Col lg={3}>
+            <Form.Control
               type="date"
               placeholder="С даты"
               name="startDate"
@@ -84,17 +88,24 @@ export default function DeliveredMoreThanCount () {
               onChange={handleInputChange}
               required
             />
-        <Form.Control
-          type="date"
-          placeholder="По дату"
-          name="endDate"
-          value={formState.endDate}
-          onChange={handleInputChange}
-          required
-        />
+          </Col>
+          <Col lg={3}>
+            <Form.Control
+              type="date"
+              placeholder="По дату"
+              name="endDate"
+              value={formState.endDate}
+              onChange={handleInputChange}
+              required
+            />
+          </Col>
+        </Form.Row>
       </Form>
 
-      Количество таких поставщиков: {data.count}
+      <div className="search-form">
+        Количество таких поставщиков: {data.count}
+      </div>
+
       <Row className="report-body">
         <Col>
           <Table striped bordered hover>

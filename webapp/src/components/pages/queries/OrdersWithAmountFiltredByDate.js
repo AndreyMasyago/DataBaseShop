@@ -38,47 +38,58 @@ export default function OrdersWithAmountFiltredByDate () {
 
       <Form onSubmit={handleSubmit}>
         <Form.Row>
-          <Form.Control
-            as="select"
-            name="goodsSearch"
-            value={formState.goodsSearch}
-            onChange={handleInputChange}
-            required
-          >
-            <option value="" disabled>Выберите деталь</option>
-            {details.map(d => (
-              <option key={d.detailId} value={d.detailId}>{d.goodsName}</option>
-            ))}
-          </Form.Control>
-          <Form.Control
-            type="number"
-            min="0"
-            placeholder="Минимальное пороговое значение"
-            name="amountLimit"
-            value={formState.amountLimit}
-            onChange={handleInputChange}
-            required
-          />
-          <Form.Control
-            type="date"
-            placeholder="С даты"
-            name="orderDateFrom"
-            value={formState.orderDateFrom}
-            onChange={handleInputChange}
-            required
-          />
-          <Form.Control
-            type="date"
-            placeholder="По дату"
-            name="orderDateTo"
-            value={formState.orderDateTo}
-            onChange={handleInputChange}
-            required
-          />
+          <Col lg={4}>
+            <Form.Control
+              as="select"
+              name="goodsSearch"
+              value={formState.goodsSearch}
+              onChange={handleInputChange}
+              required
+            >
+              <option value="" disabled>Выберите деталь</option>
+              {details.map(d => (
+                <option key={d.detailId} value={d.detailId}>{d.goodsName}</option>
+              ))}
+            </Form.Control>
+          </Col>
+          <Col lg={2}>
+            <Form.Control
+              type="number"
+              min="0"
+              placeholder="Минимальное пороговое значение"
+              name="amountLimit"
+              value={formState.amountLimit}
+              onChange={handleInputChange}
+              required
+            />
+          </Col>
+          <Col lg={3}>
+            <Form.Control
+              type="date"
+              placeholder="С даты"
+              name="orderDateFrom"
+              value={formState.orderDateFrom}
+              onChange={handleInputChange}
+              required
+            />
+          </Col>
+          <Col lg={3}>
+            <Form.Control
+              type="date"
+              placeholder="По дату"
+              name="orderDateTo"
+              value={formState.orderDateTo}
+              onChange={handleInputChange}
+              required
+            />
+          </Col>
         </Form.Row>
       </Form>
 
-      <b>Количество таких чеков: {data.count}</b>
+      <div className="search-form">
+        <b>Количество таких чеков: {data.count}</b>
+      </div>
+
       <Row className="report-body">
         <Col>
           <Table striped bordered hover>
