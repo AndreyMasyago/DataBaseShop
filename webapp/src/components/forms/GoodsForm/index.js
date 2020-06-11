@@ -71,9 +71,19 @@ function GoodsForm() {
 
   const history = useHistory();
 
-  if (formState.redirect) {
-    history.push('/goods/');
-  }
+  useEffect(() => {
+    if (formState.redirect) {
+      setFormState({ ...formState, redirect: false });
+
+      console.log(window.location.search);
+      console.log(window.location.search.includes('redirectBack'));
+      if (window.location.search && window.location.search.includes('redirectBack')) {
+        history.push('/add-delivery-form/');
+      } else {
+        history.push('/goods/');
+      }
+    }
+  } );
 
   return (
     <Row>

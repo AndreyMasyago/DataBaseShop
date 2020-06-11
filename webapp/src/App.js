@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Link
 } from "react-router-dom";
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
@@ -42,130 +43,129 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 function App() {
+  const [savedState, setSavedState] = useState({});
+
   return (
     <Container className="App">
-      <Navbar>
-        <Navbar.Brand href="/">Home</Navbar.Brand>
-      </Navbar>
+      <Router>
+        <Navbar>
+          <Navbar.Brand><Link to="/">Home</Link></Navbar.Brand>
+        </Navbar>
+        {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+        <Switch>
+          <Route exact path="/">
+            <Intro />
+          </Route>
 
-      <div>
-        <Router>
-            {/* A <Switch> looks through its children <Route>s and
-                renders the first one that matches the current URL. */}
-            <Switch>
-              <Route exact path="/">
-                <Intro />
-              </Route>
+          <Route path="/catalog/">
+            <CatalogPage />
+          </Route>
 
-              <Route path="/catalog/">
-                <CatalogPage />
-              </Route>
+          <Route path="/deliveryContent/">
+            <DeliveryContentPage />
+          </Route>
 
-              <Route path="/deliveryContent/">
-                <DeliveryContentPage />
-              </Route>
+          <Route path="/delivery/">
+            <DeliveryPage />
+          </Route>
 
-              <Route path="/delivery/">
-                <DeliveryPage />
-              </Route>
+          <Route path="/goods/">
+            <GoodsPage />
+          </Route>
 
-              <Route path="/goods/">
-                <GoodsPage />
-              </Route>
+          <Route path="/orderContent/">
+            <OrderContentPage />
+          </Route>
 
-              <Route path="/orderContent/">
-                <OrderContentPage />
-              </Route>
+          <Route path="/order/">
+            <OrderPage />
+          </Route>
 
-              <Route path="/order/">
-                <OrderPage />
-              </Route>
+          <Route path="/provider/">
+            <ProviderPage />
+          </Route>
 
-              <Route path="/provider/">
-                <ProviderPage />
-              </Route>
+          <Route path="/reject/">
+            <RejectPage />
+          </Route>
 
-              <Route path="/reject/">
-                <RejectPage />
-              </Route>
+          <Route path="/storage/">
+            <StoragePage />
+          </Route>
 
-              <Route path="/storage/">
-                <StoragePage />
-              </Route>
+          <Route path="/StorageTransactions/">
+            <StorageTransactionsPage />
+          </Route>
 
-              <Route path="/StorageTransactions/">
-                <StorageTransactionsPage />
-              </Route>
+          {/* Perfect forms */}
 
-              {/* Perfect forms */}
+          <Route path="/add-delivery-form/">
+            <AddDeliveryForm saveFormState={setSavedState} lastFormState={savedState} />
+          </Route>
 
-              <Route path="/add-delivery-form/">
-                <AddDeliveryForm />
-              </Route>
+          {/* Queries */}
 
-              {/* Queries */}
+          <Route path="/bestsellers/">
+            <BestSellers />
+          </Route>
 
-              <Route path="/bestsellers/">
-                <BestSellers />
-              </Route>
+          <Route path="/goods-details/">
+            <GoodsDetails />
+          </Route>
 
-              <Route path="/goods-details/">
-                <GoodsDetails />
-              </Route>
+          <Route path="/goods-rejects/">
+            <Row>
+              <Col>
+                <h1>Возвраты</h1>
+              </Col>
+            </Row>
 
-              <Route path="/goods-rejects/">
-                <Row>
-                  <Col>
-                    <h1>Возвраты</h1>
-                  </Col>
-                </Row>
+            <Tabs defaultActiveKey="details" id="rejects-tabs">
+              <Tab eventKey="details" title="Детали">
+                <RejectDetails />
+              </Tab>
 
-                <Tabs defaultActiveKey="details" id="rejects-tabs">
-                  <Tab eventKey="details" title="Детали">
-                    <RejectDetails />
-                  </Tab>
+              <Tab eventKey="providers" title="Поставщики">
+                <RejectProviders />
+              </Tab>
+            </Tabs>
+          </Route>
 
-                  <Tab eventKey="providers" title="Поставщики">
-                    <RejectProviders />
-                  </Tab>
-                </Tabs>
-              </Route>
+          <Route path="/monthly-average-sales/">
+            <MonthlyAverageSales />
+          </Route>
 
-              <Route path="/monthly-average-sales/">
-                <MonthlyAverageSales />
-              </Route>
+          <Route path="/provider-income-stats/">
+            <ProviderIncomeStats />
+          </Route>
 
-              <Route path="/provider-income-stats/">
-                <ProviderIncomeStats />
-              </Route>
+          <Route path="/overhead/">
+            <OverHead />
+          </Route>
 
-              <Route path="/overhead/">
-                <OverHead />
-              </Route>
+          <Route path="/finance-report/">
+            <FinanceReport />
+          </Route>
 
-              <Route path="/finance-report/">
-                <FinanceReport />
-              </Route>
+          <Route path="/daily-report/">
+            <DailyReport />
+          </Route>
 
-              <Route path="/daily-report/">
-                <DailyReport />
-              </Route>
+          <Route path="/storage-report/">
+            <StorageReport />
+          </Route>
 
-              <Route path="/storage-report/">
-                <StorageReport />
-              </Route>
+          <Route path="/delivered-more-than-count/">
+            <DeliveredMoreThanCount />
+          </Route>
 
-              <Route path="/delivered-more-than-count/">
-                <DeliveredMoreThanCount />
-              </Route>
+          <Route path="/orders-with-amount-filtred-by-date/">
+            <OrdersWithAmountFiltredByDate />
+          </Route>
 
-              <Route path="/orders-with-amount-filtred-by-date/">
-                <OrdersWithAmountFiltredByDate />
-              </Route>
-
-            </Switch>
-        </Router>
-      </div>
+        </Switch>
+      </Router>
     </Container>
   );
 }

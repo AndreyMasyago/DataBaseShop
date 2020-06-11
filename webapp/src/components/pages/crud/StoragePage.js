@@ -23,10 +23,10 @@ export default function StoragePage() {
           <Row>
             <Col>
               <Breadcrumb>
-                <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-                <Breadcrumb.Item href={`${match.url}/`}>
+                <Breadcrumb.Item active><Link to="/">Home</Link></Breadcrumb.Item>
+                <Breadcrumb.Item active><Link to={`${match.url}/`}>
                   Storage
-                </Breadcrumb.Item>
+                </Link></Breadcrumb.Item>
                 <Breadcrumb.Item active>Create</Breadcrumb.Item>
               </Breadcrumb>
             </Col>
@@ -39,10 +39,10 @@ export default function StoragePage() {
           <Row>
             <Col>
               <Breadcrumb>
-                <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-                <Breadcrumb.Item href={`${match.url}/`}>
+                <Breadcrumb.Item active><Link to="/">Home</Link></Breadcrumb.Item>
+                <Breadcrumb.Item active><Link to={`${match.url}/`}>
                   Storage
-                </Breadcrumb.Item>
+                </Link></Breadcrumb.Item>
                 <Breadcrumb.Item active>Edit</Breadcrumb.Item>
               </Breadcrumb>
             </Col>
@@ -55,7 +55,7 @@ export default function StoragePage() {
           <Row>
             <Col>
               <Breadcrumb>
-                <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+                <Breadcrumb.Item active><Link to="/">Home</Link></Breadcrumb.Item>
                 <Breadcrumb.Item active>Storage</Breadcrumb.Item>
               </Breadcrumb>
             </Col>
