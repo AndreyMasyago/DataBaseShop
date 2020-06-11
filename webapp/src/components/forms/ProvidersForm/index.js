@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import { createProvider, getProvider, updateProvider } from '../../../api/provider';
+import { CATEGORY } from '../../../constants';
 
 import useForm from '../formHook';
 
@@ -85,9 +86,9 @@ function ProvidersForm() {
               required
             >
               <option value="" disabled>Выберите категорию</option>
-              <option value="authorized dealer">Фирма/Дилер</option>
-              <option value="small manufacture">Небольшое производство</option>
-              <option value="store">Магазин</option>
+              {Object.keys(CATEGORY).map(k => (
+                <option value={k}>{CATEGORY[k]}</option>
+              ))}
             </Form.Control>
           </Form.Group>
 

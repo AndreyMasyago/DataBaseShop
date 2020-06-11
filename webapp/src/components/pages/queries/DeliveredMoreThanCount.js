@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 
 import { getDeliveredMoreThanCount } from '../../../api/queries';
 import { listDetails } from '../../../api/catalog';
+import { CATEGORY } from '../../../constants';
 import useForm from '../../forms/formHook';
 
 export default function DeliveredMoreThanCount () {
@@ -59,9 +60,9 @@ export default function DeliveredMoreThanCount () {
             required
           >
             <option value="" disabled>Выберите категорию</option>
-            <option value="authorized dealer">Фирма/Дилер</option>
-            <option value="small manufacture">Небольшое производство</option>
-            <option value="store">Магазин</option>
+            {Object.keys(CATEGORY).map(k => (
+              <option value={k}>{CATEGORY[k]}</option>
+            ))}
           </Form.Control>
         </Form.Row>
         <Form.Row>
