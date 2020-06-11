@@ -21,7 +21,7 @@ export default function DeliveredMoreThanCount () {
   const { formState, handleInputChange, handleSubmit } = useForm({
     goodsSearch: '250',
     categorySearch: 'authorized dealer',
-    amountLimit: '1',
+    amountLimit: '0',
     startDate: '2019-01-01',
     endDate: '2020-12-12'
   }, callback);
@@ -126,9 +126,6 @@ export default function DeliveredMoreThanCount () {
           </Table>
         </Col>
       </Row>
-
-
-
     </div>
   );
 }

@@ -18,7 +18,7 @@ export default function RejectProviders () {
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>Provider ID</th>
+              <th>#</th>
               <th>Provider Name</th>
               <th>Category</th>
             </tr>

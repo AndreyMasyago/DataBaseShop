@@ -74,12 +74,12 @@ function DeliveryContentForm() {
   return (
     <Row>
       <Col md={{ span: 6, offset: 3 }}>
-        <h2>{update ? 'Изменить' : 'Добавить'} содержимое поставки</h2>
+        <h2>{update ? 'Изменить' : 'Добавить'} содержимое доставки</h2>
 
         <Form onSubmit={handleSubmit}>
 
           <Form.Group as={Form.Col}>
-            <Form.Label>Номер и дата поставки</Form.Label>
+            <Form.Label>Номер и дата доставки</Form.Label>
             <Form.Control
               as="select"
               name="deliveryId"
@@ -87,7 +87,7 @@ function DeliveryContentForm() {
               onChange={handleInputChange}
               required
             >
-              <option value="" disabled>Выберите поставку</option>
+              <option value="" disabled>Выберите доставку</option>
               {deliveries.map (d => (
                 <option key={d.deliveryId} value={d.deliveryId}>
                   {`${d.deliveryId} ${d.arrivingDateOnStorage}`}
@@ -128,7 +128,7 @@ function DeliveryContentForm() {
           </Form.Group>
 
           <Button variant="outline-success" type="submit">
-            {update ? 'Сохранить изменения' : 'Добавить содержимое поставки'}
+            {update ? 'Сохранить изменения' : 'Добавить содержимое доставки'}
           </Button>
         </Form>
       </Col>

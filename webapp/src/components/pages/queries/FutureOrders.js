@@ -34,9 +34,9 @@ export default function FutureOrders() {
           <Table striped bordered hover>
             <thead>
               <tr>
-                <th>#Cells Id</th>
+                <th>#</th>
                 <th>Free Space</th>
-                <th>Cells size</th>
+                <th>Cells Size</th>
               </tr>
             </thead>
             <tbody>
