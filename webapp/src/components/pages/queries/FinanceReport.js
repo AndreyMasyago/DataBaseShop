@@ -17,7 +17,7 @@ export default function FinanceReport () {
 
   return (
     <div>
-      <h1>Top 5 best selling goods</h1>
+      <h1>Finance Report</h1>
 
       <Form className="search-form">
         <Form.Row>

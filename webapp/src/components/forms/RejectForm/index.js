@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 import { listOrderEntity } from '../../../api/orderEntity';
 import { listGoods } from '../../../api/goods';
@@ -42,7 +44,7 @@ function RejectForm() {
       return createReject(dataToSave);
     }
   }
- 
+
   const { formState, handleSubmit, handleInputChange, setFormState } = useForm({
     goodsId: "",
     amount: "",
@@ -69,63 +71,66 @@ function RejectForm() {
     history.push('/reject/');
   }
   return (
-    <div className="RejectForm">
-      <Form onSubmit={handleSubmit}>
-        <Form.Label>Содержимое возврата(брак)</Form.Label>
+    <Row>
+      <Col md={{ span: 6, offset: 3 }}>
+        <h2>{update ? 'Изменить' : 'Добавить'} возврат (брак)</h2>
 
-        <Form.Group as={Form.Col}>
-          <Form.Label>Номер и дата заказа</Form.Label>
-          <Form.Control 
-            as="select" 
-            name="orderId"
-            value={formState.orderId}
-            onChange={handleInputChange}
-            required
-          >
-            <option value="" disabled>Выберите заказ</option>
-            {orderEntities.map(o => (
-              <option key={o.orderId} value={o.orderId}>
-                {`${o.orderId} ${o.orderDate}`}
-              </option>
-            ))}
-          </Form.Control>
-        </Form.Group>
+        <Form onSubmit={handleSubmit}>
 
-        <Form.Group as={Form.Col}>
-          <Form.Label>Товар</Form.Label>
-          <Form.Control 
-            as="select" 
-            name="goodsId"
-            value={formState.goodsId}
-            onChange={handleInputChange}
-            required
-          >
-            <option value="" disabled>Выберите товар</option>
-            {goods.map(g => (
-              <option key={g.goodsId} value={g.goodsId}>
-                {`${g.catalog.goodsName} ${g.producer} ${g.provider.providerName}`}
-              </option>
-            ))}
-          </Form.Control>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Количество товара</Form.Label>
-          <Form.Control 
-            type="number" 
-            min="1" 
-            placeholder="Введите количество товара"
-            name="amount"
-            value={formState.amount}
-            onChange={handleInputChange}
-            required 
-          />
-        </Form.Group>
+          <Form.Group as={Form.Col}>
+            <Form.Label>Номер и дата заказа</Form.Label>
+            <Form.Control
+              as="select"
+              name="orderId"
+              value={formState.orderId}
+              onChange={handleInputChange}
+              required
+            >
+              <option value="" disabled>Выберите заказ</option>
+              {orderEntities.map(o => (
+                <option key={o.orderId} value={o.orderId}>
+                  {`${o.orderId} ${o.orderDate}`}
+                </option>
+              ))}
+            </Form.Control>
+          </Form.Group>
 
-        <Button variant="outline-success" type="submit">
-          {update ? 'Сохранить изменения' : 'Добавить содержимое возврата(брак)'}
-        </Button>
-      </Form>
-    </div>
+          <Form.Group as={Form.Col}>
+            <Form.Label>Товар</Form.Label>
+            <Form.Control
+              as="select"
+              name="goodsId"
+              value={formState.goodsId}
+              onChange={handleInputChange}
+              required
+            >
+              <option value="" disabled>Выберите товар</option>
+              {goods.map(g => (
+                <option key={g.goodsId} value={g.goodsId}>
+                  {`${g.catalog.goodsName} ${g.producer} ${g.provider.providerName}`}
+                </option>
+              ))}
+            </Form.Control>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Количество товара</Form.Label>
+            <Form.Control
+              type="number"
+              min="1"
+              placeholder="Введите количество товара"
+              name="amount"
+              value={formState.amount}
+              onChange={handleInputChange}
+              required
+            />
+          </Form.Group>
+
+          <Button variant="outline-success" type="submit">
+            {update ? 'Сохранить изменения' : 'Добавить содержимое возврата(брак)'}
+          </Button>
+        </Form>
+      </Col>
+    </Row>
   );
 }
 

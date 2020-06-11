@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 import useForm from '../formHook';
 
@@ -28,7 +30,7 @@ function OrderForm() {
       return createOrderEntity(dataToSave);
     }
   }
-  
+
   const { formState, handleSubmit, handleInputChange, setFormState } = useForm({
     orderDate: ""
   }, callback);
@@ -52,25 +54,29 @@ function OrderForm() {
   }
 
   return (
-    <div className="OrderForm">
-      <Form onSubmit={handleSubmit}>
-        <Form.Label>Заказы</Form.Label>
-        <Form.Group>
-          <Form.Label>Дата заказа</Form.Label>          
-          <Form.Control 
-            type="date" 
-            placeholder="Выберите дату заказа" 
-            name="orderDate"
-            value={formState.orderDate}
-            onChange={handleInputChange}
-            required
-          />
-        </Form.Group>
-        <Button variant="outline-success" type="submit">        
-          {update ? 'Сохранить изменения' : 'Добавить заказ'}          
-        </Button>
-      </Form>
-    </div>
+    <Row>
+      <Col md={{ span: 6, offset: 3 }}>
+        <h2>{update ? 'Изменить' : 'Добавить'} заказ</h2>
+
+        <Form onSubmit={handleSubmit}>
+
+          <Form.Group>
+            <Form.Label>Дата заказа</Form.Label>
+            <Form.Control
+              type="date"
+              placeholder="Выберите дату заказа"
+              name="orderDate"
+              value={formState.orderDate}
+              onChange={handleInputChange}
+              required
+            />
+          </Form.Group>
+          <Button variant="outline-success" type="submit">
+            {update ? 'Сохранить изменения' : 'Добавить заказ'}
+          </Button>
+        </Form>
+      </Col>
+    </Row>
   );
 }
 

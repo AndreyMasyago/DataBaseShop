@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 import { createProvider, getProvider, updateProvider } from '../../../api/provider';
 
@@ -28,7 +30,7 @@ function ProvidersForm() {
       return createProvider(dataToSave);
     }
   }
-  
+
   const { formState, handleSubmit, handleInputChange, setFormState } = useForm({
     providerName: "",
     category: ""
@@ -53,45 +55,48 @@ function ProvidersForm() {
   }
 
   return (
-    <div className="ProvidersForm">
-      <Form onSubmit={handleSubmit}>
-      
-      <Form.Label>Поставщики</Form.Label>
-        <Form.Group>
-          <Form.Label>Название поставщика</Form.Label>
-          
-          <Form.Control 
-            type="text" 
-            placeholder="Введите название поставщика" 
-            name="providerName" 
-            value={formState.providerName} 
-            onChange={handleInputChange} 
-            required 
-          />
-        </Form.Group>
+    <Row>
+      <Col md={{ span: 6, offset: 3 }}>
+        <h2>{update ? 'Изменить' : 'Добавить'} поставщика</h2>
 
-        <Form.Group as={Form.Col}>
-          <Form.Label>Категория поставщика</Form.Label>
-          
-          <Form.Control 
-            as="select" 
-            name="category" 
-            value={formState.category} 
-            onChange={handleInputChange} 
-            required
-          >
-            <option value="" disabled>Выберите категорию</option>
-            <option value="authorized dealer">Фирма/Дилер</option>
-            <option value="small manufacture">Небольшое производство</option>
-            <option value="store">Магазин</option>
-          </Form.Control>
-        </Form.Group>
-        
-        <Button variant="outline-success" type="submit">        
-          {update ? 'Сохранить изменения' : 'Добавить поставщика'}
-        </Button>
-      </Form>
-    </div>
+        <Form onSubmit={handleSubmit}>
+
+          <Form.Group>
+            <Form.Label>Название поставщика</Form.Label>
+
+            <Form.Control
+              type="text"
+              placeholder="Введите название поставщика"
+              name="providerName"
+              value={formState.providerName}
+              onChange={handleInputChange}
+              required
+            />
+          </Form.Group>
+
+          <Form.Group as={Form.Col}>
+            <Form.Label>Категория поставщика</Form.Label>
+
+            <Form.Control
+              as="select"
+              name="category"
+              value={formState.category}
+              onChange={handleInputChange}
+              required
+            >
+              <option value="" disabled>Выберите категорию</option>
+              <option value="authorized dealer">Фирма/Дилер</option>
+              <option value="small manufacture">Небольшое производство</option>
+              <option value="store">Магазин</option>
+            </Form.Control>
+          </Form.Group>
+
+          <Button variant="outline-success" type="submit">
+            {update ? 'Сохранить изменения' : 'Добавить поставщика'}
+          </Button>
+        </Form>
+      </Col>
+    </Row>
   );
 }
 

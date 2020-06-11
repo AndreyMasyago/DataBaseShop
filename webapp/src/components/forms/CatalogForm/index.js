@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 import { createDetail, getDetail, updateDetail } from '../../../api/catalog';
 
@@ -28,7 +30,7 @@ function CatalogForm() {
       return createDetail(dataToSave);
     }
   }
-  
+
   const { formState, handleSubmit, handleInputChange, setFormState } = useForm({
     goodsName: ""
   }, callback);
@@ -52,28 +54,31 @@ function CatalogForm() {
   }
 
   return (
-    <div className="CatalogForm">
-      <Form onSubmit={handleSubmit}>
-        <Form.Label>Каталог деталей</Form.Label>
-        
-        <Form.Group>
-          <Form.Label>Название детали</Form.Label>
-          <Form.Control 
-            type="text" 
-            placeholder="Введите название детали" 
-            name="goodsName" 
-            value={formState.goodsName} 
-            onChange={handleInputChange} 
-            required 
-          />
-        </Form.Group>
-        
-        <Button variant="outline-success" type="submit">
-          {update ? 'Сохранить изменения' : 'Добавить деталь'}
-        </Button>
+    <Row>
+      <Col md={{ span: 6, offset: 3 }}>
+        <h2>{update ? 'Изменить' : 'Добавить'} деталь</h2>
 
-      </Form>
-    </div>
+        <Form onSubmit={handleSubmit}>
+
+          <Form.Group>
+            <Form.Label>Название детали</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Введите название детали"
+              name="goodsName"
+              value={formState.goodsName}
+              onChange={handleInputChange}
+              required
+            />
+          </Form.Group>
+
+          <Button variant="outline-success" type="submit">
+            {update ? 'Сохранить изменения' : 'Добавить деталь'}
+          </Button>
+
+        </Form>
+      </Col>
+    </Row>
   );
 }
 

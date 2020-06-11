@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 import { createDelivery, getDelivery, updateDelivery } from '../../../api/delivery';
 
@@ -28,7 +30,7 @@ function DeliveryForm() {
       return createDelivery(dataToSave);
     }
   }
-  
+
   const { formState, handleSubmit, handleInputChange, setFormState } = useForm({
     arrivingDateOnStorage: ""
   }, callback);
@@ -51,25 +53,28 @@ function DeliveryForm() {
     history.push('/delivery/');
   }
   return (
-    <div className="DeliveryForm">
-      <Form onSubmit={handleSubmit}>
-        <Form.Label>Поставки</Form.Label>
-        <Form.Group>
-          <Form.Label>Дата поставки</Form.Label>
-          <Form.Control 
-            type="date" 
-            placeholder="Выберите дату поставки"
-            name="arrivingDateOnStorage"
-            value={formState.arrivingDateOnStorage}
-            onChange={handleInputChange}
-            required
-          />
-        </Form.Group>
-        <Button variant="outline-success" type="submit">
-          {update ? 'Сохранить изменения' : 'Добавить поставку'}
-        </Button>
-      </Form>
-    </div>
+    <Row>
+      <Col md={{ span: 6, offset: 3 }}>
+        <h2>{update ? 'Изменить' : 'Добавить'} поставку</h2>
+
+        <Form onSubmit={handleSubmit}>
+          <Form.Group>
+            <Form.Label>Дата поставки</Form.Label>
+            <Form.Control
+              type="date"
+              placeholder="Выберите дату поставки"
+              name="arrivingDateOnStorage"
+              value={formState.arrivingDateOnStorage}
+              onChange={handleInputChange}
+              required
+            />
+          </Form.Group>
+          <Button variant="outline-success" type="submit">
+            {update ? 'Сохранить изменения' : 'Добавить поставку'}
+          </Button>
+        </Form>
+      </Col>
+    </Row>
   );
 }
 

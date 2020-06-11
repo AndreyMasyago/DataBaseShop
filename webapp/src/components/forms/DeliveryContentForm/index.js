@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 import { listDeliveries } from '../../../api/delivery';
 import { listGoods } from '../../../api/goods';
@@ -42,7 +44,7 @@ function DeliveryContentForm() {
       return createDeliveryContent(dataToSave);
     }
   }
-  
+
   const { formState, handleSubmit, handleInputChange, setFormState } = useForm({
     deliveryId: "",
     amount: "",
@@ -70,63 +72,67 @@ function DeliveryContentForm() {
   }
 
   return (
-    <div className="DeliveryContentForm">
-      <Form onSubmit={handleSubmit}>
-      <Form.Label>Содержимое поставок</Form.Label>
-        <Form.Group as={Form.Col}>
-          <Form.Label>Номер и дата поставки</Form.Label>
-          <Form.Control 
-            as="select" 
-            name="deliveryId"
-            value={formState.deliveryId}
-            onChange={handleInputChange}
-            required
-          >
-            <option value="" disabled>Выберите поставку</option>
-            {deliveries.map (d => (
-              <option key={d.deliveryId} value={d.deliveryId}>
-                {`${d.deliveryId} ${d.arrivingDateOnStorage}`}
-              </option>
-            ))}
-          </Form.Control>
-        </Form.Group>
+    <Row>
+      <Col md={{ span: 6, offset: 3 }}>
+        <h2>{update ? 'Изменить' : 'Добавить'} содержимое поставки</h2>
 
-        <Form.Group>
-          <Form.Label>Количество товара</Form.Label>
-          <Form.Control 
-            type="number" 
-            min="1" 
-            placeholder="Введите количество товара"
-            name="amount"
-            value={formState.amount}
-            onChange={handleInputChange}
-            required 
-          />
-        </Form.Group>
+        <Form onSubmit={handleSubmit}>
 
-        <Form.Group as={Form.Col}>
-          <Form.Label>Товар</Form.Label>
-          <Form.Control 
-            as="select" 
-            name="goodsId"
-            value={formState.goodsId}
-            onChange={handleInputChange}
-            required
-          >
-            <option value="" disabled>Выберите товар</option>
-            {goods.map(g => (
-              <option key={g.goodsId} value={g.goodsId}>
-                {g.catalog.goodsName} {g.producer} {g.provider.providerName}
-              </option>
-            ))}
-          </Form.Control>
-        </Form.Group>
-        
-        <Button variant="outline-success" type="submit">
-          {update ? 'Сохранить изменения' : 'Добавить содержимое поставки'}
-        </Button>
-      </Form>
-    </div>
+          <Form.Group as={Form.Col}>
+            <Form.Label>Номер и дата поставки</Form.Label>
+            <Form.Control
+              as="select"
+              name="deliveryId"
+              value={formState.deliveryId}
+              onChange={handleInputChange}
+              required
+            >
+              <option value="" disabled>Выберите поставку</option>
+              {deliveries.map (d => (
+                <option key={d.deliveryId} value={d.deliveryId}>
+                  {`${d.deliveryId} ${d.arrivingDateOnStorage}`}
+                </option>
+              ))}
+            </Form.Control>
+          </Form.Group>
+
+          <Form.Group>
+            <Form.Label>Количество товара</Form.Label>
+            <Form.Control
+              type="number"
+              min="1"
+              placeholder="Введите количество товара"
+              name="amount"
+              value={formState.amount}
+              onChange={handleInputChange}
+              required
+            />
+          </Form.Group>
+
+          <Form.Group as={Form.Col}>
+            <Form.Label>Товар</Form.Label>
+            <Form.Control
+              as="select"
+              name="goodsId"
+              value={formState.goodsId}
+              onChange={handleInputChange}
+              required
+            >
+              <option value="" disabled>Выберите товар</option>
+              {goods.map(g => (
+                <option key={g.goodsId} value={g.goodsId}>
+                  {g.catalog.goodsName} {g.producer} {g.provider.providerName}
+                </option>
+              ))}
+            </Form.Control>
+          </Form.Group>
+
+          <Button variant="outline-success" type="submit">
+            {update ? 'Сохранить изменения' : 'Добавить содержимое поставки'}
+          </Button>
+        </Form>
+      </Col>
+    </Row>
   );
 }
 

@@ -14,17 +14,9 @@ h1 {
   font-size: 28px;
 }
 
-form {
-  text-align: center;
-  max-width: 450px;
-  margin: 0 auto;
+.form-label {
+  font-size: 18px;
 }
-
-form.search-form {
-  text-align: left;
-  max-width: 100%;
-}
-
 
 a, a:hover {
   color: #3c3c3c;
