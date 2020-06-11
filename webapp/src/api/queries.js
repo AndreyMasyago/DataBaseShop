@@ -50,6 +50,11 @@ export async function getDailyReport(params) {
   return await r.json();
 }
 
+export async function getStorageReport() {
+  const r = await fetch(
+    `${API_BASE}/goods/storage-report/`);
+  return await r.json();
+}
 
 export async function addDelivery(data) {
   const r = await fetch(`${API_BASE}/delivery/addDelivery`, {

@@ -32,6 +32,7 @@ import ProviderIncomeStats from './components/pages/queries/ProviderIncomeStats'
 import OverHead from './components/pages/queries/OverHead';
 import FinanceReport from './components/pages/queries/FinanceReport';
 import DailyReport from './components/pages/queries/DailyReport';
+import StorageReport from './components/pages/queries/StorageReport';
 
 import AddDeliveryForm from './components/forms/AddDeliveryForm';
 
@@ -94,6 +95,14 @@ function App() {
                 <StorageTransactionsPage />
               </Route>
 
+              {/* Perfect forms */}
+
+              <Route path="/add-delivery-form/">
+                <AddDeliveryForm />
+              </Route>
+
+              {/* Queries */}
+
               <Route path="/bestsellers/">
                 <BestSellers />
               </Route>
@@ -140,9 +149,10 @@ function App() {
                 <DailyReport />
               </Route>
 
-              <Route path="/add-delivery-form/">
-                <AddDeliveryForm />
+              <Route path="/storage-report/">
+                <StorageReport />
               </Route>
+
             </Switch>
         </Router>
       </div>
