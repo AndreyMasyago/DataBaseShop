@@ -31,3 +31,15 @@ export async function getFinanceReport(params) {
   	`${API_BASE}/goods/finance-report/?startDate=${params.startDate}&endDate=${params.endDate}`);
   return await r.json();
 }
+
+export async function getProviderIncomeStats(params) {
+  const r = await fetch(
+  	`${API_BASE}/order-content/provider-income-stats/?providerSearch=${params.providerSearch}`);
+  return await r.json();
+}
+
+export async function getOverHead() {
+  const r = await fetch(
+  	`${API_BASE}/order-content/overhead/`);
+  return await r.json();
+}

@@ -24,8 +24,9 @@ import GoodsDetails from './components/pages/queries/GoodsDetails';
 import RejectDetails from './components/pages/queries/RejectDetails';
 import RejectProviders from './components/pages/queries/RejectProviders';
 import MonthlyAverageSales from './components/pages/queries/MonthlyAverageSales';
+import ProviderIncomeStats from './components/pages/queries/ProviderIncomeStats';
+import OverHead from './components/pages/queries/OverHead';
 import FinanceReport from './components/pages/queries/FinanceReport';
-
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -104,6 +105,14 @@ function App() {
 
               <Route path="/monthly-average-sales/">
                 <MonthlyAverageSales />
+              </Route>
+
+              <Route path="/provider-income-stats/">
+                <ProviderIncomeStats />
+              </Route>
+
+              <Route path="/overhead/">
+                <OverHead />
               </Route>
 
               <Route path="/finance-report/">

@@ -128,12 +128,12 @@ public class OrderContentController {
     }
 
     @GetMapping("/api/order-content/provider-income-stats/")
-    public Map<String, Object> providerIncomeStats(@RequestParam String providerSearch) {
-        Object[] incomeStats = orderContentRepository.getProviderIncomeStats(providerSearch);
+    public Map<String, Object> providerIncomeStats(@RequestParam Integer providerSearch) {
+        List<Object[]> incomeStats = orderContentRepository.getProviderIncomeStats(providerSearch);
 
         Map<String, Object> response = new HashMap<>();
-        response.put("shareOfSale", incomeStats[0]);
-        response.put("shareOfAmount", incomeStats[1]);
+        response.put("shareOfSale", incomeStats.get(0)[0]);
+        response.put("shareOfAmount", incomeStats.get(0)[1]);
 
         return response;
     }
