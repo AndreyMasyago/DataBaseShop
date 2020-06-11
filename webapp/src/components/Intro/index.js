@@ -58,7 +58,7 @@ function Intro() {
           <Link to="/delivered-more-than-count/">#1 Delivered more than count</Link>
         </div>
         <div>
-          <Link to="/goods-details/">#2. Goods details</Link>
+          <Link to="/goods-details/">#2 Goods details</Link>
         </div>
         <div>
           <Link to="/orders-with-amount-filtred-by-date/">#3 Orders with amount</Link>
@@ -67,13 +67,13 @@ function Intro() {
           <Link to="/stored-goods/">#4 Stored Goods</Link>
         </div>
         <div>
-          <Link to="/bestsellers/">#5. BestSellers</Link>
+          <Link to="/bestsellers/">#5 BestSellers</Link>
         </div>
         <div>
-          <Link to="/provider-income-stats/">#7. Provider Income Stats</Link>
+          <Link to="/provider-income-stats/">#7 Provider Income Stats</Link>
         </div>
         <div>
-          <Link to="/overhead/">#8. OverHead</Link>
+          <Link to="/overhead/">#8 OverHead</Link>
         </div>
         <div>
           <Link to="/goods-rejects/">#10 Reject stats</Link>
@@ -82,7 +82,7 @@ function Intro() {
           <Link to="/daily-report/">#11 Daily Report</Link>
         </div>
         <div>
-          <Link to="/finance-report/">#12. Finance report</Link>
+          <Link to="/finance-report/">#12 Finance report</Link>
         </div>
         <div>
           <Link to="/storage-report/">#13 Storage Report</Link>

@@ -56,7 +56,7 @@ export default function GoodsDetails () {
           <Table striped bordered hover>
             <thead>
               <tr>
-                <th>Goods ID</th>
+                <th>#</th>
                 <th>Goods Name</th>
                 <th>Provider Name</th>
                 <th>Purchase Price</th>

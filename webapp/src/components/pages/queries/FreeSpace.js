@@ -25,8 +25,8 @@ export default function FreeSpace() {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>#Cells Id</th>
-            <th>Cells size</th>
+            <th>#</th>
+            <th>Cells Size</th>
             <th>Free Space</th>
           </tr>
         </thead>
@@ -41,8 +41,8 @@ export default function FreeSpace() {
 
           <tr>
             <td></td>
-            <td>Total:</td>
-            <td>{data.freeSpace}</td>
+            <td><b>Total:</b></td>
+            <td><b>{data.freeSpace}</b></td>
           </tr>
         </tbody>
       </Table>

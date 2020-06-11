@@ -80,14 +80,14 @@ function AddDeliveryForm({ saveFormState, lastFormState }) {
   return (
     <Row>
       <Col md={{ span: 8, offset: 2 }}>
-        <h2>Новая поставка</h2>
+        <h2>Новая доставка</h2>
 
         <Form onSubmit={handleSubmit}>
           <Form.Group>
-            <Form.Label>Дата поставки</Form.Label>
+            <Form.Label>Дата доставки</Form.Label>
             <Form.Control
               type="date"
-              placeholder="Выберите дату поставки"
+              placeholder="Выберите дату доставки"
               name="arrivingDateOnStorage"
               value={formState.arrivingDateOnStorage}
               onChange={handleInputChange}
@@ -113,7 +113,7 @@ function AddDeliveryForm({ saveFormState, lastFormState }) {
           <hr />
 
           <Button variant="outline-success" type="submit">
-            Добавить поставку
+            Добавить доставку
           </Button>
         </Form>
       </Col>

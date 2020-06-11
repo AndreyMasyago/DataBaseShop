@@ -20,7 +20,7 @@ export default function DeliveredMoreThanCount () {
   const { formState, handleInputChange, handleSubmit } = useForm({
     goodsSearch: '250',
     categorySearch: 'authorized dealer',
-    amountLimit: '1',
+    amountLimit: '0',
     startDate: '2019-01-01',
     endDate: '2020-12-12'
   }, callback);
@@ -49,8 +49,6 @@ export default function DeliveredMoreThanCount () {
               <option key={d.detailId} value={d.detailId}>{d.goodsName}</option>
             ))}
           </Form.Control>
-        </Form.Row>
-        <Form.Row>
           <Form.Control
             as="select"
             name="categorySearch"
@@ -63,8 +61,6 @@ export default function DeliveredMoreThanCount () {
             <option value="small manufacture">Небольшое производство</option>
             <option value="store">Магазин</option>
           </Form.Control>
-        </Form.Row>
-        <Form.Row>
           <Form.Control
             type="number"
             min="0"
@@ -74,23 +70,23 @@ export default function DeliveredMoreThanCount () {
             onChange={handleInputChange}
             required
           />
+          <Form.Control
+                type="date"
+                placeholder="С даты"
+                name="startDate"
+                value={formState.startDate}
+                onChange={handleInputChange}
+                required
+              />
+          <Form.Control
+            type="date"
+            placeholder="По дату"
+            name="endDate"
+            value={formState.endDate}
+            onChange={handleInputChange}
+            required
+          />
         </Form.Row>
-        <Form.Control
-              type="date"
-              placeholder="С даты"
-              name="startDate"
-              value={formState.startDate}
-              onChange={handleInputChange}
-              required
-            />
-        <Form.Control
-          type="date"
-          placeholder="По дату"
-          name="endDate"
-          value={formState.endDate}
-          onChange={handleInputChange}
-          required
-        />
       </Form>
 
       Количество таких поставщиков: {data.count}

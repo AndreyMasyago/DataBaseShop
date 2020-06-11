@@ -25,9 +25,9 @@ export default function FutureOrders() {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>#Cells Id</th>
-            <th>Free Space</th>
-            <th>Cells size</th>
+            <th>#</th>
+            <th>Order Date</th>
+            <th>Order Price</th>
           </tr>
         </thead>
         <tbody>
@@ -39,10 +39,10 @@ export default function FutureOrders() {
             </tr>
           ))}
 
-          <tr >
-            <td>Количество:</td>
-            <td>{data.count[0][1]}</td>
-            <td>{data.count[0][0]}</td>
+          <tr>
+            <td><b>Количество:</b></td>
+            <td><b>{data.count[0][1]}</b></td>
+            <td><b>{data.count[0][0]}</b></td>
           </tr>
         </tbody>
       </Table>

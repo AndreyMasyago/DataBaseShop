@@ -20,7 +20,7 @@ export default function FinanceReport () {
     <div>
       <Row>
         <Col>
-          <h1>Финансовый отчет</h1>
+          <h1>Финансовый отчёт</h1>
         </Col>
       </Row>
 

@@ -20,7 +20,7 @@ export default function DailyReport () {
 
   return (
     <div>
-      <h1>Daily Report</h1>
+      <h1>Отчёт за день</h1>
       <Form>
         <Form.Control
               type="date"

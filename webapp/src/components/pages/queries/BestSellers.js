@@ -25,7 +25,7 @@ export default function BestSellers () {
           <Table striped bordered hover>
             <thead>
               <tr>
-                <th>Goods ID</th>
+                <th>#</th>
                 <th>Goods Name</th>
                 <th><b>Amount</b></th>
                 <th>Producer</th>
