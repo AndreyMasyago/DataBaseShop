@@ -3,6 +3,8 @@ package DataBase.Domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -21,6 +23,7 @@ public class Goods {
     private int purchasePrice;
     private int sellingPrice;
     private String producer;
+    private Timestamp sellingPriceLastModified;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "providerId")
@@ -131,6 +134,8 @@ public class Goods {
         this.producer = producer;
     }
 
+    public Timestamp getSellingPriceLastModified() { return sellingPriceLastModified; }
+
     public Provider getProvider() {
         return provider;
     }
@@ -138,4 +143,5 @@ public class Goods {
     public void setProvider(Provider provider) {
         this.provider = provider;
     }
+
 }

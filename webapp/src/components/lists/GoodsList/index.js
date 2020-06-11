@@ -41,7 +41,7 @@ export default function GoodsList() {
             <td>{item.size}</td>
             <td>{item.deliveryTime}</td>
             <td>{item.purchasePrice}</td>
-            <td>{item.sellingPrice}</td>
+            <td><span style={{textDecoration: 'underline', textDecorationStyle: 'dashed'}} title={item.sellingPriceLastModified}>{item.sellingPrice}</span></td>
             <td>{item.producer}</td>
             <td style={{width: 140, textAlign: 'center'}}><span className="btn btn-danger" onClick={() => deleteItem(item.goodsId)}>Удалить</span></td>
           </tr>
