@@ -5,33 +5,34 @@ import Table from 'react-bootstrap/Table';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import { getDeliveredMoreThanCount } from '../../../api/queries';
+import { getOrdersWithAmountFiltredByDate } from '../../../api/queries';
 import { listDetails } from '../../../api/catalog';
 import useForm from '../../forms/formHook';
 
-export default function DeliveredMoreThanCount () {
+export default function OrdersWithAmountFiltredByDate () {
   const [data, setData] = useState({count: 0, results: []});
 
   const [details, setDetails] = useState([]);
   useEffect(() => { listDetails().then(setDetails); }, []);
 
-  const callback = formState => getDeliveredMoreThanCount(formState).then(data => setData(data));
+  const callback = formState => getOrdersWithAmountFiltredByDate(formState).then(data => setData(data));
 
   const { formState, handleInputChange, handleSubmit } = useForm({
     goodsSearch: '250',
-    categorySearch: 'authorized dealer',
     amountLimit: '1',
-    startDate: '2019-01-01',
-    endDate: '2020-12-12'
+    orderDateFrom: '2019-01-01',
+    orderDateTo: '2020-12-12'
   }, callback);
 
   useEffect(() => { callback(formState) }, [formState]);
+
+  console.log(data);
 
   return (
     <div>
       <Row>
         <Col>
-          <h1>Поставщики, поставившие определенное количество товара</h1>
+          <h1>Заказы определенного товара</h1>
         </Col>
       </Row>
 
@@ -49,22 +50,6 @@ export default function DeliveredMoreThanCount () {
               <option key={d.detailId} value={d.detailId}>{d.goodsName}</option>
             ))}
           </Form.Control>
-        </Form.Row>
-        <Form.Row>
-          <Form.Control
-            as="select"
-            name="categorySearch"
-            value={formState.category}
-            onChange={handleInputChange}
-            required
-          >
-            <option value="" disabled>Выберите категорию</option>
-            <option value="authorized dealer">Фирма/Дилер</option>
-            <option value="small manufacture">Небольшое производство</option>
-            <option value="store">Магазин</option>
-          </Form.Control>
-        </Form.Row>
-        <Form.Row>
           <Form.Control
             type="number"
             min="0"
@@ -74,49 +59,52 @@ export default function DeliveredMoreThanCount () {
             onChange={handleInputChange}
             required
           />
+          <Form.Control
+            type="date"
+            placeholder="С даты"
+            name="orderDateFrom"
+            value={formState.orderDateFrom}
+            onChange={handleInputChange}
+            required
+          />
+          <Form.Control
+            type="date"
+            placeholder="По дату"
+            name="orderDateTo"
+            value={formState.orderDateTo}
+            onChange={handleInputChange}
+            required
+          />
         </Form.Row>
-        <Form.Control
-              type="date"
-              placeholder="С даты"
-              name="startDate"
-              value={formState.startDate}
-              onChange={handleInputChange}
-              required
-            />
-        <Form.Control
-          type="date"
-          placeholder="По дату"
-          name="endDate"
-          value={formState.endDate}
-          onChange={handleInputChange}
-          required
-        />
       </Form>
 
-      Количество таких поставщиков: {data.count}
+      <b>Количество таких чеков: {data.count}</b>
       <Row className="report-body">
         <Col>
           <Table striped bordered hover>
             <thead>
               <tr>
                 <th>#</th>
+                <th>Order Date</th>
+                <th>Amount</th>
+                <th>Producer</th>
                 <th>Provider Name</th>
               </tr>
             </thead>
             <tbody>
               {data.results.map(item => (
-                <tr key={item.providerId}>
-                  <td><Link to={`/provider/${item.providerId}/`}>{item.providerId}</Link></td>
-                  <td>{item.providerName}</td>
+                <tr key={item.orderContentId}>
+                  <td><Link to={`/orderContent/${item.orderContentId}/`}>{item.orderContentId}</Link></td>
+                  <td>{item.orderEntity.orderDate}</td>
+                  <td>{item.amount}</td>
+                  <td>{item.goods.producer}</td>
+                  <td>{item.goods.provider.providerName}</td>
                 </tr>
               ))}
             </tbody>
           </Table>
         </Col>
       </Row>
-
-
-
     </div>
   );
 }

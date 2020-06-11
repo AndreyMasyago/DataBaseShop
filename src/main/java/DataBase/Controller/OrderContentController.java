@@ -5,6 +5,8 @@ import DataBase.Repository.GoodsRepository;
 import DataBase.Repository.OrderContentRepository;
 import DataBase.Repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -71,26 +73,27 @@ public class OrderContentController {
     }
 
     @GetMapping("/api/order-content/order-content-by-date/")
-    public Map<String, Object> orderContentFilteredByDate(@RequestParam String goodsSearch, @RequestParam Integer amountLimit) {
+    public Map<String, Object> orderContentFilteredByDate(
+            @RequestParam Integer goodsSearch,
+            @RequestParam Integer amountLimit,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date orderDateFrom,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date orderDateTo
+    ) {
         Map<String, Object> response = new HashMap<>();
-        List<OrderContent> orderContents = orderContentRepository.getOrderContentFilteredByDate(goodsSearch, amountLimit);
-        Long count = orderContentRepository.countOrderContentFilteredByDate(goodsSearch, amountLimit);
+        List<OrderContent> orderContents = orderContentRepository.getOrderContentFilteredByDate(
+                goodsSearch,
+                orderDateFrom,
+                orderDateTo,
+                amountLimit
+                );
+        Long count = orderContentRepository.countOrderContentFilteredByDate(
+                goodsSearch,
+                orderDateFrom,
+                orderDateTo,
+                amountLimit
+        );
 
-        ArrayList<Map<String, Object>> orderContentList = new ArrayList<>();
-
-        Map<String, Object> orderContentInfo;
-
-        for (OrderContent oc : orderContents) {
-            orderContentInfo = new HashMap<>();
-
-            orderContentInfo.put("goodsName", oc.getGoods().getGoodsName());
-            orderContentInfo.put("orderDate", oc.getOrderEntity().getOrderDate());
-            orderContentInfo.put("amount", oc.getAmount());
-
-            orderContentList.add(orderContentInfo);
-        }
-
-        response.put("results", orderContentList);
+        response.put("results", orderContents);
         response.put("count", count);
 
         return response;
@@ -128,8 +131,14 @@ public class OrderContentController {
     }
 
     @GetMapping("/api/order-content/provider-income-stats/")
-    public Map<String, Object> providerIncomeStats(@RequestParam Integer providerSearch) {
-        List<Object[]> incomeStats = orderContentRepository.getProviderIncomeStats(providerSearch);
+    public Map<String, Object> providerIncomeStats(
+            @RequestParam Integer providerSearch,
+            @Param("orderDateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date orderDateFrom,
+            @Param("orderDateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date orderDateTo
+    ) {
+        List<Object[]> incomeStats = orderContentRepository.getProviderIncomeStats(
+                providerSearch, orderDateFrom, orderDateTo
+        );
 
         Map<String, Object> response = new HashMap<>();
         response.put("shareOfSale", incomeStats.get(0)[0]);

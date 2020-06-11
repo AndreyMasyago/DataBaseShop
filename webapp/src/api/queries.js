@@ -40,7 +40,7 @@ export async function getFinanceReport(params) {
 
 export async function getProviderIncomeStats(params) {
   const r = await fetch(
-  	`${API_BASE}/order-content/provider-income-stats/?providerSearch=${params.providerSearch}`);
+  	`${API_BASE}/order-content/provider-income-stats/?providerSearch=${params.providerSearch}&orderDateFrom=${params.orderDateFrom}&orderDateTo=${params.orderDateTo}`);
   return await r.json();
 }
 
@@ -62,9 +62,9 @@ export async function getStorageReport() {
   return await r.json();
 }
 
-export async function getDeliveredMoreThanCount(param) {
+export async function getDeliveredMoreThanCount(params) {
   const r = await fetch(
-    `${API_BASE}/provider/delivered-more-than-count/?goodsSearch=${param.goodsSearch}&categorySearch=${param.categorySearch}&amountLimit=${param.amountLimit}&startDate=${param.startDate}&endDate=${param.endDate}`);
+    `${API_BASE}/provider/delivered-more-than-count/?goodsSearch=${params.goodsSearch}&categorySearch=${params.categorySearch}&amountLimit=${params.amountLimit}&startDate=${params.startDate}&endDate=${params.endDate}`);
   return await r.json();
 }
 
@@ -79,4 +79,10 @@ export async function addDelivery(data) {
   } else {
     return { errors: await r.json() };
   }
+}
+
+export async function getOrdersWithAmountFiltredByDate(param) {
+  const r = await fetch(
+    `${API_BASE}/order-content/order-content-by-date/?goodsSearch=${param.goodsSearch}&amountLimit=${param.amountLimit}&orderDateFrom=${param.orderDateFrom}&orderDateTo=${param.orderDateTo}`);
+  return await r.json();
 }

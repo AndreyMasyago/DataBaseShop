@@ -28,6 +28,8 @@ export default function BestSellers () {
                 <th>Goods ID</th>
                 <th>Goods Name</th>
                 <th><b>Amount</b></th>
+                <th>Producer</th>
+                <th>Provider Name</th>
               </tr>
             </thead>
             <tbody>
@@ -36,6 +38,8 @@ export default function BestSellers () {
                   <td><Link to={`/goods/${item.goodsId}/`}>{item.goodsId}</Link></td>
                   <td>{item.goodsName}</td>
                   <td><b>{item.amount}</b></td>
+                  <td>{item.producer}</td>
+                  <td>{item.providerName}</td>
                 </tr>
               ))}
             </tbody>

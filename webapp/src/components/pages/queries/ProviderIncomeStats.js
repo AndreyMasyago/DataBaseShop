@@ -18,7 +18,9 @@ export default function ProviderIncomeStats () {
   const callback = formState => getProviderIncomeStats(formState).then(data => setData(data));
 
   const { formState, handleInputChange, handleSubmit } = useForm({
-    providerSearch: ''
+    providerSearch: '',
+    orderDateFrom: '2019-01-01',
+    orderDateTo: '2020-12-12'
   }, callback);
 
   useEffect(() => { callback(formState) }, [formState]);
@@ -46,6 +48,22 @@ export default function ProviderIncomeStats () {
                   <option key={p.providerId} value={p.providerId}>{p.providerName}</option>
                 ))}
               </Form.Control>
+              <Form.Control
+                type="date"
+                placeholder="С даты"
+                name="orderDateFrom"
+                value={formState.orderDateFrom}
+                onChange={handleInputChange}
+                required
+              />
+              <Form.Control
+                type="date"
+                placeholder="По дату"
+                name="orderDateTo"
+                value={formState.orderDateTo}
+                onChange={handleInputChange}
+                required
+              />
             </Col>
           </Form.Row>
       </Form>
