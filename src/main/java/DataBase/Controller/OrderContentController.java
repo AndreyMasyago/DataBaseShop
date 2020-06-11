@@ -156,4 +156,63 @@ public class OrderContentController {
 
         return response;
     }
+
+    @GetMapping("/api/order-content/monthly-average-sales-2/")
+    public Map<String, Object> monthlyAverageSales2(
+            @RequestParam Optional<Integer> detailId,
+            @RequestParam Optional<Integer> month,
+            @RequestParam Optional<Long> amountFrom,
+            @RequestParam Optional<Long> amountTo,
+            @RequestParam Optional<String> producerSearch,
+            @RequestParam Optional<String> orderBy,
+            @RequestParam Optional<Integer> pageSize,
+            @RequestParam Optional<Integer> page
+    ) {
+        List<Object[]> sales = orderContentRepository.getMonthlyAverageSales2(
+                detailId,
+                month,
+                amountFrom,
+                amountTo,
+                producerSearch,
+                orderBy,
+                pageSize,
+                page
+        );
+
+        Integer count = orderContentRepository.getMonthlyAverageSalesCount(
+                detailId,
+                month,
+                amountFrom,
+                amountTo,
+                producerSearch
+        );
+
+        ArrayList<Map<String, Object>> salesList = new ArrayList<>();
+
+        Map<String, Object> salesInfo;
+
+        for (Object[] o : sales) {
+            Goods g = (Goods) o[0];
+            Integer m = (Integer) o[1];
+            Long amount = (Long) o[2];
+
+            salesInfo = new HashMap<>();
+
+            salesInfo.put("goodsId", g.getGoodsId());
+            salesInfo.put("detailId", g.getCatalog().getDetailId());
+            salesInfo.put("goodsName", g.getGoodsName());
+            salesInfo.put("producer", g.getProducer());
+
+            salesInfo.put("month", m);
+            salesInfo.put("amount", amount);
+
+            salesList.add(salesInfo);
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("results", salesList);
+        response.put("count", count);
+
+        return response;
+    }
 }
