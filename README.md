@@ -5,7 +5,7 @@
 ## Установка
 
 1. Склонировать проект с Github.
-2. Открыть проект в Idea. (? импорт maven ?)
+2. Открыть проект в Idea.
 3. Запустить [Application.java](./src/main/java/DataBase/Application.java)
 4. Из [webapp](./webapp/) запустить
 `docker build -t autoshop-webapp .`
