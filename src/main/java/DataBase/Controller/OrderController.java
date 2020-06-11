@@ -12,6 +12,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.sql.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -64,5 +66,15 @@ public class OrderController {
         orderRepository.save(updated);
 
         return ResponseEntity.ok(updated);
+    }
+
+    @GetMapping("/api/orders/future/")
+    public Map<String, Object> futureOrders() {
+        Map<String, Object> response = new HashMap<>();
+
+        response.put("results", orderRepository.getFutureOrders());
+        response.put("count", orderRepository.getFutureOrdersCount());
+
+        return response;
     }
 }

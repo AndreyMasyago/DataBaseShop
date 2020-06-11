@@ -91,3 +91,15 @@ export async function getStoredGoods() {
     `${API_BASE}/storage-transactions/stored-goods/`);
   return await r.json();
 }
+
+export async function getFreeSpace() {
+  const r = await fetch(
+    `${API_BASE}/storage/free-space/`);
+  return await r.json();
+}
+
+export async function getFutureOrders() {
+  const r = await fetch(
+    `${API_BASE}/orders/future/`);
+  return await r.json();
+}

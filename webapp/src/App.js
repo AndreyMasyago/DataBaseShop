@@ -37,6 +37,8 @@ import StorageReport from './components/pages/queries/StorageReport';
 import DeliveredMoreThanCount from './components/pages/queries/DeliveredMoreThanCount';
 import OrdersWithAmountFiltredByDate from './components/pages/queries/OrdersWithAmountFiltredByDate';
 import StoredGoods from './components/pages/queries/StoredGoods';
+import FreeSpace from './components/pages/queries/FreeSpace';
+import FutureOrders from './components/pages/queries/FutureOrders';
 
 import AddDeliveryForm from './components/forms/AddDeliveryForm';
 
@@ -167,6 +169,14 @@ function App() {
 
           <Route path="/stored-goods/">
             <StoredGoods />
+          </Route>
+
+          <Route path="/free-space/">
+            <FreeSpace />
+          </Route>
+
+          <Route path="/future-orders/">
+            <FutureOrders />
           </Route>
 
         </Switch>
