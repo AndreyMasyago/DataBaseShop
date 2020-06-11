@@ -23,7 +23,8 @@ import GoodsDetails from './components/pages/queries/GoodsDetails';
 import RejectDetails from './components/pages/queries/RejectDetails';
 import RejectProviders from './components/pages/queries/RejectProviders';
 import MonthlyAverageSales from './components/pages/queries/MonthlyAverageSales';
-
+import ProviderIncomeStats from './components/pages/queries/ProviderIncomeStats';
+import OverHead from './components/pages/queries/OverHead';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -107,6 +108,14 @@ function App() {
 
               <Route path="/order-content/monthly-average-sales/">
                 <MonthlyAverageSales />
+              </Route>
+
+              <Route path="/order-content/provider-income-stats/">
+                <ProviderIncomeStats />
+              </Route>
+
+              <Route path="/order-content/overhead/">
+                <OverHead />
               </Route>
 
 

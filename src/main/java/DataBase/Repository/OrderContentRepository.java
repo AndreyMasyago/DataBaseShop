@@ -78,12 +78,12 @@ public interface OrderContentRepository extends CrudRepository <OrderContent, In
             "SELECT " +
                     "CAST (SUM( " +
                         "CASE " +
-                        "WHEN provider.providerName like CONCAT('%', :providerSearch, '%') THEN (orderContent.amount * (goods.sellingPrice - goods.purchasePrice)) " +
+                        "WHEN provider.providerId= :providerSearch THEN (orderContent.amount * (goods.sellingPrice - goods.purchasePrice)) " +
                         "ELSE 0 END" +
                     ") as float) / SUM(orderContent.amount * (goods.sellingPrice - goods.purchasePrice)), " +
                     "CAST (SUM( " +
                         "CASE " +
-                        "WHEN provider.providerName like CONCAT('%', :providerSearch, '%') THEN orderContent.amount " +
+                        "WHEN provider.providerId= :providerSearch THEN orderContent.amount " +
                         "ELSE 0 END" +
                     ") as float) / SUM(orderContent.amount) " +
             "FROM OrderContent orderContent " +
@@ -91,7 +91,7 @@ public interface OrderContentRepository extends CrudRepository <OrderContent, In
                     "INNER JOIN orderContent.goods goods " +
                     "INNER JOIN goods.provider provider"
     )
-    Object[] getProviderIncomeStats(@Param("providerSearch") String providerSearch);
+    List<Object[]> getProviderIncomeStats(@Param("providerSearch") Integer providerSearch);
 
     // 8
     @Query(
