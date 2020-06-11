@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -62,5 +63,10 @@ public class StorageController {
         storageRepository.save(updated);
 
         return ResponseEntity.ok(updated);
+    }
+
+    @GetMapping("/api/storage/free-space/")
+    public List<Object[]> getStorageFreeSpace() {
+        return storageRepository.getFreeSpace();
     }
 }
