@@ -10,12 +10,17 @@ import { listGoods } from '../../../api/goods';
 import { addDelivery } from '../../../api/queries';
 import DeliveryContentForm from './DeliveryContentForm';
 
+const EMPTY_STATE = {
+  arrivingDateOnStorage: "",
+  content: []
+};
+
 const EMPTY_CONTENT_STATE = {
   amount: "",
   goodsId: ""
 };
 
-function AddDeliveryForm({ saveFormState, clearFormState, lastFormState }) {
+function AddDeliveryForm({ saveFormState, lastFormState }) {
   const [goods, setGoods] = useState([]);
   useEffect(() => { listGoods().then(setGoods); }, []);
 
@@ -25,24 +30,23 @@ function AddDeliveryForm({ saveFormState, clearFormState, lastFormState }) {
     setErrors({});
 
     return addDelivery(data).then(response => {
-      console.log(response);
       if (response.errors) {
         setErrors(response.errors);
         return { preventRedirect: true };
+      } else {
+        saveFormState({});
       }
     });
   }
 
   const { formState, handleSubmit, handleInputChange, setFormState } = useForm({
-    arrivingDateOnStorage: "",
-    content: []
+    ...EMPTY_STATE,
+    ...lastFormState
   }, callback);
 
-  // useEffect(() => {
-  //   setFormState({
-  //     ...lastFormState
-  //   });
-  // }, [setFormState]);
+  useEffect(() => {
+    saveFormState(formState);
+  }, [saveFormState, formState])
 
   function onContentStateChange(i, newState) {
     const newContent = [...formState.content];

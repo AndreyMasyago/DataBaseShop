@@ -22,10 +22,10 @@ export default function CatalogPage() {
           <Row>
             <Col>
               <Breadcrumb>
-                <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-                <Breadcrumb.Item href={`${match.url}/`}>
+                <Breadcrumb.Item active><Link to="/">Home</Link></Breadcrumb.Item>
+                <Breadcrumb.Item active><Link to={`${match.url}/`}>
                   Catalog
-                </Breadcrumb.Item>
+                </Link></Breadcrumb.Item>
                 <Breadcrumb.Item active>Create</Breadcrumb.Item>
               </Breadcrumb>
             </Col>
@@ -38,10 +38,10 @@ export default function CatalogPage() {
           <Row>
             <Col>
               <Breadcrumb>
-                <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-                <Breadcrumb.Item href={`${match.url}/`}>
+                <Breadcrumb.Item active><Link to="/">Home</Link></Breadcrumb.Item>
+                <Breadcrumb.Item active><Link to={`${match.url}/`}>
                   Catalog
-                </Breadcrumb.Item>
+                </Link></Breadcrumb.Item>
                 <Breadcrumb.Item active>Edit</Breadcrumb.Item>
               </Breadcrumb>
             </Col>
@@ -54,7 +54,7 @@ export default function CatalogPage() {
           <Row>
             <Col>
               <Breadcrumb>
-                <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+                <Breadcrumb.Item active><Link to="/">Home</Link></Breadcrumb.Item>
                 <Breadcrumb.Item active>Catalog</Breadcrumb.Item>
               </Breadcrumb>
             </Col>

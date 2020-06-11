@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
@@ -12,8 +13,6 @@ function DeliveryContentForm({ goods, formState, onChange, onDelete, errors }) {
       [event.target.name]: event.target.value
     });
   }
-
-  console.log(errors);
 
   return (
     <div>
@@ -44,6 +43,8 @@ function DeliveryContentForm({ goods, formState, onChange, onDelete, errors }) {
               </option>
             ))}
           </Form.Control>
+
+          <Link className="add-related" to="/goods/create/?redirectBack=true">Добавить товар</Link>
         </Col>
 
         <Col lg={5}>
@@ -56,11 +57,9 @@ function DeliveryContentForm({ goods, formState, onChange, onDelete, errors }) {
             required
             isInvalid={errors && errors.amount}
           />
-          {(errors && errors.amount) &&
-            <Form.Control.Feedback type="invalid">
-              {errors.amount}
-            </Form.Control.Feedback>
-          }
+          <Form.Control.Feedback type="invalid">
+            {errors && errors.amount}
+          </Form.Control.Feedback>
         </Col>
 
         <Col lg={2} style={{ textAlign: 'center' }}>

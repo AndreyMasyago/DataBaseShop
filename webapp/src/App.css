@@ -54,3 +54,8 @@ input[type=date]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     display: none;
 }
+
+.add-related {
+  font-size: 14px;
+  color: #28a745;
+}
