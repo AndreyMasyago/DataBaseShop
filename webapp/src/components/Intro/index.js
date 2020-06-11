@@ -50,7 +50,9 @@ function Intro() {
         </div>
 
         <h2 className="queries-header">Queries</h2>
-
+        <div>
+          <Link to="/delivered-more-than-count/">#1 Delivered more than count</Link>
+        </div>
         <div>
           <Link to="/goods-details/">#2. Goods details</Link>
         </div>

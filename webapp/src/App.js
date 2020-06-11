@@ -34,6 +34,7 @@ import OverHead from './components/pages/queries/OverHead';
 import FinanceReport from './components/pages/queries/FinanceReport';
 import DailyReport from './components/pages/queries/DailyReport';
 import StorageReport from './components/pages/queries/StorageReport';
+import DeliveredMoreThanCount from './components/pages/queries/DeliveredMoreThanCount';
 
 import AddDeliveryForm from './components/forms/AddDeliveryForm';
 
@@ -152,6 +153,10 @@ function App() {
 
           <Route path="/storage-report/">
             <StorageReport />
+          </Route>
+
+          <Route path="/delivered-more-than-count/">
+            <DeliveredMoreThanCount />
           </Route>
 
         </Switch>
