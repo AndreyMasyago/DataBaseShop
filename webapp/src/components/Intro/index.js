@@ -87,6 +87,12 @@ function Intro() {
         <div>
           <Link to="/storage-report/">#13 Storage Report</Link>
         </div>
+        <div>
+          <Link to="/free-space/">#15 Free Space</Link>
+        </div>
+        <div>
+          <Link to="/future-orders/">#16 Future Orders</Link>
+        </div>
       </Col>
     </Row>
   );
